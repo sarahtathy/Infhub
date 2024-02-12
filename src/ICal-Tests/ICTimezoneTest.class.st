@@ -157,43 +157,89 @@ ICTimezoneTest >> sample4 [
 
 { #category : 'testing' }
 ICTimezoneTest >> test1 [
+
 	| timezone standardTime recurrenceDate name comment daylightSavingTime |
 	timezone := self parse: #sample1.
-	self assert: timezone id = 'US-Eastern'.
-	self assert: timezone lastModified = (self dateClass year: 1987 month: 01 day: 01 ).
-	
-	self assert: timezone standardTimes size = 1.
+	self assert: timezone id equals: 'US-Eastern'.
+	self
+		assert: timezone lastModified
+		equals: (self dateClass year: 1987 month: 01 day: 01).
+	self assert: timezone standardTimes size equals: 1.
 	standardTime := timezone standardTimes first.
-	self assert: standardTime start = (self dateAndTimeClass year: 1997 month: 10 day: 26 hour: 2 minute: 0 second: 00).
-	self assert: standardTime recurrenceDates size = 1.
+	self assert: standardTime start equals: (self dateAndTimeClass
+			 year: 1997
+			 month: 10
+			 day: 26
+			 hour: 2
+			 minute: 0
+			 second: 00).
+	self assert: standardTime recurrenceDates size equals: 1.
 	recurrenceDate := standardTime recurrenceDates first.
-	self assert: recurrenceDate = (self dateAndTimeClass year: 1997 month: 10 day: 26 hour: 2 minute: 0 second: 00).
-	self assert: standardTime offsetFrom = (ICUtcOffset new positive: false; hours: 4; minutes: 0; seconds: 0; yourself).
-	self assert: standardTime offsetTo = (ICUtcOffset new positive: false; hours: 5; minutes: 0; seconds: 0; yourself).
-	self assert: standardTime names size = 2.
+	self assert: recurrenceDate equals: (self dateAndTimeClass
+			 year: 1997
+			 month: 10
+			 day: 26
+			 hour: 2
+			 minute: 0
+			 second: 00).
+	self assert: standardTime offsetFrom equals: (ICUtcOffset new
+			 positive: false;
+			 hours: 4;
+			 minutes: 0;
+			 seconds: 0;
+			 yourself).
+	self assert: standardTime offsetTo equals: (ICUtcOffset new
+			 positive: false;
+			 hours: 5;
+			 minutes: 0;
+			 seconds: 0;
+			 yourself).
+	self assert: standardTime names size equals: 2.
 	name := standardTime names first.
-	self assert: name language = 'EN'.
-	self assert: name text = 'EST'.
+	self assert: name language equals: 'EN'.
+	self assert: name text equals: 'EST'.
 	name := standardTime names second.
-	self assert: name language = 'FR-CA'.
-	self assert: name text = 'HNE'.
-	self assert: standardTime comments size = 1.
+	self assert: name language equals: 'FR-CA'.
+	self assert: name text equals: 'HNE'.
+	self assert: standardTime comments size equals: 1.
 	comment := standardTime comments first.
-	self assert: comment = 'The meeting really needs to include both ourselves and the customer. We can''t hold this  meeting without them. As a matter of fact, the venue for the meeting ought to be at their site. - - John'.
-	
-	self assert: timezone daylightSavingTimes size = 1.
+	self
+		assert: comment
+		equals:
+		'The meeting really needs to include both ourselves and the customer. We can''t hold this  meeting without them. As a matter of fact, the venue for the meeting ought to be at their site. - - John'.
+	self assert: timezone daylightSavingTimes size equals: 1.
 	daylightSavingTime := timezone daylightSavingTimes first.
-	self assert: daylightSavingTime start = (self dateAndTimeClass year: 1997 month: 10 day: 26 hour: 2 minute: 0 second: 00).
-	self assert: daylightSavingTime recurrenceDates size = 1.
+	self assert: daylightSavingTime start equals: (self dateAndTimeClass
+			 year: 1997
+			 month: 10
+			 day: 26
+			 hour: 2
+			 minute: 0
+			 second: 00).
+	self assert: daylightSavingTime recurrenceDates size equals: 1.
 	recurrenceDate := daylightSavingTime recurrenceDates first.
-	self assert: recurrenceDate = (self dateAndTimeClass year: 1997 month: 04 day: 06 hour: 2 minute: 0 second: 00).
-	self assert: daylightSavingTime offsetFrom = (ICUtcOffset new positive: false; hours: 5; minutes: 0; seconds: 0; yourself).
-	self assert: daylightSavingTime offsetTo = (ICUtcOffset new positive: false; hours: 4; minutes: 0; seconds: 0; yourself).
-	self assert: daylightSavingTime names size = 1.
+	self assert: recurrenceDate equals: (self dateAndTimeClass
+			 year: 1997
+			 month: 04
+			 day: 06
+			 hour: 2
+			 minute: 0
+			 second: 00).
+	self assert: daylightSavingTime offsetFrom equals: (ICUtcOffset new
+			 positive: false;
+			 hours: 5;
+			 minutes: 0;
+			 seconds: 0;
+			 yourself).
+	self assert: daylightSavingTime offsetTo equals: (ICUtcOffset new
+			 positive: false;
+			 hours: 4;
+			 minutes: 0;
+			 seconds: 0;
+			 yourself).
+	self assert: daylightSavingTime names size equals: 1.
 	name := daylightSavingTime names first.
-	self assert: name text = 'EDT'.
-	
-
+	self assert: name text equals: 'EDT'
 ]
 
 { #category : 'testing' }

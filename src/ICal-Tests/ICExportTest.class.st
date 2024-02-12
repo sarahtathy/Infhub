@@ -17,6 +17,8 @@ Class {
 
 { #category : 'running' }
 ICExportTest >> setUp [
+
+	super setUp.
 	calendar := ICCalendar name: 'test'.
 	event := (ICEvent summary: 'aTitle')
 				location: 'Bern';
@@ -136,7 +138,7 @@ ICExportTest >> setUp [
 		repetitions: 4;
 		delay: (self durationClass minutes: 15);
 		beAudio;
-		addAttachment: (Url fromICalString: 'ftp://host.com/pub/sounds/bell-01.aud');
+		addAttachment: (ZnUrl fromICalString: 'ftp://host.com/pub/sounds/bell-01.aud');
 		yourself.
 	alarm2 := ICAlarm  new
 		trigger: (ICTrigger new
@@ -165,6 +167,7 @@ ICExportTest >> standardCalendarHeader [
 
 { #category : 'testing' }
 ICExportTest >> testExportAlarmWithAudioAction [
+
 	| export str alarmEvent created |
 	alarmEvent := ICEvent summary: 'an alarming event'.
 	alarmEvent addAlarm: alarm1.
@@ -172,30 +175,25 @@ ICExportTest >> testExportAlarmWithAudioAction [
 	alarmEvent uid: 'xxx'.
 	calendar addEvent: alarmEvent.
 	export := iCalExporter export.
-	str := self standardCalendarHeader
-				, 'BEGIN:VEVENT' , String crlf 				
-				, 'UID:' , alarmEvent uid , String crlf 
-				, 'CREATED:' , created asICalUtcString , String crlf 
-				, 'SEQUENCE:0' , String crlf
-				, 'SUMMARY:an alarming event' , String crlf 
-				, 'PRIORITY:5' , String crlf
-				, 'BEGIN:VALARM' , String crlf 
-				, 'ACTION:AUDIO' , String crlf 
-				, 'TRIGGER;VALUE=DATE-TIME:19970317T133000' , String crlf 
-				, 'DURATION:PT0H15M0S' , String crlf 
-				, 'REPEAT:4' , String crlf 
-				, 'ATTACH:ftp://host.com/pub/sounds/bell-01.aud' , String crlf 
-				, 'END:VALARM' , String crlf 
-				, 'END:VEVENT' , String crlf 
-				, self standardCalendarFooter.
-	export dataStream contents 
-		keysAndValuesDo: [:index :value |
-			self assert: value = (str at: index) ].
-	self assert: export dataStream contents = str
+	str := self standardCalendarHeader , 'BEGIN:VEVENT' , String crlf
+	       , 'UID:' , alarmEvent uid , String crlf , 'CREATED:'
+	       , created asICalUtcString , String crlf , 'SEQUENCE:0'
+	       , String crlf , 'SUMMARY:an alarming event' , String crlf
+	       , 'PRIORITY:5' , String crlf , 'BEGIN:VALARM' , String crlf
+	       , 'ACTION:AUDIO' , String crlf
+	       , 'TRIGGER;VALUE=DATE-TIME:19970317T133000' , String crlf
+	       , 'DURATION:PT0H15M0S' , String crlf , 'REPEAT:4'
+	       , String crlf , 'ATTACH:ftp://host.com/pub/sounds/bell-01.aud'
+	       , String crlf , 'END:VALARM' , String crlf , 'END:VEVENT'
+	       , String crlf , self standardCalendarFooter.
+	export dataStream contents keysAndValuesDo: [ :index :value |
+		self assert: value equals: (str at: index) ].
+	self assert: export dataStream contents equals: str
 ]
 
 { #category : 'testing' }
 ICExportTest >> testExportAlarmWithDisplayAction [
+
 	| export str alarmTodo created |
 	alarmTodo := ICTodo summary: 'an alarming todo'.
 	alarmTodo addAlarm: alarm2.
@@ -203,25 +201,18 @@ ICExportTest >> testExportAlarmWithDisplayAction [
 	alarmTodo uid: '(cons car cdr)'.
 	calendar addEvent: alarmTodo.
 	export := iCalExporter export.
-	str := self standardCalendarHeader
-				, 'BEGIN:VTODO' , String crlf 				
-				, 'UID:' , alarmTodo uid , String crlf 
-				, 'CREATED:' , created asICalUtcString , String crlf 
-				, 'SEQUENCE:0' , String crlf
-				, 'SUMMARY:an alarming todo' , String crlf 
-				, 'PRIORITY:5' , String crlf 
-				, 'BEGIN:VALARM' , String crlf 
-				, 'ACTION:DISPLAY' , String crlf 
-				, 'TRIGGER:-PT0H30M0S' , String crlf 
-				, 'DURATION:PT0H15M0S' , String crlf 
-				, 'REPEAT:2' , String crlf 
-				, 'END:VALARM' , String crlf 
-				, 'END:VTODO' , String crlf 
-				, self standardCalendarFooter.
-	export dataStream contents 
-		keysAndValuesDo: [:index :value |
-			self assert: value = (str at: index) ].
-	self assert: export dataStream contents = str
+	str := self standardCalendarHeader , 'BEGIN:VTODO' , String crlf
+	       , 'UID:' , alarmTodo uid , String crlf , 'CREATED:'
+	       , created asICalUtcString , String crlf , 'SEQUENCE:0'
+	       , String crlf , 'SUMMARY:an alarming todo' , String crlf
+	       , 'PRIORITY:5' , String crlf , 'BEGIN:VALARM' , String crlf
+	       , 'ACTION:DISPLAY' , String crlf , 'TRIGGER:-PT0H30M0S'
+	       , String crlf , 'DURATION:PT0H15M0S' , String crlf
+	       , 'REPEAT:2' , String crlf , 'END:VALARM' , String crlf
+	       , 'END:VTODO' , String crlf , self standardCalendarFooter.
+	export dataStream contents keysAndValuesDo: [ :index :value |
+		self assert: value equals: (str at: index) ].
+	self assert: export dataStream contents equals: str
 ]
 
 { #category : 'testing' }
@@ -247,88 +238,99 @@ ICExportTest >> testExportDateEvent [
 
 { #category : 'testing' }
 ICExportTest >> testExportEvent [
+
 	| export str |
 	calendar name: 'veriveri''s Calendar'.
 	calendar addEvent: event.
 	export := iCalExporter export.
-	str := 'BEGIN:VCALENDAR' , String crlf 
-				, 'PRODID:' , calendar productId , String crlf 
-				, 'VERSION:2.0' , String crlf 
-				, 'X-WR-CALNAME:veriveri''s Calendar' , String crlf
-				, 'METHOD:PUBLISH' , String crlf
-				, 'BEGIN:VEVENT' , String crlf 
-				, 'UID:' , event uid , String crlf 
-				, 'CREATED:20050501T110231Z' , String crlf 
-				, 'STATUS:TENTATIVE' , String crlf 
-				, 'LAST-MODIFIED:20050501T110231Z' , String crlf 
-				, 'SEQUENCE:0' , String crlf
-				, 'SUMMARY:aTitle' , String crlf 
-				, 'PRIORITY:1' , String crlf 
-				, 'DESCRIPTION:a long long long text\, very long... really!' , String crlf 
-				, 'LOCATION:Bern' , String crlf 				
-				, 'DTSTART:20050425T104500' , String crlf 
-				, 'DTEND:20050425T120900' , String crlf 				
-				, 'TRANSP:OPAQUE' , String crlf 
-				, 'END:VEVENT' , String crlf 
-				, self standardCalendarFooter.
-	export dataStream contents 
-		keysAndValuesDo: [:index :value |
-			self assert: value = (str at: index) ].
-	self assert: export dataStream contents = str
+	str := 'BEGIN:VCALENDAR' , String crlf , 'PRODID:'
+	       , calendar productId , String crlf , 'VERSION:2.0'
+	       , String crlf , 'X-WR-CALNAME:veriveri''s Calendar'
+	       , String crlf , 'METHOD:PUBLISH' , String crlf
+	       , 'BEGIN:VEVENT' , String crlf , 'UID:' , event uid
+	       , String crlf , 'CREATED:20050501T110231Z' , String crlf
+	       , 'STATUS:TENTATIVE' , String crlf
+	       , 'LAST-MODIFIED:20050501T110231Z' , String crlf
+	       , 'SEQUENCE:0' , String crlf , 'SUMMARY:aTitle' , String crlf
+	       , 'PRIORITY:1' , String crlf
+	       , 'DESCRIPTION:a long long long text\, very long... really!'
+	       , String crlf , 'LOCATION:Bern' , String crlf
+	       , 'DTSTART:20050425T104500' , String crlf
+	       , 'DTEND:20050425T120900' , String crlf , 'TRANSP:OPAQUE'
+	       , String crlf , 'END:VEVENT' , String crlf
+	       , self standardCalendarFooter.
+	export dataStream contents keysAndValuesDo: [ :index :value |
+		self assert: value equals: (str at: index) ].
+	self assert: export dataStream contents equals: str
 ]
 
 { #category : 'testing' }
 ICExportTest >> testExportExactlyThreeLines [
+
 	| line expected |
 	line := 'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttttaaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttaaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt'.
-	expected := 
-		'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttt', String crlf,
-		' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt', String crlf,
-		' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt' , String crlf.
-
-	self assert: (iCalExporter exportLine: line) dataStream contents = expected.
+	expected := 'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttt'
+	            , String crlf
+	            ,
+	            ' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt'
+	            , String crlf
+	            ,
+	            ' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt'
+	            , String crlf.
+	self
+		assert: (iCalExporter exportLine: line) dataStream contents
+		equals: expected
 ]
 
 { #category : 'testing' }
 ICExportTest >> testExportExactlyTowLines [
+
 	| line expected |
 	line := 'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttttaaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt'.
-	expected :=
-		'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttt', String crlf,
-		' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt', String crlf.
-	self assert: (iCalExporter exportLine: line) dataStream contents = expected.
+	expected := 'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttt'
+	            , String crlf
+	            ,
+	            ' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt'
+	            , String crlf.
+	self
+		assert: (iCalExporter exportLine: line) dataStream contents
+		equals: expected
 ]
 
 { #category : 'testing' }
 ICExportTest >> testExportFourLines [
+
 	| line expected |
 	line := 'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttttaaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttaaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt fff ggg hhh'.
-	expected := 
-		'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttt', String crlf,
-		' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt' , String crlf,
-		' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt' , String crlf,
-		'  fff ggg hhh', String crlf.
-	self assert: (iCalExporter exportLine: line) dataStream contents = expected.
+	expected := 'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttt'
+	            , String crlf
+	            ,
+	            ' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt'
+	            , String crlf
+	            ,
+	            ' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt'
+	            , String crlf , '  fff ggg hhh' , String crlf.
+	self
+		assert: (iCalExporter exportLine: line) dataStream contents
+		equals: expected
 ]
 
 { #category : 'testing' }
 ICExportTest >> testExportJournal [
+
 	| export str |
 	calendar addJournal: journal.
 	export := iCalExporter export.
-	str := self standardCalendarHeader
-				, 'BEGIN:VJOURNAL' , String crlf 				
-				, 'UID:' , journal uid , String crlf 
-				, 'CREATED:20050501T110231Z' , String crlf 
-				, 'SEQUENCE:0' , String crlf
-				, 'SUMMARY:aTitle'  , String crlf 
-				, 'DESCRIPTION:description1' , String crlf  				
-				, 'DESCRIPTION:description2' , String crlf 
-				, 'END:VJOURNAL' , String crlf 
-				, self standardCalendarFooter.
-	export dataStream contents 
-		keysAndValuesDo: [:index :value | self assert: value = (str at: index)].
-	self assert: export dataStream contents = str
+	str := self standardCalendarHeader , 'BEGIN:VJOURNAL' , String crlf
+	       , 'UID:' , journal uid , String crlf
+	       , 'CREATED:20050501T110231Z' , String crlf , 'SEQUENCE:0'
+	       , String crlf , 'SUMMARY:aTitle' , String crlf
+	       , 'DESCRIPTION:description1' , String crlf
+	       , 'DESCRIPTION:description2' , String crlf , 'END:VJOURNAL'
+	       , String crlf , self standardCalendarFooter.
+	export dataStream contents keysAndValuesDo: [ :index :value |
+		self assert: value equals: (str at: index) ].
+	self assert: export dataStream contents equals: str
 ]
 
 { #category : 'testing' }
@@ -344,14 +346,17 @@ ICExportTest >> testExportLine [
 
 { #category : 'testing' }
 ICExportTest >> testExportThreeLines [
+
 	| line expected |
 	line := 'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttttaaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt fff ggg hhh'.
-	expected := 
-		'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttt', String crlf,
-		' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt', String crlf,
-		'  fff ggg hhh', String crlf.
-
-	self assert: (iCalExporter exportLine: line) dataStream contents = expected.
+	expected := 'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttt'
+	            , String crlf
+	            ,
+	            ' aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt'
+	            , String crlf , '  fff ggg hhh' , String crlf.
+	self
+		assert: (iCalExporter exportLine: line) dataStream contents
+		equals: expected
 ]
 
 { #category : 'testing' }
@@ -657,7 +662,7 @@ ICExportTest >> timezoneWithEndDate [
 	timezone := ICTimezone new.
 	timezone id: 'US-Eastern'.
 	timezone lastModified: (self dateAndTimeClass year: 1987 month: 01 day: 01 hour: 0 minute: 0 second: 0  offset: (self durationClass seconds: 0)).
-	timezone url: (Url absoluteFromText: 'http://zones.stds_r_us.net/tz/US-Eastern').
+	timezone url: (ZnUrl fromString: 'http://zones.stds_r_us.net/tz/US-Eastern').
 	
 	standard := ICStandardTime new.
 	standard start: (self dateAndTimeClass year: 1967 month: 10 day: 29 hour: 02 minute: 00 second: 00).

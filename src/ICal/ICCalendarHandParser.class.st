@@ -25,7 +25,8 @@ ICCalendarHandParser class >> on: aStream [
 
 { #category : 'instance creation' }
 ICCalendarHandParser class >> parseCalendarFile: aPath [
-	^self parseCalendarString: (FileStream readOnlyFileNamed: aPath) contentsOfEntireFile
+
+	^ self parseCalendarString: aPath asFileReference contents
 ]
 
 { #category : 'instance creation' }

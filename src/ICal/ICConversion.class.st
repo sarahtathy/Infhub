@@ -16,9 +16,10 @@ ICConversion class >> actionType [
 
 { #category : 'accessing-types' }
 ICConversion class >> attachmentType [
-	^ICTypeInformation
+
+	^ ICTypeInformation
 		name: 'ATTACH' 
-		type: Url iCalType 
+		type: ZnUrl iCalType 
 		multivalued: false
 ]
 
@@ -399,9 +400,10 @@ ICConversion class >> tzidType [
 
 { #category : 'accessing-types' }
 ICConversion class >> tzurlType [
-	^ICTypeInformation
+
+	^ ICTypeInformation
 		name: 'TZURL' 
-		type: Url iCalType 
+		type: ZnUrl iCalType 
 		multivalued: false
 ]
 
@@ -415,9 +417,10 @@ ICConversion class >> uidType [
 
 { #category : 'accessing-types' }
 ICConversion class >> urlType [
-	^ICTypeInformation
+
+	^ ICTypeInformation
 		name: 'URL' 
-		type: Url iCalType 
+		type: ZnUrl iCalType 
 		multivalued: false
 ]
 

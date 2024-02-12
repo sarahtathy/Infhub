@@ -265,7 +265,7 @@ ICCalendarParser2 >> tokensAsString: tokens [
 		tokens do: [ :each | stream nextPutAll: each value] ]
 ]
 
-{ #category : 'generated-tables' }
+{ #category : 'accessing' }
 ICCalendarParser2 >> transitionTable [
 	^#(
 #(3 58 5 58 6 13 21 17 26 58 28)
@@ -313,9 +313,9 @@ ICCalendarParser2 >> unfold: aString [
 	pattern := Array new: 3.
 	pattern at: 1 put: Character cr.
 	pattern at: 2 put: Character lf.
-	^whiteSpaces inject: aString into: [ :each :string |
+	^ whiteSpaces inject: aString into: [ :each :string |
 		pattern at: 3 put: each.
-		(string includesSubString: pattern)
+		(string includesSubstring: pattern)
 			ifFalse: [ aString ]
 			ifTrue: [ aString copyReplaceAll: pattern with: ''  ] ]
 ]

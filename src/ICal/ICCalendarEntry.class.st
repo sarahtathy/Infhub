@@ -93,7 +93,9 @@ ICCalendarEntry >> uid: aString [
 
 { #category : 'accessing' }
 ICCalendarEntry >> uidStrategy [
-	^UidStrategy
+
+	^ UidStrategy
+		ifNil: [ UidStrategy := ICRecommendedByStandardStrategy uuidstragetyClass new ]
 ]
 
 { #category : 'accessing' }

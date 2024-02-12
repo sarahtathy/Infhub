@@ -8,5 +8,6 @@ Class {
 
 { #category : 'generating' }
 ICTimebasedUUIDStrategy >> generateUid [
-	^(PipeableOSProcess command: 'uuidgen -t') output
+
+	^ (LibC resultOfCommand: 'uuidgen -t') trimBoth
 ]

@@ -4,9 +4,10 @@ Extension { #name : 'ScaledDecimal' }
 ScaledDecimal >> asICalString [
 	"copy pasted from #printOn:"
 	| aFraction tmpFractionPart |
-	^String streamContents: [ :stream |
+
+	^ String streamContents: [ :stream |
 		self negative ifTrue: [ stream nextPut: $-].
-		aFraction := fraction abs.
+		aFraction := self asFraction abs.
 		stream nextPutAll: aFraction truncated printString.
 		scale isZero ifFalse: [ 
 			stream nextPut: $..

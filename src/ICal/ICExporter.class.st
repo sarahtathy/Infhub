@@ -115,14 +115,14 @@ ICExporter >> exportParameter: aName value: aValue [
 { #category : 'exporting' }
 ICExporter >> exportProperty: anObject type: aTypeInformation [ 
 	(self shouldExport: anObject) ifTrue: [
-		(anObject isCollection
-			and: [aTypeInformation multipleValuesPerLine not]
-			and: [anObject isString not]) 
-				ifTrue: [
-					anObject do: [ :each |
-						self exportSingleProperty: each type: aTypeInformation ] ]
-				ifFalse: [
-					self exportSingleProperty: anObject type: aTypeInformation ] ]
+		((anObject isCollection
+			and: [aTypeInformation multipleValuesPerLine not])
+				and: [anObject isString not]) 
+					ifTrue: [
+						anObject do: [ :each |
+							self exportSingleProperty: each type: aTypeInformation ] ]
+					ifFalse: [
+						self exportSingleProperty: anObject type: aTypeInformation ] ]
 ]
 
 { #category : 'exporting' }
@@ -219,16 +219,16 @@ ICExporter >> scanForBeginningCharacterAt: anInteger in: aString [
 { #category : 'testing' }
 ICExporter >> shouldExport: anObject [
 	^(anObject isNil
-		or: [ anObject isCollection
-			and: [ anObject isEmpty ]
-			and: [ anObject isString not ] ]) not
+		or: [ (anObject isCollection and: [ anObject isEmpty ])
+				and: [ anObject isString not ] ]) not
 ]
 
 { #category : 'accessing' }
 ICExporter >> stringConversionBlock [
-	stringConversionBlock isNil ifTrue: [
+
+	stringConversionBlock ifNil: [
 		stringConversionBlock := [ :value | value ] ].
-	^stringConversionBlock
+	^ stringConversionBlock
 ]
 
 { #category : 'accessing' }

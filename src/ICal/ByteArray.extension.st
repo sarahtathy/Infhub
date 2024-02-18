@@ -16,7 +16,8 @@ ByteArray >> exportICalParametersOn: anExpoter [
 
 { #category : '*ICal' }
 ByteArray class >> fromICalString: aString [
-	^(Base64MimeConverter mimeDecodeToBytes: 
+
+	^ (Base64MimeConverter mimeDecodeToChars: 
 		(ReadStream on: aString))
 			contents
 ]

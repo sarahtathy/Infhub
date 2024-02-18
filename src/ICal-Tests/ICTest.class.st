@@ -27,6 +27,16 @@ ICTest >> durationClass [
 	^ICConversion durationClass
 ]
 
+{ #category : 'testing' }
+ICTest >> inFourDaysFromNow [
+
+	^ self dateAndTimeClass now + (self durationClass
+		   days: 4
+		   hours: 0
+		   minutes: 0
+		   seconds: 0)
+]
+
 { #category : 'private' }
 ICTest >> timeClass [
 	^ICConversion timeClass

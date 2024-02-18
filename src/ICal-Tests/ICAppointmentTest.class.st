@@ -2,8 +2,7 @@ Class {
 	#name : 'ICAppointmentTest',
 	#superclass : 'ICTest',
 	#instVars : [
-		'appointment',
-		'serie'
+		'appointment'
 	],
 	#category : 'ICal-Tests',
 	#package : 'ICal-Tests'

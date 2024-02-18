@@ -513,24 +513,35 @@ ICExportTest >> testExportTodo [
 
 { #category : 'testing' }
 ICExportTest >> testExportUmlautLineBreak [
+
 	| line expected |
-	iCalExporter stringConversionBlock: [ :string | string squeakToIso isoToUtf8 ].
+	iCalExporter stringConversionBlock: [ :string |
+		string asUTF8Bytes asString ].
 	line := 'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttfff ggg hhh'.
-	expected := ('aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt', String crlf,
-		' fff ggg hhh', String crlf) squeakToIso isoToUtf8.
-	
-	self assert: (iCalExporter exportLine: line) dataStream contents = expected.
+	expected := ('aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttt'
+	             , String crlf , ' fff ggg hhh' , String crlf)
+		            asUTF8Bytes asString.
+	self
+		assert: (iCalExporter exportLine: line) dataStream contents
+		equals: expected
 ]
 
 { #category : 'testing' }
 ICExportTest >> testExportUmlautLineNoBreak [
+
 	| line expected |
-	iCalExporter stringConversionBlock: [ :string | string squeakToIso isoToUtf8 ].
+	iCalExporter stringConversionBlock: [ :string | string asUTF8Bytes asString ].
+	"Update to add a CRLF between tttfff here"
 	line := 'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx tttfff ggg hhh'.
-	expected := ('aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttt', String crlf,
-		' fff ggg hhh', String crlf) squeakToIso isoToUtf8.
-	
-	self assert: (iCalExporter exportLine: line) dataStream contents = expected.
+	expected := (String streamContents: [ : stream |
+		stream 
+			<< 'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttt';
+			<< String crlf;
+			<< ' fff ggg hhh'; 
+			<< String crlf ]) asUTF8Bytes asString.
+	self
+		assert: (iCalExporter exportLine: line) dataStream contents
+		equals: expected
 ]
 
 { #category : 'testing' }

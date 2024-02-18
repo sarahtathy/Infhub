@@ -5,7 +5,6 @@ Class {
 		'appointment1',
 		'appointment2',
 		'todo',
-		'eventSerie',
 		'calendar'
 	],
 	#category : 'ICal-Tests',
@@ -14,10 +13,26 @@ Class {
 
 { #category : 'running' }
 ICEventTest >> setUp [
-	| category |
+	
+	super setUp.
 	calendar := ICCalendar new.
-	appointment1 := ICEvent summary: 'diner'.
+	self 
+		setUpAppointment1;
+		setUpAppointment2;
+		setUpToDo.
+
+	calendar addEvent: appointment1.
+	calendar addEvent: appointment2.
+	calendar addEvent: todo
+]
+
+{ #category : 'running' }
+ICEventTest >> setUpAppointment1 [
+
+	| category |
 	category := ICCategory summary: 'friends'.
+
+	appointment1 := ICEvent summary: 'diner'.
 	appointment1 addCategory: category.
 	appointment1 uid: 'app1'.
 	appointment1
@@ -37,6 +52,11 @@ ICEventTest >> setUp [
 					second: 0).
 	appointment1 beLowPriority.
 	appointment1 location: 'in nature'.
+]
+
+{ #category : 'running' }
+ICEventTest >> setUpAppointment2 [
+
 	appointment2 := ICEvent summary: 'running'.
 	appointment2 uid: 'app2'.
 	appointment2
@@ -54,12 +74,14 @@ ICEventTest >> setUp [
 					hour: 9
 					minute: 40
 					second: 0).
+]
+
+{ #category : 'running' }
+ICEventTest >> setUpToDo [
+
 	todo := ICTodo summary: 'clean the living-room'.
 	todo uid: 'todo1'.
-	todo due: (self dateAndTimeClass now + (self durationClass days: 4 hours: 0 minutes: 0 seconds: 0)).
-	calendar addEvent: appointment1.
-	calendar addEvent: appointment2.
-	calendar addEvent: todo
+	todo due: self inFourDaysFromNow
 ]
 
 { #category : 'testing' }
@@ -105,20 +127,21 @@ ICEventTest >> testIsBefore [
 
 { #category : 'testing' }
 ICEventTest >> testStati [
+
 	| stati |
 	stati := ICEvent possibleStati asSet.
-	self assert: stati size = 3.
+	self assert: stati size equals: 3.
 	self assert: (stati includes: ICEvent statusCanceled).
 	self assert: (stati includes: ICEvent statusConfirmed).
 	self assert: (stati includes: ICEvent statusTentative).
 	stati := ICTodo possibleStati asSet.
-	self assert: stati size = 4.
+	self assert: stati size equals: 4.
 	self assert: (stati includes: ICTodo statusCanceled).
 	self assert: (stati includes: ICTodo statusNeedsAction).
 	self assert: (stati includes: ICTodo statusInProcess).
 	self assert: (stati includes: ICTodo statusCompleted).
 	stati := ICJournal possibleStati asSet.
-	self assert: stati size = 3.
+	self assert: stati size equals: 3.
 	self assert: (stati includes: ICJournal statusCanceled).
 	self assert: (stati includes: ICJournal statusDraft).
 	self assert: (stati includes: ICJournal statusFinal)
@@ -127,17 +150,15 @@ ICEventTest >> testStati [
 { #category : 'testing' }
 ICEventTest >> testTesting [
 
-  self deny: (appointment1 isFullDayEvent).
-  self deny: (appointment1 isRecurrent).
+	self deny: appointment1 isFullDayEvent.
+	self deny: appointment1 isRecurrent.
 
-  self deny: (todo isRecurrent).
+	self deny: todo isRecurrent.
 
-  self assert: (appointment1 isValidForDate: (self dateAndTimeClass 
-							year: 2005
-							month: 5
-							day: 18)).
-							
-   self assert: (todo startsInHour: self dateAndTimeClass now + (self durationClass days: 4 hours: 0 minutes: 0 seconds: 0)).
+	self assert: (appointment1 isValidForDate:
+			 (self dateAndTimeClass year: 2005 month: 5 day: 18)).
+
+	self deny: (todo startsInHour: self inFourDaysFromNow)
 ]
 
 { #category : 'testing' }

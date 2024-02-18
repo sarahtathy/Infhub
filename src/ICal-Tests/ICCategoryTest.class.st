@@ -27,28 +27,38 @@ ICCategoryTest >> setUp [
 
 { #category : 'testing' }
 ICCategoryTest >> testColor [
-  
-   self assert: (calendar categoryWithSummary: 'family') hasColor.
-   self assert: (calendar categoryWithSummary: 'tennis club') color = 'red'.
-   
-   category1 color: 'purple'.
-   category2 color: 'yellow'.
 
-   self assert: (calendar categoryWithSummary: 'family') hasColor.
-   self deny: (calendar categoryWithSummary: 'tennis club') color = 'red'.
+	self assert: (calendar categoryWithSummary: 'family') hasColor.
+	self
+		assert: (calendar categoryWithSummary: 'tennis club') color
+		equals: 'red'.
+
+	category1 color: 'purple'.
+	category2 color: 'yellow'.
+
+	self assert: (calendar categoryWithSummary: 'family') hasColor.
+	self
+		deny: (calendar categoryWithSummary: 'tennis club') color
+		equals: 'red'
 ]
 
 { #category : 'testing' }
 ICCategoryTest >> testEqual [
-	self deny: category1 = category2.
-	self assert: category1 = (ICCategory summary: 'tennis club').
-	self assert: category2 = (ICCategory summary: 'family')
+
+	self deny: category1 equals: category2.
+	self assert: category1 equals: (ICCategory summary: 'tennis club').
+	self assert: category2 equals: (ICCategory summary: 'family')
 ]
 
 { #category : 'testing' }
 ICCategoryTest >> testExplanation [
 
-    self assert: (calendar categoryWithSummary: 'family') textualDescription = 'for family events'.
-    self assert: (calendar categoryWithSummary: 'tennis club') textualDescription = 'this category is for tennis club events'.
-    self deny: category1 textualDescription = ''.
+	self
+		assert: (calendar categoryWithSummary: 'family') textualDescription
+		equals: 'for family events'.
+	self
+		assert:
+		(calendar categoryWithSummary: 'tennis club') textualDescription
+		equals: 'this category is for tennis club events'.
+	self deny: category1 textualDescription equals: ''
 ]

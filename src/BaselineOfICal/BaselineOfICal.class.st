@@ -13,11 +13,11 @@ BaselineOfICal >> baseline: spec [
 		self smaCC: spec.
 
 		spec 
-			package: 'ICal'       with: [ spec requires: #(SmaCC) ];
-			package: 'ICal-Tests' with: [ spec requires: #(ICal) ];
+			package: 'ICal'       with: [ spec requires: #('SmaCC') ];
+			package: 'ICal-Tests' with: [ spec requires: #('ICal') ];
 			
-			package: 'ICal-VCard' with: [ spec requires: #(ICal) ];
-			package: 'ICal-VCard-Tests' with: [ spec requires: #(ICal-VCard) ].
+			package: 'ICal-VCard' with: [ spec requires: #('ICal') ];
+			package: 'ICal-VCard-Tests' with: [ spec requires: #('ICal-VCard') ].
 
 		spec 
 			group: 'Core' with: #('ICal');

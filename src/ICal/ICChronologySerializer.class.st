@@ -59,18 +59,16 @@ ICChronologySerializer class >> fractionString: nanoseconds [
 
 { #category : 'duration' }
 ICChronologySerializer class >> hasTime: aDuration [
-
-	^ (aDuration hours isZero not
+	^(aDuration hours isZero not
 		or: [ aDuration minutes isZero not ])
-			or: [ aDuration seconds isZero not ]
+		or: [ aDuration seconds isZero not ]
 ]
 
 { #category : 'duration' }
 ICChronologySerializer class >> justWeeks: aDuration [
-
 	^ (((aDuration weeks isZero not
 		and: [ (self daysWithoutWeeks: aDuration) isZero ])
-			and: [ aDuration hours isZero ])
-				and: [ aDuration minutes isZero ])
-					and: [ aDuration seconds isZero ]
+		and: [ aDuration hours isZero ])
+		and: [ aDuration minutes isZero ])
+		and: [ aDuration seconds isZero ]
 ]

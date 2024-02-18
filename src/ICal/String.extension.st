@@ -10,9 +10,7 @@ String >> asICalParameterString [
 
 { #category : '*ICal' }
 String >> asICalString [
-	^ICCalendarVersion value >= 2.0
-		ifTrue: [ self asNewICalString ]
-		ifFalse: [ self asOldICalString ]
+	^ self asNewICalString 
 ]
 
 { #category : '*ICal' }

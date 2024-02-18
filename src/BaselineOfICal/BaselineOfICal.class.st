@@ -31,6 +31,9 @@ BaselineOfICal >> smaCC: spec [
 
 	spec
    		baseline: 'SmaCC'
-		with: [ spec repository: 'github://hernanmd/SmaCC:pharo12' ].
+		with: [
+			 spec 
+				loads: 'Runtime';
+				repository: 'github://hernanmd/SmaCC:pharo12' ].
 		
 ]

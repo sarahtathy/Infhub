@@ -14,7 +14,7 @@ Class {
 
 { #category : 'instance creation' }
 ICCalendarExporter class >> calendar: aCalendar [
-	^(self new calendar: aCalendar)
+	^ self new calendar: aCalendar
 ]
 
 { #category : 'examples' }
@@ -30,7 +30,7 @@ ICCalendarExporter class >> example1 [
 	calendar addEvent: event.
 	
 	exporter := self calendar: calendar.
-	exporter dataStream: 'demo.ics' asFileReference readStream.
+	exporter dataStream: 'demo.ics' asFileReference writeStream.
 	exporter export.
 	
 ]

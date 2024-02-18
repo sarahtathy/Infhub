@@ -355,7 +355,6 @@ ICConversion class >> supportedComponents [
 		add: ICFreeBusy;
 		add: ICTimezone;
 		add: ICJournal;
-		add: ICVCard;
 		yourself
 ]
 

@@ -347,7 +347,7 @@ ICConversionTest >> testParseTimeUtc [
 ICConversionTest >> testParseUrl [
 
 	| url string |
-	string := 'mailto:mouse@squeakfoundation.org'.
+	string := 'mailto:mouse@glourp.org'.
 	url := ZnUrl fromICalString: string.
 	self assert: string equals: url asICalString.
 

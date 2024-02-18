@@ -30,7 +30,7 @@ BaselineOfICal >> baseline: spec [
 BaselineOfICal >> smaCC: spec [
 
 	spec
-   		baseline: 'SmalCC'
-		with: [ spec repository: 'github://github://hernanmd/SmaCC:pharo12' ].
+   		baseline: 'SmaCC'
+		with: [ spec repository: 'github://hernanmd/SmaCC:pharo12' ].
 		
 ]

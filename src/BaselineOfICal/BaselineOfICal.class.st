@@ -17,7 +17,7 @@ BaselineOfICal >> baseline: spec [
 			package: 'ICal-Tests' with: [ spec requires: #(ICal) ];
 			
 			package: 'ICal-VCard' with: [ spec requires: #(ICal) ];
-			package: 'ICal-VCard-Tests' with: [ spec requires: #(ICal-VCard) ].
+			package: 'ICal-VCard-Tests' with: [ spec requires: #('ICal-VCard') ].
 
 		spec 
 			group: 'Core' with: #('ICal');

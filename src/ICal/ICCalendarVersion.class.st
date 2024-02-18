@@ -18,9 +18,9 @@ ICCalendarVersion class >> use: anObject during: aBlock [
 		do: [ :notification | notification resume: anObject]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'evaluating' }
 ICCalendarVersion class >> value [
-	^ self raiseSignal
+	^ self signal
 ]
 
 { #category : 'accessing' }

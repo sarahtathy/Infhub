@@ -136,9 +136,9 @@ ICVCardConversion class >> titleType [
 
 { #category : 'accessing-types' }
 ICVCardConversion class >> urlType [
-	^ICVCardTypeInformation
+	^ ICVCardTypeInformation
 		name: 'URL' 
-		type: Url iCalType 
+		type: ZnUrl iCalType 
 		multivalued: false
 ]
 

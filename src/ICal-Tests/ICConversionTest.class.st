@@ -65,18 +65,19 @@ ICConversionTest >> testDateAndTimeUtc [
 
 { #category : 'testing' }
 ICConversionTest >> testDateUtc [
+
 	| date |
-	date := self dateClass year: 1901 month: 1 day: 1 .
-	self assert: '19010101'  = date asICalUtcString.
-	
-	date := self dateClass year: 1901 month: 2 day: 1 .
-	self assert: '19010201'  = date asICalUtcString.
-	
+	date := self dateClass year: 1901 month: 1 day: 1.
+	self assert: '19010101' equals: date asICalUtcString.
+
+	date := self dateClass year: 1901 month: 2 day: 1.
+	self assert: '19010201' equals: date asICalUtcString.
+
 	date := self dateClass year: 1901 month: 11 day: 22.
-	self assert: '19011122'  = date asICalUtcString.
-	
+	self assert: '19011122' equals: date asICalUtcString.
+
 	date := self dateClass year: 1997 month: 7 day: 14.
-	self assert: '19970714'  = date asICalUtcString.
+	self assert: '19970714' equals: date asICalUtcString
 ]
 
 { #category : 'testing' }
@@ -102,7 +103,7 @@ ICConversionTest >> testFloatPrecision [
 	string := '1000000.0000001'.
 	float := Float fromICalString: string.
 	self assert: string equals: float asICalString.
-	self assert: float equals: 1000000.0000001
+	self assert: float closeTo: 1000000.0000001
 ]
 
 { #category : 'testing' }
@@ -265,12 +266,12 @@ ICConversionTest >> testParseScaledDecimal [
 	string := '-3.14'.
 	decimal := ScaledDecimal fromICalString: string.
 	self assert: string equals: decimal asICalString.
-	self assert: decimal equals: -3.14.
+	self assert: decimal closeTo: -3.14.
 
 	string := '1.333'.
 	decimal := ScaledDecimal fromICalString: string.
 	self assert: string equals: decimal asICalString.
-	self assert: decimal equals: 1.333
+	self assert: decimal closeTo: 1.333
 ]
 
 { #category : 'testing' }

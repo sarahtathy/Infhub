@@ -140,10 +140,10 @@ ICRecurrenceRule class >> frequencyYearly [
 ICRecurrenceRule class >> fromICalString: aString [
 	| inst parts key values |
 	inst := self new.
-	(aString  subStrings: #($;)) do: [ :property | 
-		parts := property subStrings: #($=).
+	(aString  substrings: #($;)) do: [ :property | 
+		parts := property substrings: #($=).
 		key := parts first.
-		values := parts second subStrings: #($,).
+		values := parts second substrings: #($,).
 		values do: [ :each |
 			self
 				perform: (key asLowercase , ':on:') asSymbol

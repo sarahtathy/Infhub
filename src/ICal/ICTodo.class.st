@@ -130,9 +130,11 @@ ICTodo >> percentComplete: anInteger [
 ]
 
 { #category : 'testing' }
-ICTodo >> startsInHour: aDateAndTime [ 
-	^aDateAndTime <= self due
-		and: [(aDateAndTime + (self durationClass seconds: 3600)) >= self due]
+ICTodo >> startsInHour: aDateAndTime [
+
+	^ self due
+		  between: aDateAndTime
+		  and: aDateAndTime + (self durationClass seconds: 3600)
 ]
 
 { #category : 'actions' }

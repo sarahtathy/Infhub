@@ -163,7 +163,7 @@ ICTimezoneTest >> test1 [
 	self assert: timezone id equals: 'US-Eastern'.
 	self
 		assert: timezone lastModified
-		equals: (self dateClass year: 1987 month: 01 day: 01).
+		equals: (self dateClass year: 1987 month: 01 day: 01) asDateAndTime.
 	self assert: timezone standardTimes size equals: 1.
 	standardTime := timezone standardTimes first.
 	self assert: standardTime start equals: (self dateAndTimeClass
@@ -247,7 +247,7 @@ ICTimezoneTest >> test2 [
 	| timezone standardTime recurrenceRule name daylightSavingTime |
 	timezone := self parse: #sample2.
 	self assert: timezone id = 'US-Eastern'.
-	self assert: timezone lastModified = (self dateClass year: 1987 month: 01 day: 01).
+	self assert: timezone lastModified = (self dateAndTimeClass year: 1987 month: 01 day: 01).
 	self assert: timezone url asString = 'http://zones.stds_r_us.net/tz/US-Eastern'.
 	
 	self assert: timezone standardTimes size = 1.
@@ -284,7 +284,7 @@ ICTimezoneTest >> test3 [
 	| timezone standardTime recurrenceRule name daylightSavingTime |
 	timezone := self parse: #sample3.
 	self assert: timezone id = 'US--Fictitious-Eastern'.
-	self assert: timezone lastModified = (self dateClass year: 1987 month: 01 day: 01).
+	self assert: timezone lastModified = (self dateAndTimeClass year: 1987 month: 01 day: 01).
 	
 	self assert: timezone standardTimes size = 1.
 	standardTime := timezone standardTimes first.
@@ -318,52 +318,108 @@ ICTimezoneTest >> test3 [
 
 { #category : 'testing' }
 ICTimezoneTest >> test4 [
+
 	| timezone standardTime recurrenceRule name daylightSavingTime |
 	timezone := self parse: #sample4.
-	
-	self assert: timezone id = 'US--Fictitious-Eastern'.
-	self assert: timezone lastModified = (self dateClass year: 1987 month: 01 day: 01).
-	
-	self assert: timezone standardTimes size = 1.
+	self assert: timezone id equals: 'US--Fictitious-Eastern'.
+	self
+		assert: timezone lastModified
+		equals: (self dateAndTimeClass year: 1987 month: 01 day: 01).
+	self assert: timezone standardTimes size equals: 1.
 	standardTime := timezone standardTimes first.
-	self assert: standardTime start = (self dateAndTimeClass year: 1967 month: 10 day: 29 hour: 2 minute: 0 second: 00).
-	self assert: standardTime recurrenceRules size = 1.
+	self assert: standardTime start equals: (self dateAndTimeClass
+			 year: 1967
+			 month: 10
+			 day: 29
+			 hour: 2
+			 minute: 0
+			 second: 00).
+	self assert: standardTime recurrenceRules size equals: 1.
 	recurrenceRule := standardTime recurrenceRules first.
-	self assert: recurrenceRule frequency = 'YEARLY'.
-	self assert: recurrenceRule weekdays = (Set with: 'SU' -> -1).
-	self assert: recurrenceRule monthnumbers = (Set with: 10).
-	self assert: standardTime offsetFrom = (ICUtcOffset new positive: false; hours: 4; minutes: 0; seconds: 0; yourself).
-	self assert: standardTime offsetTo = (ICUtcOffset new positive: false; hours: 5; minutes: 0; seconds: 0; yourself).
-	self assert: standardTime names size = 1.
+	self assert: recurrenceRule frequency equals: 'YEARLY'.
+	self assert: recurrenceRule weekdays equals: (Set with: 'SU' -> -1).
+	self assert: recurrenceRule monthnumbers equals: (Set with: 10).
+	self assert: standardTime offsetFrom equals: (ICUtcOffset new
+			 positive: false;
+			 hours: 4;
+			 minutes: 0;
+			 seconds: 0;
+			 yourself).
+	self assert: standardTime offsetTo equals: (ICUtcOffset new
+			 positive: false;
+			 hours: 5;
+			 minutes: 0;
+			 seconds: 0;
+			 yourself).
+	self assert: standardTime names size equals: 1.
 	name := standardTime names first.
-	self assert: name text = 'EST'.
-	
-	self assert: timezone daylightSavingTimes size = 2.
+	self assert: name text equals: 'EST'.
+	self assert: timezone daylightSavingTimes size equals: 2.
 	daylightSavingTime := timezone daylightSavingTimes first.
-	self assert: daylightSavingTime start = ((self dateAndTimeClass year: 1987 month: 04 day: 05 hour: 2 minute: 0 second: 00)).
-	self assert: daylightSavingTime recurrenceRules size = 1.
+	self assert: daylightSavingTime start equals: (self dateAndTimeClass
+			 year: 1987
+			 month: 04
+			 day: 05
+			 hour: 2
+			 minute: 0
+			 second: 00).
+	self assert: daylightSavingTime recurrenceRules size equals: 1.
 	recurrenceRule := daylightSavingTime recurrenceRules first.
-	self assert: recurrenceRule frequency = 'YEARLY'.
-	self assert: recurrenceRule weekdays = (Set with: 'SU' -> 1).
-	self assert: recurrenceRule monthnumbers = (Set with: 4).
-	self assert: recurrenceRule repetition = (self dateAndTimeClass year: 1998 month: 04 day: 04 hour: 7 minute: 0 second: 00).
-	self assert: daylightSavingTime offsetFrom = (ICUtcOffset new positive: false; hours: 5; minutes: 0; seconds: 0; yourself).
-	self assert: daylightSavingTime offsetTo = (ICUtcOffset new positive: false; hours: 4; minutes: 0; seconds: 0; yourself).
-	self assert: daylightSavingTime names size = 1.
+	self assert: recurrenceRule frequency equals: 'YEARLY'.
+	self assert: recurrenceRule weekdays equals: (Set with: 'SU' -> 1).
+	self assert: recurrenceRule monthnumbers equals: (Set with: 4).
+	self
+		assert: recurrenceRule repetition
+		equals: (self dateAndTimeClass
+				 year: 1998
+				 month: 04
+				 day: 04
+				 hour: 7
+				 minute: 0
+				 second: 00).
+	self assert: daylightSavingTime offsetFrom equals: (ICUtcOffset new
+			 positive: false;
+			 hours: 5;
+			 minutes: 0;
+			 seconds: 0;
+			 yourself).
+	self assert: daylightSavingTime offsetTo equals: (ICUtcOffset new
+			 positive: false;
+			 hours: 4;
+			 minutes: 0;
+			 seconds: 0;
+			 yourself).
+	self assert: daylightSavingTime names size equals: 1.
 	name := daylightSavingTime names first.
-	self assert: name text = 'EDT'.
-	
+	self assert: name text equals: 'EDT'.
+
 	daylightSavingTime := timezone daylightSavingTimes second.
-	self assert: daylightSavingTime start = (self dateAndTimeClass year: 1999 month: 04 day: 24 hour: 2 minute: 0 second: 00).
-	self assert: daylightSavingTime recurrenceRules size = 1.
+	self assert: daylightSavingTime start equals: (self dateAndTimeClass
+			 year: 1999
+			 month: 04
+			 day: 24
+			 hour: 2
+			 minute: 0
+			 second: 00).
+	self assert: daylightSavingTime recurrenceRules size equals: 1.
 	recurrenceRule := daylightSavingTime recurrenceRules first.
-	self assert: recurrenceRule frequency = 'YEARLY'.
-	self assert: recurrenceRule weekdays = (Set with: 'SU' -> -1).
-	self assert: recurrenceRule monthnumbers = (Set with: 4).
+	self assert: recurrenceRule frequency equals: 'YEARLY'.
+	self assert: recurrenceRule weekdays equals: (Set with: 'SU' -> -1).
+	self assert: recurrenceRule monthnumbers equals: (Set with: 4).
 	self assert: recurrenceRule repetition isNil.
-	self assert: daylightSavingTime offsetFrom = (ICUtcOffset new positive: false; hours: 5; minutes: 0; seconds: 0; yourself).
-	self assert: daylightSavingTime offsetTo = (ICUtcOffset new positive: false; hours: 4; minutes: 0; seconds: 0; yourself).
-	self assert: daylightSavingTime names size = 1.
+	self assert: daylightSavingTime offsetFrom equals: (ICUtcOffset new
+			 positive: false;
+			 hours: 5;
+			 minutes: 0;
+			 seconds: 0;
+			 yourself).
+	self assert: daylightSavingTime offsetTo equals: (ICUtcOffset new
+			 positive: false;
+			 hours: 4;
+			 minutes: 0;
+			 seconds: 0;
+			 yourself).
+	self assert: daylightSavingTime names size equals: 1.
 	name := daylightSavingTime names first.
-	self assert: name text = 'EDT'.
+	self assert: name text equals: 'EDT'
 ]

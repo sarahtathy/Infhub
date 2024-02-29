@@ -11,7 +11,8 @@ Class {
 
 { #category : 'instance creation' }
 ICCardHandParser class >> parseVCardFile: aPath [
-	^self parseVCardString: (FileStream readOnlyFileNamed: aPath) contentsOfEntireFile
+
+	^ self parseVCardString: aPath asFileReference contents
 ]
 
 { #category : 'instance creation' }

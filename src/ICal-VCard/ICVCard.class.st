@@ -48,7 +48,8 @@ ICVCard >> addAimid: anInstantMessageId [
 
 { #category : 'adding' }
 ICVCard >> addEmailAddress: anEmailAddress [
-	^self emailAddresses add: anEmailAddress
+
+	self emailAddresses add: anEmailAddress
 ]
 
 { #category : 'adding' }
@@ -68,7 +69,8 @@ ICVCard >> addNote: aString [
 
 { #category : 'adding' }
 ICVCard >> addPhoneNumber: aPhoneNumber [
-	^self phoneNumbers add: aPhoneNumber
+
+	self phoneNumbers add: aPhoneNumber
 ]
 
 { #category : 'adding' }

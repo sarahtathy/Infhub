@@ -21,9 +21,10 @@ ICTypedObject class >> iCalType [
 
 { #category : 'private' }
 ICTypedObject class >> parseTypes: aDictionary [
-	^((aDictionary includesKey: 'TYPE')
-		ifTrue: [ ((aDictionary at: 'TYPE') collect: [ :each | each asLowercase]) asSet ]
-		ifFalse: [ self defaultTypes ]).
+
+	^ (aDictionary includesKey: 'TYPE')
+		ifTrue: [ ((aDictionary at: 'TYPE') collect: #asLowercase) asSet ]
+		ifFalse: [ self defaultTypes ]
 ]
 
 { #category : 'accessing-types' }

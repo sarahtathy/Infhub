@@ -294,12 +294,12 @@ ICConversionTest >> testParseStringOldEncoding [
 	| string value |
 	ICCalendarVersion use: 1.0 during: [
 		string := 'Bar Street 99=0AFootown 12345=0AFooland'.
-		value := String fromICalString: string.
+		value := String fromOldString: string.
 		self assert: value equals: 'Bar Street 99
 Footown 12345
 Fooland'.
 		self
-			assert: value asICalString
+			assert: value asOldICalString
 			equals: 'Bar Street 99=0D=0AFootown 12345=0D=0AFooland' ]
 ]
 
@@ -310,13 +310,12 @@ ICConversionTest >> testParseStringOldEncodingAndSpaces [
 	ICCalendarVersion use: 1.0 during: [
 		string := '123 Winding Way=0D=0A=' , String crlf
 		          , ' Any Town, CA 12345=0D=0A=' , String crlf , ' USA'.
-		value := String fromICalString:
-			         (ICCalendarHandParser new unfold: string).
+		value := String fromOldString: (ICCalendarHandParser new unfold: string).
 		self assert: value equals: '123 Winding Way
 Any Town, CA 12345
 USA'.
 		self
-			assert: value asICalString
+			assert: value asOldICalString
 			equals: '123 Winding Way=0D=0AAny Town\\, CA 12345=0D=0AUSA' ]
 ]
 

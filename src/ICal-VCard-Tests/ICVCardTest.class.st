@@ -227,14 +227,14 @@ ICVCardTest >> aviCardString [
 
 { #category : 'fixtures-exporting' }
 ICVCardTest >> aviCardStringExport [
-^
-'BEGIN:VCARD' , String crlf ,
+
+	^ 'BEGIN:VCARD' , String crlf ,
 'VERSION:3.0' , String crlf ,
 'N:Bryant;Avi;;;' , String crlf ,
 'FN:Avi Bryant' , String crlf ,
 'ADR;TYPE=home;TYPE=pref:;;xxx E. xx Ave;Vancouver;BC;V5V 1E3;Canada' , String crlf ,
 'TEL;TYPE=home;TYPE=pref:(778) xxx-xxxx' , String crlf ,
-'EMAIL;TYPE=pref;TYPE=internet;TYPE=work:avi@smallthought.com' , String crlf ,
+'EMAIL;TYPE=work;TYPE=internet;TYPE=pref:avi@smallthought.com' , String crlf ,
 'EMAIL;TYPE=internet;TYPE=home:avi.bryant@gmail.com' , String crlf ,
 'TZ:-05:00' , String crlf ,
 'X-AIM;TYPE=pref:avbry' , String crlf ,
@@ -304,9 +304,9 @@ ICVCardTest >> goofyCardStringExport [
 'FN:Markus Tschannen' , String crlf ,
 'BDAY:1980-10-30' , String crlf ,
 'ADR;TYPE=home:;;Neufeldstrasse 11;Bern;;3012;Schweiz' , String crlf ,
-'TEL;TYPE=home;TYPE=voice:+41 31 302 08 56' , String crlf ,
-'TEL;TYPE=cell;TYPE=home:+41 78 845 24 12' , String crlf ,
-'TZ;VALUE=TEXT:-05:00\\; EST\\; Raleigh/North America' , String crlf ,
+'TEL;TYPE=voice;TYPE=home:+41 31 302 08 56' , String crlf ,
+'TEL;TYPE=home;TYPE=cell:+41 78 845 24 12' , String crlf ,
+'TZ;VALUE=TEXT:-05:00\; EST\; Raleigh/North America' , String crlf ,
 'GEO:37.386013;-122.082932' , String crlf ,
 'END:VCARD' , String crlf
 ]
@@ -346,7 +346,7 @@ ICVCardTest >> maeveCardString [
 'item1.X-ABADR:us' , String crlf ,
 'item2.URL;type=pref:http\://www.zenediting.com' , String crlf ,
 'item2.X-ABLabel:_$!<HomePage>!$_' , String crlf ,
-'item3.URL:http\://www.myspace.com/maeveprice' , String crlf ,
+'item3.URL:http://www.myspace.com/maeveprice' , String crlf ,
 'item3.X-ABLabel:my space' , String crlf ,
 'BDAY;value=date:2005-06-14' , String crlf ,
 'X-AIM;type=HOME;type=pref:Mahaevey' , String crlf ,
@@ -522,36 +522,34 @@ ICVCardTest >> surendarCardString [
 
 { #category : 'testing-exporting' }
 ICVCardTest >> testExportAvi [
+
 	| cards exporter str |
 	cards := ICCardHandParser parseVCardString: self aviCardString.
 	cards anyOne photo: nil.
-	
+
 	exporter := ICVCardExporter cards: cards.
 	exporter export.
 	str := self aviCardStringExport.
 
-	exporter dataStream contents 
-		keysAndValuesDo: [:index :value |
-			self assert: value = (str at: index) ].
-	self assert: exporter dataStream contents = str.
-	
+	exporter dataStream contents keysAndValuesDo: [ :index :value |
+		self assert: value equals: (str at: index) ].
+	self assert: exporter dataStream contents equals: str
 ]
 
 { #category : 'testing-exporting' }
 ICVCardTest >> testExportGoofy [
+
 	| cards exporter str |
 	cards := ICCardHandParser parseVCardString: self goofyCardString.
 	cards anyOne photo: nil.
-	
+
 	exporter := ICVCardExporter cards: cards.
 	exporter export.
 	str := self goofyCardStringExport.
 
-	exporter dataStream contents 
-		keysAndValuesDo: [:index :value |
-			self assert: value = (str at: index) ].
-	self assert: exporter dataStream contents = str.
-	
+	exporter dataStream contents keysAndValuesDo: [ :index :value |
+		self assert: value equals: (str at: index) ].
+	self assert: exporter dataStream contents equals: str
 ]
 
 { #category : 'testing-exporting' }
@@ -571,52 +569,55 @@ ICVCardTest >> testIsOrganization [
 
 { #category : 'testing-parsing' }
 ICVCardTest >> testName [
+
 	| name |
 	name := ICName fromICalString: 'Public;John;Quinlan;Mr.;Esq'.
-	self assert: name familyName = 	'Public'.
-	self assert: name givenName = 	'John'.
-	self assert: name additionalNames size = 1.
-	self assert: name additionalNames first = 'Quinlan'.
-	self assert: name honorificPrefixes size = 1.
-	self assert: name honorificPrefixes first = 'Mr.'.
-	self assert: name honorificSuffixes size = 1.
-	self assert: name honorificSuffixes first = 'Esq'.
+
+	self assert: name familyName equals: 'Public'.
+	self assert: name givenName equals: 'John'.
+	self assert: name additionalNames size equals: 1.
+	self assert: name additionalNames first equals: 'Quinlan'.
+	self assert: name honorificPrefixes size equals: 1.
+	self assert: name honorificPrefixes first equals: 'Mr.'.
+	self assert: name honorificSuffixes size equals: 1.
+	self assert: name honorificSuffixes first equals: 'Esq'.
 
 	name := ICName fromICalString: 'Stevenson;John;Philip,Paul;Dr.;Jr.,M.D.,A.C.P.'.
-	self assert: name familyName = 	'Stevenson'.
-	self assert: name givenName = 	'John'.
-		
-	self assert: name additionalNames size = 2.
-	self assert: name additionalNames first = 'Philip'.
-	self assert: name additionalNames second = 'Paul'.
-	
-	self assert: name honorificPrefixes size = 1.
-	self assert: name honorificPrefixes first = 'Dr.'.
-	
-	self assert: name honorificSuffixes size = 3.
-	self assert: name honorificSuffixes first = 'Jr.'.
-	self assert: name honorificSuffixes second = 'M.D.'.
-	self assert: name honorificSuffixes third = 'A.C.P.'.
+	self assert: name familyName equals: 'Stevenson'.
+	self assert: name givenName equals: 'John'.
+
+	self assert: name additionalNames size equals: 2.
+	self assert: name additionalNames first equals: 'Philip'.
+	self assert: name additionalNames second equals: 'Paul'.
+	self assert: name honorificPrefixes size equals: 1.
+	self assert: name honorificPrefixes first equals: 'Dr.'.
+
+	self assert: name honorificSuffixes size equals: 3.
+	self assert: name honorificSuffixes first equals: 'Jr.'.
+	self assert: name honorificSuffixes second equals: 'M.D.'.
+	self assert: name honorificSuffixes third equals: 'A.C.P.'
 ]
 
 { #category : 'testing-parsing' }
 ICVCardTest >> testParseAvi [
 	| cards card address name phoneNumber emailAddress imid |
+	
 	cards := ICCardHandParser parseVCardString: self aviCardString.
-	self assert: cards size = 1.
+
+	self assert: cards size equals: 1.
 	card := cards anyOne.
 	
-	self assert: card fullname = 'Avi Bryant'.
-	self assert: card version = 3.0.
+	self assert: card fullname equals: 'Avi Bryant'.
+	self assert: card version equals: 3.0.
 	name := card name.
 	self assert: name notNil.
-	self assert: name familyName = 'Bryant'.
-	self assert: name givenName = 'Avi'.
+	self assert: name familyName equals: 'Bryant'.
+	self assert: name givenName equals: 'Avi'.
 	self assert: name additionalNames isEmptyOrNil.
 	self assert: name honorificPrefixes isEmptyOrNil.
 	self assert: name honorificSuffixes isEmptyOrNil.
 	
-	self assert: card addresses size = 1.
+	self assert: card addresses size equals: 1.
 	address := card addresses anyOne.
 	
 	self assert: address isHome.
@@ -630,15 +631,15 @@ ICVCardTest >> testParseAvi [
 	self assert: address poBox isEmptyOrNil.
 	self assert: address extended isEmptyOrNil.
 	
-	self assert: address street = 'xxx E. xx Ave'.
-	self assert: address locality = 'Vancouver'.
-	self assert: address region = 'BC'.
-	self assert: address postalcode = 'V5V 1E3'.
-	self assert: address country = 'Canada'.
+	self assert: address street equals: 'xxx E. xx Ave'.
+	self assert: address locality equals: 'Vancouver'.
+	self assert: address region equals: 'BC'.
+	self assert: address postalcode equals: 'V5V 1E3'.
+	self assert: address country equals: 'Canada'.
 	
-	self assert: card phoneNumbers size = 1.
+	self assert: card phoneNumbers size equals: 1.
 	phoneNumber := card phoneNumbers first.
-	self assert: phoneNumber number = '(778) xxx-xxxx'.
+	self assert: phoneNumber number equals: '(778) xxx-xxxx'.
 	self assert: phoneNumber isHome.
 	self assert: phoneNumber isPreferred.
 	self deny: phoneNumber isWork.
@@ -652,9 +653,9 @@ ICVCardTest >> testParseAvi [
 	self deny: phoneNumber isVoice.
 	self deny: phoneNumber isVoiceMessage.
 	
-	self assert: card emailAddresses size = 2.
+	self assert: card emailAddresses size equals: 2.
 	emailAddress := card emailAddresses first.
-	self assert: emailAddress address = 'avi@smallthought.com'.
+	self assert: emailAddress address equals: 'avi@smallthought.com'.
 	self assert: emailAddress isWork.
 	self assert: emailAddress isPreferred.
 	self deny: emailAddress isHome.
@@ -662,36 +663,36 @@ ICVCardTest >> testParseAvi [
 	self deny: emailAddress isX400.
 	
 	emailAddress := card emailAddresses second.
-	self assert: emailAddress address = 'avi.bryant@gmail.com'.
+	self assert: emailAddress address equals: 'avi.bryant@gmail.com'.
 	self deny: emailAddress isWork.
 	self deny: emailAddress isPreferred.
 	self assert: emailAddress isHome.
 	self assert: emailAddress isInternet.
 	self deny: emailAddress isX400.
 	
-	self assert: card photo iCalType = 'BINARY'.
+	self assert: card photo iCalType equals: 'BINARY'.
 	
-	self assert: card aimids size = 1.
+	self assert: card aimids size equals: 1.
 	imid := card aimids anyOne.
 	self assert: (imid isKindOf: ICAIMId).
 	self assert: imid isPreferred.
 	self deny: imid isWork.
 	self deny: imid isHome.
-	self assert: imid id = 'avbry'.
+	self assert: imid id equals: 'avbry'.
 	
 	self assert: card icqids isEmpty.
 	
-	self assert: card msnids size = 1.
+	self assert: card msnids size equals: 1.
 	imid := card msnids anyOne.
 	self assert: (imid isKindOf: ICMSNId).
 	self assert: imid isPreferred.
 	self deny: imid isWork.
 	self deny: imid isHome.
-	self assert: imid id = 'avi666@hotmail.com'.
+	self assert: imid id equals: 'avi666@hotmail.com'.
 	
 	self assert: card yahooids isEmpty.
 	self assert: (card timeZone isKindOf: ICUtcOffset).
-	self assert: (card timeZone totalSeconds = (5 * 60 * 60) negated)
+	self assert: card timeZone totalSeconds equals: (5 * 60 * 60) negated
 	
 ]
 
@@ -866,12 +867,16 @@ ICVCardTest >> testParseMaeve [
 
 { #category : 'testing-parsing' }
 ICVCardTest >> testParseMaeveUrl [
+	"The vCard uses backslashes (\) to escape characters in URLs, which is not compliant with the vCard 3.0 specification. According to RFC 6350, URLs should be encoded properly without needing to escape characters. For example, spaces in URLs should be encoded as %20 instead of being escaped with a backslash."
+
 	| cards card |
 	cards := ICCardHandParser parseVCardString: self maeveCardString.
-	self assert: cards size = 1.
+	self assert: cards size equals: 1.
 	card := cards anyOne.
-	
-	self assert: card url asVCardString equals: 'http://http\:0/www.myspace.com/maeveprice'.	
+
+	self
+		assert: card url asVCardString
+		equals: 'http://www.myspace.com/maeveprice'
 ]
 
 { #category : 'testing-parsing' }
@@ -1241,20 +1246,20 @@ ICVCardTest >> testParseSurendarUrl [
 ICVCardTest >> testParseWikipedia [
 	| cards card address name phoneNumber emailAddress |
 	cards := ICCardHandParser parseVCardString: self wikipediaCardString.
-	self assert: cards size = 1.
+	self assert: cards size equals: 1.
 	card := cards anyOne.
 	
-	self assert: card fullname = 'Firstname Lastname'.
-	self assert: card version = 2.1.
+	self assert: card fullname equals: 'Firstname Lastname'.
+	self assert: card version equals: 2.1.
 	name := card name.
 	self assert: name notNil.
-	self assert: name familyName = 'Lastname'.
-	self assert: name givenName = 'Firstname'.
+	self assert: name familyName equals: 'Lastname'.
+	self assert: name givenName equals: 'Firstname'.
 	self assert: name additionalNames isEmptyOrNil.
 	self assert: name honorificPrefixes isEmptyOrNil.
 	self assert: name honorificSuffixes isEmptyOrNil.
 	
-	self assert: card addresses size = 1.
+	self assert: card addresses size equals: 1.
 	address := card addresses anyOne.
 	
 	self deny: address isHome.
@@ -1268,16 +1273,16 @@ ICVCardTest >> testParseWikipedia [
 	self assert: address poBox isEmptyOrNil.
 	self assert: address locality isEmptyOrNil.
 	
-	self assert: address street = 'Bar Street 99'.
-	self assert: address extended = 'Footown 12345
+	self assert: address street equals: 'Bar Street 99'.
+	self assert: address extended equals: 'Footown 12345
 Fooland'.
 	self assert: address region isEmptyOrNil.
 	self assert: address postalcode isEmptyOrNil.
 	self assert: address country isEmptyOrNil.
 	
-	self assert: card phoneNumbers size = 1.
+	self assert: card phoneNumbers size equals: 1.
 	phoneNumber := card phoneNumbers first.
-	self assert: phoneNumber number = '+358-40-123456'.
+	self assert: phoneNumber number equals: '+358-40-123456'.
 	self deny: phoneNumber isHome.
 	self deny: phoneNumber isPreferred.
 	self deny: phoneNumber isWork.
@@ -1292,9 +1297,9 @@ Fooland'.
 	self deny: phoneNumber isVoiceMessage.
 
 	
-	self assert: card emailAddresses size = 1.
+	self assert: card emailAddresses size equals: 1.
 	emailAddress := card emailAddresses first.
-	self assert: emailAddress address = 'nobody@example.invalid'.
+	self assert: emailAddress address equals: 'nobody@example.invalid'.
 	self deny: emailAddress isWork.
 	self deny: emailAddress isPreferred.
 	self deny: emailAddress isHome.
@@ -1307,31 +1312,31 @@ ICVCardTest >> testUtcOffset [
 	| offset |
 	offset := ICUtcOffset fromVCardString: '-05:00'.
 	self deny: offset positive.
-	self assert: offset hours = 5.
-	self assert: offset minutes = 0.
-	self assert: offset seconds = 0.
-	self assert: '-05:00'  = offset asVCardString.
+	self assert: offset hours equals: 5.
+	self assert: offset minutes equals: 0.
+	self assert: offset seconds equals: 0.
+	self assert: '-05:00'  equals: offset asVCardString.
 
 	offset := ICUtcOffset fromVCardString: '+01:00'.
 	self assert: offset positive.
-	self assert: offset hours = 1.
-	self assert: offset minutes = 0.
-	self assert: offset seconds = 0.
-	self assert: '+01:00'  = offset asVCardString.
+	self assert: offset hours equals: 1.
+	self assert: offset minutes equals: 0.
+	self assert: offset seconds equals: 0.
+	self assert: '+01:00'  equals: offset asVCardString.
 	
 	offset := ICUtcOffset fromVCardString: '+01:05'.
 	self assert: offset positive.
-	self assert: offset hours = 1.
-	self assert: offset minutes = 5.
-	self assert: offset seconds = 0.
-	self assert: '+01:05'  = offset asVCardString.
+	self assert: offset hours equals: 1.
+	self assert: offset minutes equals: 5.
+	self assert: offset seconds equals: 0.
+	self assert: '+01:05'  equals: offset asVCardString.
 	
 	offset := ICUtcOffset fromVCardString: '-01:05'.
 	self deny: offset positive.
-	self assert: offset hours = 1.
-	self assert: offset minutes = 5.
-	self assert: offset seconds = 0.
-	self assert: '-01:05'  = offset asVCardString.
+	self assert: offset hours equals: 1.
+	self assert: offset minutes equals: 5.
+	self assert: offset seconds equals: 0.
+	self assert: '-01:05'  equals: offset asVCardString.
 ]
 
 { #category : 'fixtures-parsing' }

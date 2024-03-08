@@ -23,7 +23,9 @@ BaselineOfICal >> baseline: spec [
 			group: 'Core' with: #('ICal');
 			group: 'VCard' with: #('Core' 'ICal-VCard');
 			group: 'Tests' with: #('VCard' 'ICal-Tests');
-			group: 'default' with: #('VCard' 'Tests') ]
+			group: 'VCardTests' with: #('Tests' 'ICal-VCard-Tests');
+
+ 			group: 'default' with: #('VCard' 'VCardTests') ]
 ]
 
 { #category : 'baselines' }

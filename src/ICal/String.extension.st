@@ -38,6 +38,8 @@ String >> asVCardString [
 
 { #category : '*ICal' }
 String class >> fromICalString: aString [
+	"Parse aString according to the vCard 3.0 specification"
+
 	^ self fromNewString: aString 
 ]
 

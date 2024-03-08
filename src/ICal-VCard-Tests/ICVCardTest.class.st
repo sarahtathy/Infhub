@@ -700,49 +700,49 @@ ICVCardTest >> testParseAvi [
 ICVCardTest >> testParseEric [
 	| cards card name imid |
 	cards := ICCardHandParser parseVCardString: self ericCardString.
-	self assert: cards size = 1.
+	self assert: cards size equals: 1.
 	card := cards anyOne.
 	
-	self assert: card fullname = 'Eric Wahlforss'.
-	self assert: card title = 'Entrepreneur / Musician'.
-	self assert: card url asVCardString = 'http://eric.wahlforss.com/'.
-	self assert: card version = 3.0.
+	self assert: card fullname equals: 'Eric Wahlforss'.
+	self assert: card title equals: 'Entrepreneur / Musician'.
+	self assert: card url asVCardString equals: 'http://eric.wahlforss.com/'.
+	self assert: card version equals: 3.0.
 	name := card name.
 	self assert: name notNil.
-	self assert: name familyName = 'Wahlforss'.
-	self assert: name givenName = 'Eric'.
+	self assert: name familyName equals: 'Wahlforss'.
+	self assert: name givenName equals: 'Eric'.
 	self assert: name additionalNames isEmptyOrNil.
 	self assert: name honorificPrefixes isEmptyOrNil.
 	self assert: name honorificSuffixes isEmptyOrNil.
 	
-	self assert: card aimids size = 1.	
+	self assert: card aimids size equals: 1.	
 	imid := card aimids anyOne.
 	self assert: (imid isKindOf: ICAIMId).
 	self assert: imid isPreferred.
 	self deny: imid isWork.
 	self assert: imid isHome.
-	self assert: imid id = 'ericwahlforss'.
+	self assert: imid id equals: 'ericwahlforss'.
 	
-	self assert: card icqids size = 1.	
+	self assert: card icqids size equals: 1.	
 	imid := card icqids anyOne.
 	self assert: (imid isKindOf: ICICQId).
 	self assert: imid isPreferred.
 	self assert: imid isWork.
 	self deny: imid isHome.
-	self assert: imid id = '5399905'.
+	self assert: imid id equals: '5399905'.
 	
-	self assert: card msnids size = 1.
+	self assert: card msnids size equals: 1.
 	imid := card msnids anyOne.
 	self assert: (imid isKindOf: ICMSNId).
 	self deny: imid isPreferred.
 	self deny: imid isWork.
 	self assert: imid isHome.
-	self assert: imid id = 'ericwahlforss@hotmail.com'.
+	self assert: imid id equals: 'ericwahlforss@hotmail.com'.
 	
 	self assert: card yahooids isEmpty.
 	
-	self assert: card categories size = 1.
-	self assert: card categories anyOne summary = '24HDC'
+	self assert: card categories size equals: 1.
+	self assert: card categories anyOne summary equals: '24HDC'
 	
 ]
 
@@ -750,21 +750,21 @@ ICVCardTest >> testParseEric [
 ICVCardTest >> testParseGoofy [
 	| cards card address name phoneNumber |
 	cards := ICCardHandParser parseVCardString: self goofyCardString.
-	self assert: cards size = 1.
+	self assert: cards size equals: 1.
 	card := cards anyOne.
 	
-	self assert: card fullname = 'Markus Tschannen'.
-	self assert: card version = 2.1.
-	self assert: card birthday = (self dateClass year: 1980 month: 10 day: 30).
+	self assert: card fullname equals: 'Markus Tschannen'.
+	self assert: card version equals: 2.1.
+	self assert: card birthday equals: (self dateClass year: 1980 month: 10 day: 30).
 	name := card name.
 	self assert: name notNil.
-	self assert: name familyName = 'Tschannen'.
-	self assert: name givenName = 'Markus'.
+	self assert: name familyName equals: 'Tschannen'.
+	self assert: name givenName equals: 'Markus'.
 	self assert: name additionalNames isEmptyOrNil.
 	self assert: name honorificPrefixes isEmptyOrNil.
 	self assert: name honorificSuffixes isEmptyOrNil.
 	
-	self assert: card addresses size = 1.
+	self assert: card addresses size equals: 1.
 	address := card addresses anyOne.
 	
 	self assert: address isHome.
@@ -778,15 +778,15 @@ ICVCardTest >> testParseGoofy [
 	self assert: address poBox isEmptyOrNil.
 	self assert: address extended isEmptyOrNil.
 	
-	self assert: address street = 'Neufeldstrasse 11'.
-	self assert: address locality = 'Bern'.
+	self assert: address street equals: 'Neufeldstrasse 11'.
+	self assert: address locality equals: 'Bern'.
 	self assert: address region isEmptyOrNil.
-	self assert: address postalcode = '3012'.
-	self assert: address country = 'Schweiz'.
+	self assert: address postalcode equals: '3012'.
+	self assert: address country equals: 'Schweiz'.
 	
-	self assert: card phoneNumbers size = 2.
+	self assert: card phoneNumbers size equals: 2.
 	phoneNumber := card phoneNumbers first.
-	self assert: phoneNumber number = '+41 31 302 08 56'.
+	self assert: phoneNumber number equals: '+41 31 302 08 56'.
 	self assert: phoneNumber isHome.
 	self deny: phoneNumber isPreferred.
 	self deny: phoneNumber isWork.
@@ -801,7 +801,7 @@ ICVCardTest >> testParseGoofy [
 	self deny: phoneNumber isVoiceMessage.
 	
 	phoneNumber := card phoneNumbers second.
-	self assert: phoneNumber number = '+41 78 845 24 12'.
+	self assert: phoneNumber number equals: '+41 78 845 24 12'.
 	self assert: phoneNumber isHome.
 	self deny: phoneNumber isPreferred.
 	self deny: phoneNumber isWork.
@@ -817,48 +817,48 @@ ICVCardTest >> testParseGoofy [
 	
 	self assert: card emailAddresses isEmpty.
 	self assert: (card timeZone isKindOf: String).
-	self assert: (card timeZone = '-05:00; EST; Raleigh/North America').
-	self assert: card geo = (37.386013@ (-122.082932))
+	self assert: card timeZone equals: '-05:00; EST; Raleigh/North America'.
+	self assert: card geo equals: (37.386013@ (-122.082932))
 ]
 
 { #category : 'testing-parsing' }
 ICVCardTest >> testParseMaeve [
 	| cards card name imid |
 	cards := ICCardHandParser parseVCardString: self maeveCardString.
-	self assert: cards size = 1.
+	self assert: cards size equals: 1.
 	card := cards anyOne.
 	
-	self assert: card fullname = 'Maeve Price'.
-	self assert: card title = 'Digital Editor'.
-	self assert: card version = 3.0.
+	self assert: card fullname equals: 'Maeve Price'.
+	self assert: card title equals: 'Digital Editor'.
+	self assert: card version equals: 3.0.
 	name := card name.
 	self assert: name notNil.
-	self assert: name familyName = 'Price'.
-	self assert: name givenName = 'Maeve'.
+	self assert: name familyName equals: 'Price'.
+	self assert: name givenName equals: 'Maeve'.
 	self assert: name additionalNames isEmptyOrNil.
 	self assert: name honorificPrefixes isEmptyOrNil.
 	self assert: name honorificSuffixes isEmptyOrNil.
 	
-	self assert: card aimids size = 1.
+	self assert: card aimids size equals: 1.
 	imid := card aimids anyOne.
 	self assert: imid isPreferred.
 	self deny: imid isWork.
 	self assert: imid isHome.
-	self assert: imid id = 'Mahaevey'.
+	self assert: imid id equals: 'Mahaevey'.
 	
 	self assert: card icqids isEmpty.
 	
-	self assert: card msnids size = 1.
+	self assert: card msnids size equals: 1.
 	imid := card msnids anyOne.
 	self assert: (imid isKindOf: ICMSNId).
 	self assert: imid isPreferred.
 	self deny: imid isWork.
 	self assert: imid isHome.
-	self assert: imid id = 'dgu186@hotmail.com'.
+	self assert: imid id equals: 'dgu186@hotmail.com'.
 	
 	self assert: card yahooids isEmpty.
 	
-	self assert: card categories size = 3.
+	self assert: card categories size equals: 3.
 	#('Friends' 'Columbia College Chicago' 'Family') do: [ :each |
 		self assert: (card categories anySatisfy: [ :cat | cat summary = each  ]) ].
 	
@@ -886,19 +886,19 @@ ICVCardTest >> testParseOscar [
 	self assert: cards size equals: 1.
 	card := cards anyOne.
 	
-	self assert: card fullname = 'Oscar2 Nierstrasz'.
-	self assert: card version = 3.0.
-	self assert: card title = 'Professor'.
+	self assert: card fullname equals: 'Oscar2 Nierstrasz'.
+	self assert: card version equals: 3.0.
+	self assert: card title equals: 'Professor'.
 	
 	name := card name.
 	self assert: name notNil.
-	self assert: name familyName = 'Nierstrasz'.
-	self assert: name givenName = 'Oscar'.
+	self assert: name familyName equals: 'Nierstrasz'.
+	self assert: name givenName equals: 'Oscar'.
 	self assert: name additionalNames isEmptyOrNil.
 	self assert: name honorificPrefixes isEmptyOrNil.
 	self assert: name honorificSuffixes isEmptyOrNil.
 	
-	self assert: card addresses size = 3.
+	self assert: card addresses size equals: 3.
 	address := card addresses first.
 	
 	self deny: address isHome.
@@ -912,13 +912,13 @@ ICVCardTest >> testParseOscar [
 	self assert: address poBox isEmptyOrNil.
 	self assert: address extended isEmptyOrNil.
 	
-	self assert: address street = 'Software Composition Group
+	self assert: address street equals: 'Software Composition Group
 IAM, University of Bern
 Neubrueckstrasse 10'.
-	self assert: address locality = 'Bern'.
+	self assert: address locality equals: 'Bern'.
 	self assert: address region isEmptyOrNil.
-	self assert: address postalcode = 'CH-3012'.
-	self assert: address country = 'SWITZERLAND'.
+	self assert: address postalcode equals: 'CH-3012'.
+	self assert: address country equals: 'SWITZERLAND'.
 	
 	address := card addresses second.
 	
@@ -933,11 +933,11 @@ Neubrueckstrasse 10'.
 	self assert: address poBox isEmptyOrNil.
 	self assert: address extended isEmptyOrNil.
 	
-	self assert: address street = 'Fluhmattweg 41'.
-	self assert: address locality = 'Kehrsatz'.
+	self assert: address street equals: 'Fluhmattweg 41'.
+	self assert: address locality equals: 'Kehrsatz'.
 	self assert: address region isEmptyOrNil.
-	self assert: address postalcode = '3122'.
-	self assert: address country = 'SWITZERLAND'.
+	self assert: address postalcode equals: '3122'.
+	self assert: address country equals: 'SWITZERLAND'.
 	
 	address := card addresses third.
 	
@@ -952,15 +952,15 @@ Neubrueckstrasse 10'.
 	self assert: address poBox isEmptyOrNil.
 	self assert: address extended isEmptyOrNil.
 	
-	self assert: address street = 'Schuetzenmattstrasse 14, room 103'.
+	self assert: address street equals: 'Schuetzenmattstrasse 14, room 103'.
 	self assert: address locality isEmptyOrNil.
 	self assert: address region isEmptyOrNil.
 	self assert: address postalcode isEmptyOrNil.
 	self assert: address country isEmptyOrNil.
 	
-	self assert: card phoneNumbers size = 3.
+	self assert: card phoneNumbers size equals: 3.
 	phoneNumber := card phoneNumbers first.
-	self assert: phoneNumber number = '+41 31 631.4618'.
+	self assert: phoneNumber number equals: '+41 31 631.4618'.
 	self deny: phoneNumber isHome.
 	self assert: phoneNumber isPreferred.
 	self assert: phoneNumber isWork.
@@ -975,7 +975,7 @@ Neubrueckstrasse 10'.
 	self deny: phoneNumber isVoiceMessage.
 	
 	phoneNumber := card phoneNumbers second.
-	self assert: phoneNumber number = '+41 31 961.7065'.
+	self assert: phoneNumber number equals: '+41 31 961.7065'.
 	self assert: phoneNumber isHome.
 	self deny: phoneNumber isPreferred.
 	self deny: phoneNumber isWork.
@@ -990,7 +990,7 @@ Neubrueckstrasse 10'.
 	self deny: phoneNumber isVoiceMessage.
 	
 	phoneNumber := card phoneNumbers third.
-	self assert: phoneNumber number = '+41 31 631.3355'.
+	self assert: phoneNumber number equals: '+41 31 631.3355'.
 	self deny: phoneNumber isHome.
 	self deny: phoneNumber isPreferred.
 	self assert: phoneNumber isWork.
@@ -1004,9 +1004,9 @@ Neubrueckstrasse 10'.
 	self deny: phoneNumber isVoice.
 	self deny: phoneNumber isVoiceMessage.
 	
-	self assert: card emailAddresses size = 1.
+	self assert: card emailAddresses size equals: 1.
 	emailAddress := card emailAddresses first.
-	self assert: emailAddress address = 'oscar.nierstrasz@acm.org'.
+	self assert: emailAddress address equals: 'oscar.nierstrasz@acm.org'.
 	self assert: emailAddress isWork.
 	self assert: emailAddress isPreferred.
 	self deny: emailAddress isHome.
@@ -1014,7 +1014,7 @@ Neubrueckstrasse 10'.
 	self deny: emailAddress isX400.
 	
 	organization := card organization.
-	self assert: organization name = 'University of Bern'.
+	self assert: organization name equals: 'University of Bern'.
 	self assert: organization unitNames isEmpty.
 ]
 
@@ -1022,10 +1022,10 @@ Neubrueckstrasse 10'.
 ICVCardTest >> testParseOscarUrl [
 	| cards card |
 	cards := ICCardHandParser parseVCardString: self oscarCardString.
-	self assert: cards size = 1.
+	self assert: cards size equals: 1.
 	card := cards anyOne.
 
-	self assert: card url asVCardString = 'http://www.iam.unibe.ch/~oscar/'.
+	self assert: card url asVCardString equals: 'http://www.iam.unibe.ch/~oscar/'.
 	
 ]
 
@@ -1033,22 +1033,22 @@ ICVCardTest >> testParseOscarUrl [
 ICVCardTest >> testParseSean [
 	| cards card address name phoneNumber emailAddress organization |
 	cards := ICCardHandParser parseVCardString: self seanCardString.
-	self assert: cards size = 1.
+	self assert: cards size equals: 1.
 	card := cards anyOne.
 	
-	self assert: card fullname = 'Sean Glazier'.
-	self assert: card version = 2.1.
-	self assert: card title = 'Lead Software Engineer'.
-	self assert: card birthday = (self dateClass year: 2005 month: 10 day: 01).
+	self assert: card fullname equals: 'Sean Glazier'.
+	self assert: card version equals: 2.1.
+	self assert: card title equals: 'Lead Software Engineer'.
+	self assert: card birthday equals: (self dateClass year: 2005 month: 10 day: 01).
 	name := card name.
 	self assert: name notNil.
-	self assert: name familyName = 'Glazier'.
-	self assert: name givenName = 'Sean'.
+	self assert: name familyName equals: 'Glazier'.
+	self assert: name givenName equals: 'Sean'.
 	self assert: name additionalNames isEmptyOrNil.
 	self assert: name honorificPrefixes isEmptyOrNil.
 	self assert: name honorificSuffixes isEmptyOrNil.
 	
-	self assert: card addresses size = 2.
+	self assert: card addresses size equals: 2.
 	address := card addresses first.
 	
 	self deny: address isHome.
@@ -1062,11 +1062,11 @@ ICVCardTest >> testParseSean [
 	self assert: address poBox isEmptyOrNil.
 	self assert: address extended isEmptyOrNil.
 	
-	self assert: address street = '6 Christie Lane'.
-	self assert: address locality = 'Stratham'.
-	self assert: address region = 'NH'.
-	self assert: address postalcode = '03885'.
-	self assert: address country = 'USA'.
+	self assert: address street equals: '6 Christie Lane'.
+	self assert: address locality equals: 'Stratham'.
+	self assert: address region equals: 'NH'.
+	self assert: address postalcode equals: '03885'.
+	self assert: address country equals: 'USA'.
 	
 	address := card addresses second.
 	
@@ -1081,15 +1081,15 @@ ICVCardTest >> testParseSean [
 	self assert: address poBox isEmptyOrNil.
 	self assert: address extended isEmptyOrNil.
 	
-	self assert: address street = '6 Christie Lane'.
-	self assert: address locality = 'Stratham'.
-	self assert: address region = 'NH'.
-	self assert: address postalcode = '03885'.
-	self assert: address country = 'USA'.
+	self assert: address street equals: '6 Christie Lane'.
+	self assert: address locality equals: 'Stratham'.
+	self assert: address region equals: 'NH'.
+	self assert: address postalcode equals: '03885'.
+	self assert: address country equals: 'USA'.
 	
-	self assert: card phoneNumbers size = 4.
+	self assert: card phoneNumbers size equals: 4.
 	phoneNumber := card phoneNumbers first.
-	self assert: phoneNumber number = '603 772 4480'.
+	self assert: phoneNumber number equals: '603 772 4480'.
 	self deny: phoneNumber isHome.
 	self deny: phoneNumber isPreferred.
 	self assert: phoneNumber isWork.
@@ -1104,7 +1104,7 @@ ICVCardTest >> testParseSean [
 	self deny: phoneNumber isVoiceMessage.
 	
 	phoneNumber := card phoneNumbers second.
-	self assert: phoneNumber number = '603 770 8260'.
+	self assert: phoneNumber number equals: '603 770 8260'.
 	self deny: phoneNumber isHome.
 	self deny: phoneNumber isPreferred.
 	self deny: phoneNumber isWork.
@@ -1119,7 +1119,7 @@ ICVCardTest >> testParseSean [
 	self deny: phoneNumber isVoiceMessage.
 	
 	phoneNumber := card phoneNumbers third.
-	self assert: phoneNumber number = '603 772 2852'.
+	self assert: phoneNumber number equals: '603 772 2852'.
 	self assert: phoneNumber isHome.
 	self deny: phoneNumber isPreferred.
 	self deny: phoneNumber isWork.
@@ -1134,7 +1134,7 @@ ICVCardTest >> testParseSean [
 	self deny: phoneNumber isVoiceMessage.
 	
 	phoneNumber := card phoneNumbers fourth.
-	self assert: phoneNumber number = '603 770 8260'.
+	self assert: phoneNumber number equals: '603 770 8260'.
 	self deny: phoneNumber isHome.
 	self deny: phoneNumber isPreferred.
 	self deny: phoneNumber isWork.
@@ -1148,9 +1148,9 @@ ICVCardTest >> testParseSean [
 	self assert: phoneNumber isVoice.
 	self deny: phoneNumber isVoiceMessage.
 	
-	self assert: card emailAddresses size = 2.
+	self assert: card emailAddresses size equals: 2.
 	emailAddress := card emailAddresses first.
-	self assert: emailAddress address = 'sglazier@comcast.net'.
+	self assert: emailAddress address equals: 'sglazier@comcast.net'.
 	self assert: emailAddress isWork.
 	self assert: emailAddress isPreferred.
 	self deny: emailAddress isHome.
@@ -1158,7 +1158,7 @@ ICVCardTest >> testParseSean [
 	self deny: emailAddress isX400.
 	
 	emailAddress := card emailAddresses second.
-	self assert: emailAddress address = 'sglazier@comcast.net'.
+	self assert: emailAddress address equals: 'sglazier@comcast.net'.
 	self deny: emailAddress isWork.
 	self deny: emailAddress isPreferred.
 	self assert: emailAddress isHome.
@@ -1166,80 +1166,80 @@ ICVCardTest >> testParseSean [
 	self deny: emailAddress isX400.
 	
 	organization := card organization.
-	self assert: organization name = 'Cincom Systems'.
+	self assert: organization name equals: 'Cincom Systems'.
 	self assert: organization unitNames isEmpty.
 	
 ]
 
 { #category : 'testing-parsing' }
 ICVCardTest >> testParseSurendar [
+
 	| cards card name imid organization |
 	cards := ICCardHandParser parseVCardString: self surendarCardString.
-	self assert: cards size = 1.
+	self assert: cards size equals: 1.
 	card := cards anyOne.
-	
-	self assert: card fullname = 'Surendar Chandra'.
-	self assert: card title = 'Asst. Professor'.
-	self assert: card version = 3.0.
+
+	self assert: card fullname equals: 'Surendar Chandra'.
+	self assert: card title equals: 'Asst. Professor'.
+	self assert: card version equals: 3.0.
 	name := card name.
 	self assert: name notNil.
-	self assert: name familyName = 'Chandra'.
-	self assert: name givenName = 'Surendar'.
+	self assert: name familyName equals: 'Chandra'.
+	self assert: name givenName equals: 'Surendar'.
 	self assert: name additionalNames isEmptyOrNil.
 	self assert: name honorificPrefixes isEmptyOrNil.
 	self assert: name honorificSuffixes isEmptyOrNil.
-	
-	self assert: card aimids size = 1.
+
+	self assert: card aimids size equals: 1.
 	imid := card aimids anyOne.
 	self assert: (imid isKindOf: ICAIMId).
 	self assert: imid isPreferred.
 	self deny: imid isWork.
 	self assert: imid isHome.
-	self assert: imid id = 'surendar'.
-	
+	self assert: imid id equals: 'surendar'.
+
 	self assert: card icqids isEmpty.
-	
-	self assert: card msnids size = 1.
+
+	self assert: card msnids size equals: 1.
 	imid := card msnids anyOne.
 	self assert: (imid isKindOf: ICMSNId).
 	self assert: imid isPreferred.
 	self deny: imid isWork.
 	self assert: imid isHome.
-	self assert: imid id = 'surendar'.
-	
-	self assert: card yahooids size = 1.
+	self assert: imid id equals: 'surendar'.
+
+	self assert: card yahooids size equals: 1.
 	imid := card yahooids anyOne.
 	self assert: (imid isKindOf: ICYahooId).
 	self assert: imid isPreferred.
 	self assert: imid isWork.
 	self deny: imid isHome.
-	self assert: imid id = 'surendarcsdukeedu'.
-	
+	self assert: imid id equals: 'surendarcsdukeedu'.
+
 	organization := card organization.
-	self assert: organization name = 'Univ. of Notre Dame'.
-	self assert: organization unitNames size = 1.
-	self assert: organization unitNames anyOne = 'Computer Science and Engg'.
-	
-	self shouldnt: [ self assert: card notes size = 1 ] raise: Error.
-	self assert: card notes anyOne =
-'SMS message
+	self assert: organization name equals: 'Univ. of Notre Dame'.
+	self assert: organization unitNames size equals: 1.
+	self
+		assert: organization unitNames anyOne
+		equals: 'Computer Science and Engg'.
+	self assert: card notes size equals: 1.
+	self assert: card notes anyOne equals: 'SMS message
 12/22/2003 18:12
 wassup
 
 SMS message
 12/23/2003 13:12
 Hello'
-	
 ]
 
 { #category : 'testing-parsing' }
 ICVCardTest >> testParseSurendarUrl [
 	| cards card |
 	cards := ICCardHandParser parseVCardString: self surendarCardString.
-	self assert: cards size = 1.
+	self assert: cards size equals: 1.
 	card := cards anyOne.
 
-	self assert: card url asVCardString = 'http://www.cse.nd.edu/~surendar/'.
+	self assert: card url asVCardString equals: 'http://www.cse.nd.edu/~surendar/'.
 ]
 
 { #category : 'testing-parsing' }
@@ -1250,7 +1250,7 @@ ICVCardTest >> testParseWikipedia [
 	card := cards anyOne.
 	
 	self assert: card fullname equals: 'Firstname Lastname'.
-	self assert: card version equals: 2.1.
+	self assert: card version equals: 3.0.
 	name := card name.
 	self assert: name notNil.
 	self assert: name familyName equals: 'Lastname'.
@@ -1274,8 +1274,7 @@ ICVCardTest >> testParseWikipedia [
 	self assert: address locality isEmptyOrNil.
 	
 	self assert: address street equals: 'Bar Street 99'.
-	self assert: address extended equals: 'Footown 12345
-Fooland'.
+	self assert: address extended equals: 'Footown 12345, Fooland'.
 	self assert: address region isEmptyOrNil.
 	self assert: address postalcode isEmptyOrNil.
 	self assert: address country isEmptyOrNil.
@@ -1341,15 +1340,16 @@ ICVCardTest >> testUtcOffset [
 
 { #category : 'fixtures-parsing' }
 ICVCardTest >> wikipediaCardString [
-^
-'BEGIN:VCARD' , String crlf ,
-'VERSION:2.1' , String crlf ,
-'FN:Firstname Lastname' , String crlf ,
-'N:Lastname;Firstname' , String crlf ,
-'ADR;WORK;PREF;QUOTED-PRINTABLE:;Footown 12345=0AFooland;Bar Street 99' , String crlf ,
-'LABEL;QUOTED-PRINTABLE;WORK;PREF:Bar Street 99=0AFootown 12345=0AFooland' , String crlf ,
-'TEL;CELL:+358-40-123456' , String crlf ,
-'EMAIL;INTERNET:nobody@example.invalid' , String crlf ,
-'UID:' , String crlf ,
-'END:VCARD' , String crlf
+
+	^ 'BEGIN:VCARD
+VERSION:3.0
+FN:Firstname Lastname
+N:Lastname;Firstname
+ADR;TYPE=WORK;TYPE=PREF:;Footown 12345, Fooland;Bar Street 99
+LABEL;TYPE=WORK;TYPE=PREF:Bar Street 99, Footown 12345, Fooland
+TEL;TYPE=CELL:+358-40-123456
+EMAIL;TYPE=INTERNET:nobody@example.invalid
+UID:
+END:VCARD
+' lines joinUsing: String crlf
 ]

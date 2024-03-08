@@ -12,57 +12,57 @@ ICVCardConversionTest >> testAddress [
 	address := ICAddress fromVCardString: string parameters: Dictionary new.
 	self assert: address poBox isEmptyOrNil.
 	self assert: address extended isEmptyOrNil.
-	self assert: address street = '123 Main Street'.
-	self assert: address locality = 'Any Town'.
-	self assert: address postalcode = '91921-1234'.
-	self assert: address region = 'CA'.
+	self assert: address street equals: '123 Main Street'.
+	self assert: address locality equals: 'Any Town'.
+	self assert: address postalcode equals: '91921-1234'.
+	self assert: address region equals: 'CA'.
 	self assert: address country isEmptyOrNil.
-	self assert: address asVCardString = string.	
+	self assert: address asVCardString equals: string.	
 
 	string := ';;501 E. Middlefield Rd.;Mountain View;CA;94043;U.S.A.'.
 	address := ICAddress fromVCardString: string parameters: Dictionary new.
 	self assert: address poBox isEmptyOrNil.
 	self assert: address extended isEmptyOrNil.
-	self assert: address street = '501 E. Middlefield Rd.'.
-	self assert: address locality = 'Mountain View'.
-	self assert: address postalcode = '94043'.
-	self assert: address region = 'CA'.
-	self assert: address country = 'U.S.A.'.
-	self assert: address asVCardString = string.
+	self assert: address street equals: '501 E. Middlefield Rd.'.
+	self assert: address locality equals: 'Mountain View'.
+	self assert: address postalcode equals: '94043'.
+	self assert: address region equals: 'CA'.
+	self assert: address country equals: 'U.S.A.'.
+	self assert: address asVCardString equals: string.
 
 	string := ';;6544 Battleford Drive;Raleigh;NC;27613-3502;U.S.A.'.
 	address := ICAddress fromVCardString: string parameters: Dictionary new.
 	self assert: address poBox isEmptyOrNil.
 	self assert: address extended isEmptyOrNil.
-	self assert: address street = '6544 Battleford Drive'.
-	self assert: address locality = 'Raleigh'.
-	self assert: address postalcode = '27613-3502'.
-	self assert: address region = 'NC'.
-	self assert: address country = 'U.S.A.'.
-	self assert: address asVCardString = string.
+	self assert: address street equals: '6544 Battleford Drive'.
+	self assert: address locality equals: 'Raleigh'.
+	self assert: address postalcode equals: '27613-3502'.
+	self assert: address region equals: 'NC'.
+	self assert: address country equals: 'U.S.A.'.
+	self assert: address asVCardString equals: string.
 ]
 
 { #category : 'testing' }
 ICVCardConversionTest >> testDate [
 	| date |
 	date := self dateClass year: 1985 month: 04 day: 12.
-	self assert: date asVCardString = '1985-04-12'.
+	self assert: date asVCardString equals: '1985-04-12'.
 
 	date :=  self dateClass year: 1996 month: 08 day: 05.
-	self assert: date asVCardString = '1996-08-05'.
+	self assert: date asVCardString equals: '1996-08-05'.
 
 	date :=  self dateClass year: 1996 month: 11 day: 11.
-	self assert: date asVCardString = '1996-11-11'.
+	self assert: date asVCardString equals: '1996-11-11'.
 ]
 
 { #category : 'testing' }
 ICVCardConversionTest >> testDateAndTime [
 	| dateAndTime |
 	dateAndTime := self dateAndTimeClass year: 1996 month: 10 day: 22 hour: 14 minute: 00 second: 00.
-	self assert: '1996-10-22T14:00:00'  = dateAndTime asVCardString.
+	self assert: '1996-10-22T14:00:00' equals: dateAndTime asVCardString.
 	
 	dateAndTime := self dateAndTimeClass year: 1996 month: 08 day: 11 hour: 12 minute: 34 second: 56.
-	self assert: '1996-08-11T12:34:56'  = dateAndTime asVCardString.
+	self assert: '1996-08-11T12:34:56' equals: dateAndTime asVCardString.
 ]
 
 { #category : 'testing' }
@@ -92,19 +92,19 @@ ICVCardConversionTest >> testParseDate [
 	| string date |
 	string := '1985-04-12'.
 	date := self dateClass fromVCardString: string.
-	self assert: date = (self dateClass year: 1985 month: 04 day: 12).
+	self assert: date equals: (self dateClass year: 1985 month: 04 day: 12).
 
 	string := '1996-08-05'.
 	date := self dateClass fromVCardString: string.
-	self assert: date = (self dateClass year: 1996 month: 08 day: 05).
+	self assert: date equals: (self dateClass year: 1996 month: 08 day: 05).
 
 	string := '1996-11-11'.
 	date := self dateClass fromVCardString: string.
-	self assert: date = (self dateClass year: 1996 month: 11 day: 11).
+	self assert: date equals: (self dateClass year: 1996 month: 11 day: 11).
 
 	string := '19850412'.
 	date := self dateClass fromVCardString: string.
-	self assert: date = (self dateClass year: 1985 month: 04 day: 12).
+	self assert: date equals: (self dateClass year: 1985 month: 04 day: 12).
 ]
 
 { #category : 'testing' }
@@ -112,56 +112,56 @@ ICVCardConversionTest >> testParseDateAndTime [
 	| string dateAndTime |
 	string := '1996-10-22T14:00:00Z'.
 	dateAndTime := self dateAndTimeClass fromVCardString: string.
-	self assert: dateAndTime = (self dateAndTimeClass year: 1996 month: 10 day: 22 hour: 14 minute: 00 second: 00).
+	self assert: dateAndTime equals: (self dateAndTimeClass year: 1996 month: 10 day: 22 hour: 14 minute: 00 second: 00).
 
 	string := '1996-08-11T12:34:56Z'.
 	dateAndTime := self dateAndTimeClass fromVCardString: string.
-	self assert: dateAndTime = (self dateAndTimeClass year: 1996 month: 08 day: 11 hour: 12 minute: 34 second: 56).
+	self assert: dateAndTime equals: (self dateAndTimeClass year: 1996 month: 08 day: 11 hour: 12 minute: 34 second: 56).
 
 	string := '19960811T123456Z'.
 	dateAndTime := self dateAndTimeClass fromVCardString: string.
-	self assert: dateAndTime = (self dateAndTimeClass year: 1996 month: 08 day: 11 hour: 12 minute: 34 second: 56).
+	self assert: dateAndTime equals: (self dateAndTimeClass year: 1996 month: 08 day: 11 hour: 12 minute: 34 second: 56).
 ]
 
 { #category : 'testing' }
 ICVCardConversionTest >> testParseTime [
 	| time string |
 	time := self timeClass hour: 10 minute: 22 second: 00.
-	self assert: '10:22:00'  = time asVCardString.
+	self assert: '10:22:00' equals: time asVCardString.
 	
 	string := '10:22:00'.
 	time := self timeClass hour: 10 minute: 22 second: 00.
-	self assert: (self timeClass fromVCardString: string) = time.
+	self assert: (self timeClass fromVCardString: string) equals: time.
 	
 	string := '102200'.
 	time := self timeClass hour: 10 minute: 22 second: 00.
-	self assert: (self timeClass fromVCardString: string) = time.
+	self assert: (self timeClass fromVCardString: string) equals: time.
 	
 	string := '10:22:00.33'.
 	time := self timeClass hour: 10 minute: 22 second: 00 nanosecond: 330000000.
-	self assert: (self timeClass fromVCardString: string) = time.
-	self assert: time asVCardString = string.
+	self assert: (self timeClass fromVCardString: string) equals: time.
+	self assert: time asVCardString equals: string.
 	
 	string := '10:22:00.33Z'.
 	time := self timeClass hour: 10 minute: 22 second: 00 nanosecond: 330000000.
-	self assert: (self timeClass fromVCardString: string) = time.
-	self assert: time asVCardUtcString = string.
+	self assert: (self timeClass fromVCardString: string) equals: time.
+	self assert: time asVCardUtcString equals: string.
 	
 	string := '10:22:00-08:00'.
 	time := self timeClass hour: 10 minute: 22 second: 00.
-	self assert: (self timeClass fromVCardString: string) = time.
+	self assert: (self timeClass fromVCardString: string) equals: time.
 ]
 
 { #category : 'testing' }
 ICVCardConversionTest >> testTime [
 	| time |
 	time := self timeClass hour: 10 minute: 22 second: 00.
-	self assert: time asVCardString = '10:22:00'.
+	self assert: time asVCardString equals: '10:22:00'.
 
 	time := self timeClass hour: 10 minute: 22 second: 00 nanosecond: 330000000.
-	self assert: time asVCardString = '10:22:00.33'.
+	self assert: time asVCardString equals: '10:22:00.33'.
 
 	time :=self timeClass hour: 10 minute: 22 second: 33.
-	self assert: time asVCardString = '10:22:33'.
+	self assert: time asVCardString equals: '10:22:33'.
 
 ]

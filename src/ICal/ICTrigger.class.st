@@ -61,9 +61,10 @@ ICTrigger >> exportICalParametersOn: anExpoter [
 
 { #category : 'accessing' }
 ICTrigger >> iCalType [
-	^self value isNil
-		ifTrue: [ self class iCalType ]
-		ifFalse: [ self value iCalType ]
+
+	^ self value
+		  ifNil: [ self class iCalType ]
+		  ifNotNil: [ self value iCalType ]
 ]
 
 { #category : 'testing' }

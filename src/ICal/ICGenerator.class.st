@@ -54,7 +54,7 @@ ICGenerator >> createValue: aString parameters: aDictionary type: iCalType [
 		fromICalString: aString parameters: aDictionary
 ]
 
-{ #category : 'dispatching' }
+{ #category : 'reflective operations' }
 ICGenerator >> doesNotUnderstand: aMessage [
 	| property |
 	^((aMessage selector endsWith: 'parameters:')

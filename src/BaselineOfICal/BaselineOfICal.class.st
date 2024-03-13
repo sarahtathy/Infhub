@@ -11,7 +11,6 @@ BaselineOfICal >> baseline: spec [
 	spec for: #'common' do: [
 		
 		self smaCC: spec.
-
 		spec 
 			package: 'ICal'       with: [ spec requires: #('SmaCC') ];
 			package: 'ICal-Tests' with: [ spec requires: #('ICal') ];

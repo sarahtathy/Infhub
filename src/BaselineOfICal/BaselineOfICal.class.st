@@ -11,19 +11,25 @@ BaselineOfICal >> baseline: spec [
 	spec for: #'common' do: [
 		
 		self smaCC: spec.
-
 		spec 
 			package: 'ICal'       with: [ spec requires: #('SmaCC') ];
 			package: 'ICal-Tests' with: [ spec requires: #('ICal') ];
 			
 			package: 'ICal-VCard' with: [ spec requires: #('ICal') ];
-			package: 'ICal-VCard-Tests' with: [ spec requires: #('ICal-VCard') ].
+			package: 'ICal-VCard-Tests' with: [ spec requires: #('ICal-VCard') ];
+				
+			package: 'ICal-VCard-UI' with: [ spec requires: #('ICal-VCard') ];
+			package: 'ICal-VCard-UI-Tests' with: [ spec requires: #('ICal-VCard-UI') ].
 
 		spec 
 			group: 'Core' with: #('ICal');
+			group: 'Tests' with: #('ICal-Tests');
+
 			group: 'VCard' with: #('Core' 'ICal-VCard');
-			group: 'Tests' with: #('VCard' 'ICal-Tests');
-			group: 'VCardTests' with: #('Tests' 'ICal-VCard-Tests');
+			group: 'VCardTests' with: #('Tests' 'VCard' 'ICal-VCard-Tests');
+
+			group: 'UI' with: #('VCard' 'ICal-VCard-UI');
+			group: 'all' with: #('UI' 'VCardTests');
 
  			group: 'default' with: #('VCard' 'VCardTests') ]
 ]

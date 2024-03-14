@@ -1,7 +1,6 @@
 Class {
 	#name : 'CMMainPresenter',
 	#superclass : 'SpPresenter',
-	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'contactList',
 		'statusBar',

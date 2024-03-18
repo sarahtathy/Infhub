@@ -1,5 +1,5 @@
 Class {
-	#name : 'CMAddPresenter',
+	#name : 'ICCMAddPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'nameText',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : 'layout' }
-CMAddPresenter >> defaultLayout [
+ICCMAddPresenter >> defaultLayout [
 
 	^ SpGridLayout build: [ :builder |
 		  builder
@@ -29,24 +29,24 @@ CMAddPresenter >> defaultLayout [
 ]
 
 { #category : 'layout' }
-CMAddPresenter >> email [
+ICCMAddPresenter >> email [
 		
 	^ emailText text
 ]
 
 { #category : 'initialization' }
-CMAddPresenter >> initializeDialogWindow: aDialogPresenter [
+ICCMAddPresenter >> initializeDialogWindow: aDialogPresenter [
 	aDialogPresenter centered.
 	aDialogPresenter
 		addButton: 'Cancel' do: [ :presenter | presenter close ];
-		addButton: 'Save Contact' do: [ :presenter | presenter beOk;
+		addButton: 'Save' do: [ :presenter | presenter beOk;
 	close ].
 
 
 ]
 
 { #category : 'initialization' }
-CMAddPresenter >> initializePresenters [
+ICCMAddPresenter >> initializePresenters [
 	
 	nameText := self newTextInput.
 	emailText := self newTextInput.
@@ -55,7 +55,7 @@ CMAddPresenter >> initializePresenters [
 ]
 
 { #category : 'initialization' }
-CMAddPresenter >> initializeWindow: aWindowPresenter [
+ICCMAddPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 	title: 'Contact';
 	initialExtent: 400 @ 250
@@ -63,13 +63,13 @@ CMAddPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : 'layout' }
-CMAddPresenter >> name [
+ICCMAddPresenter >> name [
 	^ nameText text
 
 ]
 
 { #category : 'layout' }
-CMAddPresenter >> phoneNumbers [
+ICCMAddPresenter >> phoneNumbers [
 	^ phoneNumber text
 		
 

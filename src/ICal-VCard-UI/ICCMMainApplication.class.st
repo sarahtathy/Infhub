@@ -1,5 +1,13 @@
+"
+This is the Spec Application class for the Contact Manager.
+
+To start the application, please evaluate:
+```
+CMMainApplication new start.
+```
+"
 Class {
-	#name : 'CMMainApplication',
+	#name : 'ICCMMainApplication',
 	#superclass : 'SpApplication',
 	#instVars : [
 		'contacts',
@@ -11,66 +19,66 @@ Class {
 }
 
 { #category : 'private' }
-CMMainApplication class >> menuNoteTakersOn: aBuilder [
+ICCMMainApplication class >> menuNoteTakersOn: aBuilder [
 	<worldMenu>
 
-	(aBuilder item: #ContactManager)
+	(aBuilder item: #ICContactManager)
 		parent: #Tools;
 		label: 'The Contact Manager';
 		icon: (self iconNamed: #catalog);
-		action: [ CMMainApplication new run ];
+		action: [ ICCMMainApplication new run ];
 		help: 'The Contact Manager';
 		order: 630
 ]
 
 { #category : 'accessing' }
-CMMainApplication >> contactManager [
+ICCMMainApplication >> contactManager [
 
 	^ contactManager
 ]
 
 { #category : 'accessing' }
-CMMainApplication >> contactManager: anObject [
+ICCMMainApplication >> contactManager: anObject [
 
 	contactManager := anObject
 ]
 
 { #category : 'instance creation' }
-CMMainApplication >> contacts [
+ICCMMainApplication >> contacts [
 
 	^ contacts
 ]
 
 { #category : 'accessing' }
-CMMainApplication >> contacts: anObject [
+ICCMMainApplication >> contacts: anObject [
 
 	contacts := anObject
 ]
 
 { #category : 'initialization' }
-CMMainApplication >> defaultContactManager [
+ICCMMainApplication >> defaultContactManager [
 
-	^ ContactManager uniqueInstance 
+	^ ICContactManager uniqueInstance 
 ]
 
 { #category : 'instance creation' }
-CMMainApplication >> defaultContacts [
+ICCMMainApplication >> defaultContacts [
 
 	^ ICCardHandParser parseVCardString: ICVCardTest new aviCardString
 ]
 
 { #category : 'initialization' }
-CMMainApplication >> initialize [
+ICCMMainApplication >> initialize [
 
 	super initialize.
 	contacts := self defaultContacts.
 	contactManager := self defaultContactManager.
 ]
 
-{ #category : 'instance creation' }
-CMMainApplication >> start [
+{ #category : 'running' }
+ICCMMainApplication >> start [
 
-	(CMMainPresenter newApplication: self) 
+	(ICCMMainPresenter newApplication: self) 
 		"contacts: self contacts;"
 		open
 ]

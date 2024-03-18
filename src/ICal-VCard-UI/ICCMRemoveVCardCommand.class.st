@@ -2,29 +2,28 @@
 Implements the ""Remove contact"" operation in the Contact Manager application.
 "
 Class {
-	#name : 'CMRemoveVCardCommand',
-	#superclass : 'CMAbstractCommand',
+	#name : 'ICCMRemoveVCardCommand',
+	#superclass : 'ICCMAbstractCommand',
 	#category : 'ICal-VCard-UI-Command',
 	#package : 'ICal-VCard-UI',
 	#tag : 'Command'
 }
 
 { #category : 'testing' }
-CMRemoveVCardCommand >> canBeExecuted [ 
+ICCMRemoveVCardCommand >> canBeExecuted [ 
 
 	^ self selectedContact notNil.
 ]
 
 { #category : 'executing' }
-CMRemoveVCardCommand >> execute [
+ICCMRemoveVCardCommand >> execute [
 
-	self contactManagerPresenter removeContact: self selectedContact.
-	self contactManagerPresenter updateItems
-	
+	(self confirm: 'Do you want to remove the selected contact?')
+		ifTrue: [ self contactManagerPresenter removeContact: self selectedContact ]
 ]
 
 { #category : 'initialization' }
-CMRemoveVCardCommand >> initialize [
+ICCMRemoveVCardCommand >> initialize [
 	super initialize.
 	self
 		name: 'Remove';

@@ -3,7 +3,7 @@ This is the Spec Application class for the Contact Manager.
 
 To start the application, please evaluate:
 ```
-CMMainApplication new start.
+ICCMMainApplication new start.
 ```
 "
 Class {
@@ -64,7 +64,7 @@ ICCMMainApplication >> defaultContactManager [
 { #category : 'instance creation' }
 ICCMMainApplication >> defaultContacts [
 
-	^ ICCardHandParser parseVCardString: ICVCardTest new aviCardString
+	^ ICCardHandParser parseVCardString: ICVCardParserTest new aviCardString
 ]
 
 { #category : 'initialization' }

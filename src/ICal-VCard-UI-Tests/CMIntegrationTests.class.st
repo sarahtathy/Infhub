@@ -12,7 +12,7 @@ Class {
 CMIntegrationTests >> setUp [
 
 	super setUp.
-	contactManager := ContactManager new.
+	contactManager := ICContactManager new.
 
 ]
 

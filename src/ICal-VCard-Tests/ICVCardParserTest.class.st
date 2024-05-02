@@ -1,12 +1,12 @@
 Class {
-	#name : 'ICVCardTest',
+	#name : 'ICVCardParserTest',
 	#superclass : 'ICTest',
 	#category : 'ICal-VCard-Tests',
 	#package : 'ICal-VCard-Tests'
 }
 
 { #category : 'fixtures - parsing' }
-ICVCardTest >> aviCardString [
+ICVCardParserTest >> aviCardString [
 ^
 'BEGIN:VCARD' , String crlf ,
 'VERSION:3.0' , String crlf ,
@@ -226,7 +226,7 @@ ICVCardTest >> aviCardString [
 ]
 
 { #category : 'fixtures - exporting' }
-ICVCardTest >> aviCardStringExport [
+ICVCardParserTest >> aviCardStringExport [
 
 	^ 'BEGIN:VCARD' , String crlf ,
 'VERSION:3.0' , String crlf ,
@@ -243,7 +243,7 @@ ICVCardTest >> aviCardStringExport [
 ]
 
 { #category : 'fixtures - parsing' }
-ICVCardTest >> donaldCardString [
+ICVCardParserTest >> donaldCardString [
 ^'begin:vcard
 fn:Donald Major
 n:Major;Donald
@@ -258,7 +258,7 @@ end:vcard' , String crlf
 ]
 
 { #category : 'fixtures - parsing' }
-ICVCardTest >> ericCardString [
+ICVCardParserTest >> ericCardString [
 ^
 'BEGIN:VCARD' , String crlf ,
 'VERSION:3.0' , String crlf ,
@@ -282,7 +282,7 @@ ICVCardTest >> ericCardString [
 ]
 
 { #category : 'fixtures - parsing' }
-ICVCardTest >> goofyCardString [
+ICVCardParserTest >> goofyCardString [
 ^'BEGIN:VCARD' , String crlf ,
 'VERSION:2.1' , String crlf ,
 'FN;CHARSET=ISO-8859-1:Markus Tschannen' , String crlf ,
@@ -297,7 +297,7 @@ ICVCardTest >> goofyCardString [
 ]
 
 { #category : 'fixtures - exporting' }
-ICVCardTest >> goofyCardStringExport [
+ICVCardParserTest >> goofyCardStringExport [
 
 ^'BEGIN:VCARD' , String crlf ,
 'VERSION:2.1' , String crlf ,
@@ -313,7 +313,7 @@ ICVCardTest >> goofyCardStringExport [
 ]
 
 { #category : 'fixtures - parsing' }
-ICVCardTest >> josephCardString [
+ICVCardParserTest >> josephCardString [
 ^
 'begin:vcard' , String crlf ,
 'n:THOMAS;JOSEPH' , String crlf ,
@@ -332,7 +332,7 @@ ICVCardTest >> josephCardString [
 ]
 
 { #category : 'fixtures - parsing' }
-ICVCardTest >> maeveCardString [
+ICVCardParserTest >> maeveCardString [
 ^
 'BEGIN:VCARD' , String crlf ,
 'VERSION:3.0' , String crlf ,
@@ -358,7 +358,7 @@ ICVCardTest >> maeveCardString [
 ]
 
 { #category : 'fixtures - parsing' }
-ICVCardTest >> oscarCardString [
+ICVCardParserTest >> oscarCardString [
 ^'BEGIN:VCARD' , String crlf ,
 'VERSION:3.0' , String crlf ,
 'N:Nierstrasz;Oscar;;;' , String crlf ,
@@ -381,7 +381,7 @@ ICVCardTest >> oscarCardString [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> parseAndReturnFirstFromString: aviCardString [
+ICVCardParserTest >> parseAndReturnFirstFromString: aviCardString [
 	
  	| cards |
 	cards := ICCardHandParser parseVCardString:  aviCardString.
@@ -392,7 +392,7 @@ ICVCardTest >> parseAndReturnFirstFromString: aviCardString [
 ]
 
 { #category : 'fixtures - parsing' }
-ICVCardTest >> seanCardString [
+ICVCardParserTest >> seanCardString [
 ^
 'BEGIN:VCARD' , String crlf ,
 'VERSION:2.1' , String crlf ,
@@ -416,7 +416,7 @@ ICVCardTest >> seanCardString [
 ]
 
 { #category : 'fixtures - parsing' }
-ICVCardTest >> surendarCardString [
+ICVCardParserTest >> surendarCardString [
 ^
 'BEGIN:VCARD' , String crlf ,
 'VERSION:3.0' , String crlf,
@@ -533,7 +533,7 @@ ICVCardTest >> surendarCardString [
 ]
 
 { #category : 'tests - exporting' }
-ICVCardTest >> testExportAvi [
+ICVCardParserTest >> testExportAvi [
 
 	| cards exporter str |
 	cards := ICCardHandParser parseVCardString: self aviCardString.
@@ -549,7 +549,7 @@ ICVCardTest >> testExportAvi [
 ]
 
 { #category : 'tests - exporting' }
-ICVCardTest >> testExportGoofy [
+ICVCardParserTest >> testExportGoofy [
 
 	| cards exporter str |
 	cards := ICCardHandParser parseVCardString: self goofyCardString.
@@ -565,7 +565,7 @@ ICVCardTest >> testExportGoofy [
 ]
 
 { #category : 'tests - exporting' }
-ICVCardTest >> testIsOrganization [
+ICVCardParserTest >> testIsOrganization [
 
 	| card |
 	card := ICVCard new
@@ -581,7 +581,7 @@ ICVCardTest >> testIsOrganization [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testName [
+ICVCardParserTest >> testName [
 
 	| name |
 	name := ICName fromICalString: 'Public;John;Quinlan;Mr.;Esq'.
@@ -612,7 +612,7 @@ ICVCardTest >> testName [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testParseAvi [
+ICVCardParserTest >> testParseAvi [
 	| cards card address name phoneNumber emailAddress imid |
 	
 	cards := ICCardHandParser parseVCardString: self aviCardString.
@@ -710,7 +710,7 @@ ICVCardTest >> testParseAvi [
 ]
 
 { #category : 'tests - address parts' }
-ICVCardTest >> testParseAviName [
+ICVCardParserTest >> testParseAviName [
 	
 	| card name |
 	card := self parseAndReturnFirstFromString: self aviCardString.
@@ -728,7 +728,7 @@ ICVCardTest >> testParseAviName [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testParseEric [
+ICVCardParserTest >> testParseEric [
 	| cards card name imid |
 	cards := ICCardHandParser parseVCardString: self ericCardString.
 	self assert: cards size equals: 1.
@@ -778,7 +778,7 @@ ICVCardTest >> testParseEric [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testParseGoofy [
+ICVCardParserTest >> testParseGoofy [
 	| cards card address name phoneNumber |
 	cards := ICCardHandParser parseVCardString: self goofyCardString.
 	self assert: cards size equals: 1.
@@ -853,7 +853,7 @@ ICVCardTest >> testParseGoofy [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testParseMaeve [
+ICVCardParserTest >> testParseMaeve [
 	| cards card name imid |
 	cards := ICCardHandParser parseVCardString: self maeveCardString.
 	self assert: cards size equals: 1.
@@ -897,7 +897,7 @@ ICVCardTest >> testParseMaeve [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testParseMaeveUrl [
+ICVCardParserTest >> testParseMaeveUrl [
 	"The vCard uses backslashes (\) to escape characters in URLs, which is not compliant with the vCard 3.0 specification. According to RFC 6350, URLs should be encoded properly without needing to escape characters. For example, spaces in URLs should be encoded as %20 instead of being escaped with a backslash."
 
 	| cards card |
@@ -911,7 +911,7 @@ ICVCardTest >> testParseMaeveUrl [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testParseOscar [
+ICVCardParserTest >> testParseOscar [
 	| cards card address name phoneNumber emailAddress organization |
 	cards := ICCardHandParser parseVCardString: self oscarCardString.
 	self assert: cards size equals: 1.
@@ -1050,7 +1050,7 @@ Neubrueckstrasse 10'.
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testParseOscarUrl [
+ICVCardParserTest >> testParseOscarUrl [
 	| cards card |
 	cards := ICCardHandParser parseVCardString: self oscarCardString.
 	self assert: cards size equals: 1.
@@ -1061,7 +1061,7 @@ ICVCardTest >> testParseOscarUrl [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testParseSean [
+ICVCardParserTest >> testParseSean [
 	| cards card address name phoneNumber emailAddress organization |
 	cards := ICCardHandParser parseVCardString: self seanCardString.
 	self assert: cards size equals: 1.
@@ -1203,7 +1203,7 @@ ICVCardTest >> testParseSean [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testParseSurendar [
+ICVCardParserTest >> testParseSurendar [
 
 	| cards card name imid organization |
 	cards := ICCardHandParser parseVCardString: self surendarCardString.
@@ -1264,7 +1264,7 @@ Hello'
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testParseSurendarUrl [
+ICVCardParserTest >> testParseSurendarUrl [
 	| cards card |
 	cards := ICCardHandParser parseVCardString: self surendarCardString.
 	self assert: cards size equals: 1.
@@ -1274,7 +1274,7 @@ ICVCardTest >> testParseSurendarUrl [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testParseWikipedia [
+ICVCardParserTest >> testParseWikipedia [
 	| cards card address name phoneNumber emailAddress |
 	cards := ICCardHandParser parseVCardString: self wikipediaCardString.
 	self assert: cards size equals: 1.
@@ -1338,7 +1338,7 @@ ICVCardTest >> testParseWikipedia [
 ]
 
 { #category : 'tests - printing' }
-ICVCardTest >> testPrinting [
+ICVCardParserTest >> testPrinting [
 
 	| card |
 	card := self parseAndReturnFirstFromString: self aviCardString.
@@ -1348,7 +1348,7 @@ ICVCardTest >> testPrinting [
 ]
 
 { #category : 'tests - parsing' }
-ICVCardTest >> testUtcOffset [
+ICVCardParserTest >> testUtcOffset [
 	| offset |
 	offset := ICUtcOffset fromVCardString: '-05:00'.
 	self deny: offset positive.
@@ -1380,7 +1380,7 @@ ICVCardTest >> testUtcOffset [
 ]
 
 { #category : 'fixtures - parsing' }
-ICVCardTest >> wikipediaCardString [
+ICVCardParserTest >> wikipediaCardString [
 
 	^ 'BEGIN:VCARD
 VERSION:3.0

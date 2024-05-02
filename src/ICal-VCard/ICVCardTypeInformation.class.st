@@ -6,7 +6,7 @@ Class {
 	#tag : 'Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'conversion' }
 ICVCardTypeInformation >> conversionSelector [
 	^#asVCardString
 ]

@@ -104,9 +104,13 @@ ICVCard >> asJpeg: anArray [
 	input := String streamContents: [ :stream |
 		anArray do: [ :each |
 			stream nextPut: (Character value: each) ] ].
+	"should be converted to use OSSubProcess 
+	
+	The convert message is from imageMagick library and should probably be correct
+	
 	proc := OSProcess thisOSProcess
 		command:  'convert -quality 0 - jpg:-'
-		input: input.
+		input: input."
 	[ proc isComplete ] whileFalse: [ (Delay forSeconds: 1) wait ].
 	^proc upToEnd asByteArray
 ]

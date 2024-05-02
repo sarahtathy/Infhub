@@ -157,7 +157,7 @@ ICImportTest >> setUp [
 'PRIORITY:1' , String crlf ,
 'END:VTODO' , String crlf ,
 'END:VCALENDAR' , String crlf.
-	importCommand := (ICImporter new)
+	importCommand := ICImporter new
 				calendar: calendar;
 				fileContent: importString;
 				yourself
@@ -246,7 +246,7 @@ ICImportTest >> testSynchronize [
 				year: 2005
 				month: 6
 				day: 14.
-	self assert: calendar components size = 3.
+	self assert: calendar components size equals: 3.
 	self assert: calendar todos size = 2.
 	self assert: calendar events size = 1.
 	importCommand synchronize.

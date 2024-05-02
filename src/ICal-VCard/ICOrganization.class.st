@@ -35,7 +35,7 @@ ICOrganization >> addUnitName: aString [
 
 { #category : 'converting' }
 ICOrganization >> asVCardString [
-	^String streamContents: [ :stream |
+	^ String streamContents: [ :stream |
 		stream nextPutAll: self name asVCardString.
 		self unitNames isEmpty ifFalse: [
 			stream nextPut: $; ].

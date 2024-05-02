@@ -32,7 +32,7 @@ BaselineOfICal >> baseline: spec [
 			group: 'UITests' with: #('UI' 'ICal-VCard-UI-Tests');
 			group: 'all' with: #('VCardTests' 'UITests');
 
- 			group: 'default' with: #('VCard' 'VCardTests') ]
+ 			group: 'default' with: #('UITests') ]
 ]
 
 { #category : 'baselines' }

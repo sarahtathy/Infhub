@@ -38,7 +38,7 @@ Class {
 	#tag : 'Core'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'class initialization' }
 ICContactManager class >> initialize [
 
 	self uniqueInstance reset

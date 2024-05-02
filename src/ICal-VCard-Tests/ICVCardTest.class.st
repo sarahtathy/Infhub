@@ -1306,6 +1306,16 @@ ICVCardTest >> testParseWikipedia [
 	self deny: emailAddress isX400.
 ]
 
+{ #category : 'tests - printing' }
+ICVCardTest >> testPrinting [
+
+	| card |
+	card := self parseAndReturnFirstFromString: self aviCardString.
+	self assert: card printString equals: 'an ICVCard(Avi Bryant)'
+
+
+]
+
 { #category : 'testing-parsing' }
 ICVCardTest >> testUtcOffset [
 	| offset |

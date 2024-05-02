@@ -306,6 +306,13 @@ ICVCard >> photo: anObject [
 	photo := anObject
 ]
 
+{ #category : 'printing' }
+ICVCard >> printOn: aStream [
+
+	super printOn: aStream. 
+	self fullname ifNotNil: [ :f | aStream << '('; << f ; << ')' ] 
+]
+
 { #category : 'removing' }
 ICVCard >> removeAddress: anAddress [
 	^self addresses remove: anAddress

@@ -61,17 +61,11 @@ ICCMMainApplication >> defaultContactManager [
 	^ ICContactManager uniqueInstance 
 ]
 
-{ #category : 'instance creation' }
-ICCMMainApplication >> defaultContacts [
-
-	^ ICCardHandParser parseVCardString: ICVCardParserTest new aviCardString
-]
-
 { #category : 'initialization' }
 ICCMMainApplication >> initialize [
 
 	super initialize.
-	contacts := self defaultContacts.
+	contacts := OrderedCollection new.
 	contactManager := self defaultContactManager.
 ]
 

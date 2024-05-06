@@ -83,7 +83,7 @@ ICCreateCalendarTest >> testToDoList [
 		detect: [ :each | each name = 'veriveri''s Calendar' ]
 		ifNone: [nil].
 	self deny: calendar isNil.
-	self deny: calendar todos size = 2.
+	self deny: calendar todos size equals: 2.
 	self deny: calendar todos isNil.
 
 ]
@@ -97,5 +97,5 @@ ICCreateCalendarTest >> testUser [
 	self assert: newCalendar notNil.
 	self assert: (newCalendar isKindOf: ICCalendar).
 	self deny: newCalendar users isEmptyOrNil.
-	self assert: newCalendar users anyOne = user
+	self assert: newCalendar users anyOne equals: user
 ]

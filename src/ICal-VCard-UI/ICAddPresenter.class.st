@@ -1,5 +1,13 @@
+"
+This is the Spec Application class for adding a contact.
+
+To start the application, please evaluate:
+```
+ICAddPresenter new open.
+```
+"
 Class {
-	#name : 'ICCMAddPresenter',
+	#name : 'ICAddPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'nameText',
@@ -12,7 +20,7 @@ Class {
 }
 
 { #category : 'layout' }
-ICCMAddPresenter >> defaultLayout [
+ICAddPresenter >> defaultLayout [
 
 	^ SpGridLayout build: [ :builder |
 		  builder
@@ -29,13 +37,13 @@ ICCMAddPresenter >> defaultLayout [
 ]
 
 { #category : 'layout' }
-ICCMAddPresenter >> email [
+ICAddPresenter >> email [
 		
 	^ emailText text
 ]
 
 { #category : 'initialization' }
-ICCMAddPresenter >> initializeDialogWindow: aDialogPresenter [
+ICAddPresenter >> initializeDialogWindow: aDialogPresenter [
 	aDialogPresenter centered.
 	aDialogPresenter
 		addButton: 'Cancel' do: [ :presenter | presenter close ];
@@ -46,7 +54,7 @@ ICCMAddPresenter >> initializeDialogWindow: aDialogPresenter [
 ]
 
 { #category : 'initialization' }
-ICCMAddPresenter >> initializePresenters [
+ICAddPresenter >> initializePresenters [
 	
 	nameText := self newTextInput.
 	emailText := self newTextInput.
@@ -55,7 +63,7 @@ ICCMAddPresenter >> initializePresenters [
 ]
 
 { #category : 'initialization' }
-ICCMAddPresenter >> initializeWindow: aWindowPresenter [
+ICAddPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 	title: 'Contact';
 	initialExtent: 400 @ 250
@@ -63,13 +71,13 @@ ICCMAddPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : 'layout' }
-ICCMAddPresenter >> name [
+ICAddPresenter >> name [
 	^ nameText text
 
 ]
 
 { #category : 'layout' }
-ICCMAddPresenter >> phoneNumbers [
+ICAddPresenter >> phoneNumbers [
 	^ phoneNumber text
 		
 

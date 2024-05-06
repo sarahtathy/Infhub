@@ -2,7 +2,7 @@
 Abstract class grouping common behavior for the Contact Manager application behavior.
 "
 Class {
-	#name : 'ICCMAbstractCommand',
+	#name : 'ICAbstractCommand',
 	#superclass : 'CmCommand',
 	#category : 'ICal-VCard-UI-Command',
 	#package : 'ICal-VCard-UI',
@@ -10,14 +10,14 @@ Class {
 }
 
 { #category : 'accessing' }
-ICCMAbstractCommand >> contactManagerPresenter [
+ICAbstractCommand >> contactManagerPresenter [
 	"Answer the receiver's <CMMainPresenter> "
 
 	^ context
 ]
 
 { #category : 'accessing' }
-ICCMAbstractCommand >> selectedContact [
+ICAbstractCommand >> selectedContact [
 	"Answer a <ICVCard> representing the currently selected contact"
 	
 	^ self contactManagerPresenter selectedContact

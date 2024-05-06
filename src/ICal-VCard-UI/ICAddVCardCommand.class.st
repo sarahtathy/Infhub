@@ -2,21 +2,21 @@
 Implements the ""Add contact"" operation in the Contact Manager application.
 "
 Class {
-	#name : 'ICCMAddVCardCommand',
-	#superclass : 'ICCMAbstractCommand',
+	#name : 'ICAddVCardCommand',
+	#superclass : 'ICAbstractCommand',
 	#category : 'ICal-VCard-UI-Command',
 	#package : 'ICal-VCard-UI',
 	#tag : 'Command'
 }
 
 { #category : 'executing' }
-ICCMAddVCardCommand >> execute [
+ICAddVCardCommand >> execute [
 
 	context "..."
 ]
 
 { #category : 'initialization' }
-ICCMAddVCardCommand >> initialize [
+ICAddVCardCommand >> initialize [
 	super initialize.
 	self
 		name: 'Add';

@@ -342,7 +342,7 @@ ICExportTest >> testExportLine [
 		'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttt', String crlf,
 		'  fff ggg hhh', String crlf.
 
-	self assert: (iCalExporter exportLine: line) dataStream contents = expected.
+	self assert: (iCalExporter exportLine: line) dataStream contents equals: expected.
 ]
 
 { #category : 'testing' }

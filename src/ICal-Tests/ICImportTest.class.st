@@ -247,32 +247,32 @@ ICImportTest >> testSynchronize [
 				month: 6
 				day: 14.
 	self assert: calendar components size equals: 3.
-	self assert: calendar todos size = 2.
-	self assert: calendar events size = 1.
+	self assert: calendar todos size equals: 2.
+	self assert: calendar events size equals: 1.
 	importCommand synchronize.
-	self assert: calendar components size = 3.
-	self assert: calendar todos size = 1.
-	self assert: calendar events size = 2.
+	self assert: calendar components size equals: 3.
+	self assert: calendar todos size equals: 1.
+	self assert: calendar events size equals: 2.
 	self assert: (calendar includesEventWithUid: event uid).
 	self assert: (calendar includesTodoWithUid: todo uid).
 	self assert: (calendar includesComponentWithUid: event uid).
 	self assert: (calendar includesComponentWithUid: todo uid).
 	self deny: (calendar includesTodoWithUid: otherTodo uid).
 	events := calendar componentForDate: date.
-	self assert: events size = 3.
+	self assert: events size equals: 3.
 	tempEvent := events detect: [:each | each summary = 'test1'].
 	self assert: tempEvent isHighPriority.
-	self assert: tempEvent location = 'Bern'.
+	self assert: tempEvent location equals: 'Bern'.
 	self assert: tempEvent isConfirmed.
-	self assert: tempEvent textualDescription = 'blabla'.
+	self assert: tempEvent textualDescription equals: 'blabla'.
 	self 
-		assert: tempEvent start = (self dateAndTimeClass date: date
+		assert: tempEvent start equals: (self dateAndTimeClass date: date
 						time: (self timeClass 
 								hour: 11
 								minute: 0
 								second: 0)).
 	self 
-		assert: tempEvent end = (self dateAndTimeClass date: date
+		assert: tempEvent end equals: (self dateAndTimeClass date: date
 						time: (self timeClass 
 								hour: 13
 								minute: 0
@@ -281,15 +281,15 @@ ICImportTest >> testSynchronize [
 	tempEvent := events detect: [:each | each summary = 'todo1'].
 	self assert: tempEvent isHighPriority.
 	self assert: tempEvent isCompleted.
-	self assert: tempEvent textualDescription = 'testest'.
+	self assert: tempEvent textualDescription equals: 'testest'.
 	self 
-		assert: tempEvent due = (self dateAndTimeClass date: date
+		assert: tempEvent due equals: (self dateAndTimeClass date: date
 						time: (self timeClass 
 								hour: 15
 								minute: 0
 								second: 0)).
 	self 
-		assert: tempEvent completed = (self dateAndTimeClass date: date
+		assert: tempEvent completed equals: (self dateAndTimeClass date: date
 						time: (self timeClass 
 								hour: 11
 								minute: 9
@@ -335,11 +335,11 @@ ICImportTest >> testUnfolding [
 'END:VCALENDAR' , String crlf.
 	calendar := ICCalendarHandParser parseCalendarString: importString.
 	event := calendar events first.
-	self assert: event start = (self dateClass year: 2005 month: 6 day: 14).
-	self assert: event summary = 'test'.
-	self assert: event location = 'Bern'.
+	self assert: event start equals: (self dateClass year: 2005 month: 6 day: 14).
+	self assert: event summary equals: 'test'.
+	self assert: event location equals: 'Bern'.
 	self assert: event isOpaque.
-	self assert: event textualDescription = 'blabla'.
-	self assert: event categories size = 1.
-	self assert: event categories first summary = 'business'.
+	self assert: event textualDescription equals: 'blabla'.
+	self assert: event categories size equals: 1.
+	self assert: event categories first summary equals: 'business'.
 ]

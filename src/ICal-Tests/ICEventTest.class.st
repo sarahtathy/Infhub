@@ -86,17 +86,18 @@ ICEventTest >> setUpToDo [
 
 { #category : 'testing' }
 ICEventTest >> testHours [
-  self assert: (appointment1 hours asInteger = 3).
-  self assert: (appointment2 hours = (1 +(1/6)) asFloat).
+ 
+  self assert: appointment1 hours asInteger equals: 3.
+  self assert: appointment2 hours equals: (1 +(1/6)) asFloat.
    
 ]
 
 { #category : 'testing' }
 ICEventTest >> testIDs [
 	| aTodo |
-	self assert: appointment1 uid = 'app1'.
-	self assert: appointment2 uid = 'app2'.
-	self assert: todo uid = 'todo1'.
+	self assert: appointment1 uid equals: 'app1'.
+	self assert: appointment2 uid equals: 'app2'.
+	self assert: todo uid equals: 'todo1'.
 	calendar addEvent: (
 		ICTodo new
 			summary: 'cleaning';
@@ -105,16 +106,16 @@ ICEventTest >> testIDs [
 	aTodo := ICTodo summary: 'shopping'.
 	aTodo uid: 'todo3'.
 	calendar addEvent: aTodo.
-	self assert: aTodo uid = 'todo3'.
-	self assert: (calendar eventWithUid: 'app1') == appointment1.
-	self assert: (calendar eventWithUid: 'todo2') summary = 'cleaning'
+	self assert: aTodo uid equals: 'todo3'.
+	self assert: (calendar eventWithUid: 'app1') equals: appointment1.
+	self assert: (calendar eventWithUid: 'todo2') summary equals: 'cleaning'
 ]
 
 { #category : 'testing' }
 ICEventTest >> testInitialize [
 	| anAppointment |
 	anAppointment := ICEvent summary: 'physical test'.
-	self assert: anAppointment summary = 'physical test'.
+	self assert: anAppointment summary equals: 'physical test'.
 	self assert: anAppointment textualDescription isNil.
 	self assert: anAppointment lastModified isNil.
 	self assert: anAppointment isMediumPriority
@@ -172,16 +173,16 @@ ICEventTest >> testUpdateAppointment [
 	appEvent := ICEvent summary: 'meeting'.
 	calendar addEvent: appEvent.
 	appEvent updateEventWith: appointment1.
-	self assert: appEvent summary = appointment1 summary.
-	self assert: appEvent categories = appointment1 categories.
-	self assert: appEvent textualDescription = appointment1 textualDescription.
-	self assert: appEvent status = appointment1 status.
-	self assert: appEvent priority = appointment1 priority.
-	self assert: appEvent created = appointment1 created.
-	self assert: appEvent lastModified = appointment1 lastModified.
-	self assert: appEvent sequenceNumber = appointment1 sequenceNumber.
-	self assert: appEvent start = appointment1 start.
-	self assert: appEvent end = appointment1 end.
+	self assert: appEvent summary equals: appointment1 summary.
+	self assert: appEvent categories equals: appointment1 categories.
+	self assert: appEvent textualDescription equals: appointment1 textualDescription.
+	self assert: appEvent status equals: appointment1 status.
+	self assert: appEvent priority equals: appointment1 priority.
+	self assert: appEvent created equals: appointment1 created.
+	self assert: appEvent lastModified equals: appointment1 lastModified.
+	self assert: appEvent sequenceNumber equals: appointment1 sequenceNumber.
+	self assert: appEvent start equals: appointment1 start.
+	self assert: appEvent end equals: appointment1 end.
 ]
 
 { #category : 'testing' }
@@ -189,13 +190,13 @@ ICEventTest >> testUpdateToDo [
 	| todoEvent |
 	todoEvent := ICTodo summary: 'todo'.
 	todoEvent updateEventWith: todo.
-	self assert: todoEvent summary = todo summary.
-	self assert: todoEvent categories = todo categories.
-	self assert: todoEvent textualDescription = todo textualDescription.
-	self assert: todoEvent status = todo status.
-	self assert: todoEvent priority = todo priority.
-	self assert: todoEvent created = todo created.
-	self assert: todoEvent lastModified = todo lastModified.
-	self assert: todoEvent sequenceNumber = todo sequenceNumber.
-	self assert: todoEvent due = todo due
+	self assert: todoEvent summary equals: todo summary.
+	self assert: todoEvent categories equals: todo categories.
+	self assert: todoEvent textualDescription equals: todo textualDescription.
+	self assert: todoEvent status equals: todo status.
+	self assert: todoEvent priority equals: todo priority.
+	self assert: todoEvent created equals: todo created.
+	self assert: todoEvent lastModified equals: todo lastModified.
+	self assert: todoEvent sequenceNumber equals: todo sequenceNumber.
+	self assert: todoEvent due equals: todo due
 ]

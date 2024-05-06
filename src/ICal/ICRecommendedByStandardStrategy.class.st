@@ -79,7 +79,7 @@ ICRecommendedByStandardStrategy >> gethostnameFFi [
 
 { #category : 'accessing' }
 ICRecommendedByStandardStrategy >> hostName [
-	hostName isNil ifTrue: [
+	hostName ifNil: [
 		hostName := self getHostName ].
 	^hostName
 ]

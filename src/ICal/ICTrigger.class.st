@@ -55,7 +55,7 @@ ICTrigger >> beRelatedToStart [
 { #category : 'exporting' }
 ICTrigger >> exportICalParametersOn: anExpoter [
 	super exportICalParametersOn: anExpoter.
-	self related isNil ifFalse: [
+	self related ifNotNil: [
 		anExpoter exportParameter: 'RELATED' value: self related ]
 ]
 

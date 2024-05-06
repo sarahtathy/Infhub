@@ -71,11 +71,11 @@ ICName >> additionalNames: aCollection [
 { #category : 'converting' }
 ICName >> asVCardString [
 	^String streamContents: [ :stream |
-		self familyName isNil ifFalse: [
+		self familyName ifNotNil: [
 			stream nextPutAll: self familyName asVCardString ].
 		stream nextPut: $; .
 
-		self givenName isNil ifFalse: [
+		self givenName ifNotNil: [
 			stream nextPutAll: self givenName asVCardString ].
 		stream nextPut: $; .
 
@@ -100,10 +100,10 @@ ICName >> displayString [
 		| writeBlock |
 		writeBlock := [ :each | stream nextPutAll: each; space ].
 		self honorificPrefixes do: writeBlock.
-		self givenName isNil ifFalse: [
+		self givenName ifNotNil: [
 			writeBlock value: self givenName ].
 		self additionalNames do: writeBlock.
-		self familyName isNil ifFalse: [
+		self familyName ifNotNil: [
 			writeBlock value: self familyName ].
 		self honorificSuffixes do: writeBlock ]
 	

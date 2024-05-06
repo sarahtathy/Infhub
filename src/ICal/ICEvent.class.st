@@ -69,9 +69,9 @@ ICEvent >> beConfirmed [
 ICEvent >> beFullDay [
 	self start ifNotNil: [
 		self start: self start asDate ].
-	self end isNil
-		ifTrue: [ self end: self start + (self durationClass days: 1) ]
-		ifFalse: [ self end: self end asDate ]	
+	self end 
+		ifNotNil: [ self end: self start + (self durationClass days: 1) ]
+		ifNil: [ self end: self end asDate ]	
 ]
 
 { #category : 'transparency' }

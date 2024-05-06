@@ -31,7 +31,7 @@ ICTimezoneName >> asICalString [
 { #category : 'exporting' }
 ICTimezoneName >> exportICalParametersOn: anExpoter [
 	super exportICalParametersOn: anExpoter.
-	self language isNil ifFalse: [
+	self language ifNotNil: [
 		anExpoter exportParameter: 'LANGUAGE' value: self language ]
 ]
 
@@ -50,7 +50,7 @@ ICTimezoneName >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	
-	self language isNil ifFalse: [
+	self language ifNotNil: [
 		aStream
 			nextPutAll: self language;
 			nextPut: $: ].

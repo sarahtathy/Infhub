@@ -145,9 +145,9 @@ ICTodo >> updateEventWith: anEventOrCommand [
 
 	anEventOrCommand isCompleted ifTrue: [
 		self beCompleted.
-		anEventOrCommand completed isNil ifTrue: [
+		anEventOrCommand completed ifNil: [
 			self completed: self dateAndTimeClass now.
-		] ifFalse: [
+		] ifNotNil: [
 			self completed: anEventOrCommand completed.
 		].
 	]

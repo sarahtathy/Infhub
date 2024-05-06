@@ -21,9 +21,8 @@ ICCalendarGenerator >> action: aString parameters: aDictionary [
 
 { #category : 'accessing' }
 ICCalendarGenerator >> activeComponent [
-	^self tempAlarm isNil
-		ifTrue: [ self tempComponent ]
-		ifFalse: [ self tempAlarm ]
+	^self tempAlarm 
+		ifNil: [ self tempComponent ] ifNotNil: [ self tempAlarm ]
 ]
 
 { #category : 'accessing' }
@@ -112,12 +111,11 @@ ICCalendarGenerator >> completed: aString parameters: aDictionary [
 
 { #category : 'productions' }
 ICCalendarGenerator >> contentline: aName parameters: aCollection value: aString [
-	self calendar isNil
-		ifFalse: [
+	self calendar ifNotNil: [  
 			ICCalendarVersion
 				use: self calendar version
 				during: [ super contentline: aName parameters: aCollection value: aString ] ]
-		ifTrue: [ super contentline: aName parameters: aCollection value: aString ]
+		ifNil: [ super contentline: aName parameters: aCollection value: aString ]
 ]
 
 { #category : 'utilities' }
@@ -377,10 +375,10 @@ ICCalendarGenerator >> tempTime: aTime [
 
 { #category : 'accessing' }
 ICCalendarGenerator >> topStack [
-	self tempAlarm isNil ifFalse: [
+	self tempAlarm ifNotNil: [
 		^self tempAlarm ].
 	
-	self tempTime isNil ifFalse: [
+	self tempTime ifNotNil: [
 		^self tempTime ].
 	
 	^self tempComponent

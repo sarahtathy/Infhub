@@ -65,12 +65,12 @@ ICVCardGenerator >> category: aString parameters: aDictionary [
 
 { #category : 'productions' }
 ICVCardGenerator >> contentline: aName parameters: aCollection value: aString [
-	self currentCard isNil
-		ifFalse: [
+	self currentCard 
+		ifNotNil: [
 			ICCardVersion
 				use: self currentCard version
 				during: [ super contentline: aName parameters: aCollection value: aString ] ]
-		ifTrue: [ super contentline: aName parameters: aCollection value: aString ]
+		ifNil: [ super contentline: aName parameters: aCollection value: aString ]
 ]
 
 { #category : 'private' }

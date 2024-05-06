@@ -89,7 +89,7 @@ ICTimezone >> lastModified: aDateAndTime [
 { #category : 'accessing' }
 ICTimezone >> printOn: aStream [
 	super printOn: aStream.
-	self id isNil ifFalse: [
+	self id ifNotNil: [
 		aStream
 			nextPut: $(;
 			nextPutAll: self id;

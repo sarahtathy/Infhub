@@ -78,31 +78,31 @@ ICAddress class >> typePostal [
 { #category : 'converting' }
 ICAddress >> asVCardString [
 	^String streamContents: [ :stream |
-		self poBox isNil ifFalse: [
+		self poBox ifNotNil: [
 			stream nextPutAll: self poBox asVCardString ].
 		stream nextPut: $;.
 
-		self extended isNil ifFalse: [
+		self extended ifNotNil: [
 			stream nextPutAll: self extended asVCardString ].
 		stream nextPut: $;.
 
-		self street isNil ifFalse: [
+		self street ifNotNil: [
 			stream nextPutAll: self street asVCardString ].
 		stream nextPut: $;.
 
-		self locality isNil ifFalse: [
+		self locality ifNotNil: [
 			stream nextPutAll: self locality asVCardString ].
 		stream nextPut: $;.
 
-		self region isNil ifFalse: [
+		self region ifNotNil: [
 			stream nextPutAll: self region asVCardString ].
 		stream nextPut: $;.
 
-		self postalcode isNil ifFalse: [
+		self postalcode ifNotNil: [
 			stream nextPutAll: self postalcode asVCardString ].
 		stream nextPut: $;.
 
-		self country isNil ifFalse: [
+		self country ifNotNil: [
 			stream nextPutAll: self country asVCardString ] ]
 ]
 

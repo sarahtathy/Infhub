@@ -219,8 +219,7 @@ ICExporter >> scanForBeginningCharacterAt: anInteger in: aString [
 { #category : 'testing' }
 ICExporter >> shouldExport: anObject [
 	^(anObject isNil
-		or: [ (anObject isCollection and: [ anObject isEmpty ])
-				and: [ anObject isString not ] ]) not
+		or: [   (anObject isCollection and: [ anObject isEmpty ])                                                       and: [anObject isString not]]) not
 ]
 
 { #category : 'accessing' }

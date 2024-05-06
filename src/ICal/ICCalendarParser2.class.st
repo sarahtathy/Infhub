@@ -196,8 +196,7 @@ ICCalendarParser2 >> reduceActionForRepeatXXGroupXXXXXXXXXparam1: nodes [
 
 { #category : 'generated-reduction actions' }
 ICCalendarParser2 >> reduceActionForRepeatXXGroupXXXXXXXXXparam2: nodes [ 
-	^(nodes at: 1)
-		add: (nodes at: 2);
+	^(nodes at: 1) add: (nodes at: 2);
 		yourself
 ]
 

@@ -331,7 +331,7 @@ ICCalendar >> name: aString [
 { #category : 'printing' }
 ICCalendar >> printOn: aStream [
 	super printOn: aStream.
-	self name isNil ifFalse: [
+	self name ifNotNil: [
 		aStream
 			nextPut: $(;
 			nextPutAll: self name;

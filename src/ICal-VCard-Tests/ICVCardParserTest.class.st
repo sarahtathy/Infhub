@@ -1,6 +1,10 @@
 Class {
 	#name : 'ICVCardParserTest',
 	#superclass : 'ICTest',
+	#instVars : [
+		'cards',
+		'card'
+	],
 	#category : 'ICal-VCard-Tests',
 	#package : 'ICal-VCard-Tests'
 }
@@ -535,7 +539,7 @@ ICVCardParserTest >> surendarCardString [
 { #category : 'tests - exporting' }
 ICVCardParserTest >> testExportAvi [
 
-	| cards exporter str |
+	| exporter str |
 	cards := ICCardHandParser parseVCardString: self aviCardString.
 	cards anyOne photo: nil.
 
@@ -551,7 +555,7 @@ ICVCardParserTest >> testExportAvi [
 { #category : 'tests - exporting' }
 ICVCardParserTest >> testExportGoofy [
 
-	| cards exporter str |
+	| exporter str |
 	cards := ICCardHandParser parseVCardString: self goofyCardString.
 	cards anyOne photo: nil.
 
@@ -567,7 +571,6 @@ ICVCardParserTest >> testExportGoofy [
 { #category : 'tests - exporting' }
 ICVCardParserTest >> testIsOrganization [
 
-	| card |
 	card := ICVCard new
 		fullname: 'Tantek Celik';
 		yourself.
@@ -613,7 +616,8 @@ ICVCardParserTest >> testName [
 
 { #category : 'tests - parsing' }
 ICVCardParserTest >> testParseAvi [
-	| cards card address name phoneNumber emailAddress imid |
+
+| address name phoneNumber emailAddress imid |
 	
 	cards := ICCardHandParser parseVCardString: self aviCardString.
 
@@ -709,11 +713,111 @@ ICVCardParserTest >> testParseAvi [
 	
 ]
 
-{ #category : 'tests - address parts' }
-ICVCardParserTest >> testParseAviName [
+{ #category : 'tests - parsing' }
+ICVCardParserTest >> testParseAviAddress [
+
+| address |
 	
-	| card name |
-	card := self parseAndReturnFirstFromString: self aviCardString.
+	cards := ICCardHandParser parseVCardString: self aviCardString.
+
+	self assert: cards size equals: 1.
+	card := cards anyOne.
+	
+	self assert: card addresses size equals: 1.
+	address := card addresses anyOne.
+	
+	self assert: address isHome.
+	self deny: address isDomestic.
+	self deny: address isInternational.
+	self deny: address isParcel.
+	self deny: address isPostal.
+	self assert: address isPreferred.
+	self deny: address isWork.
+	
+	self assert: address poBox isEmptyOrNil.
+	self assert: address extended isEmptyOrNil.
+	
+	self assert: address street equals: 'xxx E. xx Ave'.
+	self assert: address locality equals: 'Vancouver'.
+	self assert: address region equals: 'BC'.
+	self assert: address postalcode equals: 'V5V 1E3'.
+	self assert: address country equals: 'Canada'.
+	
+]
+
+{ #category : 'tests - parsing' }
+ICVCardParserTest >> testParseAviAimids [
+
+| imid |
+	
+	cards := ICCardHandParser parseVCardString: self aviCardString.
+
+	self assert: cards size equals: 1.
+	card := cards anyOne.
+	
+	self assert: card photo iCalType equals: 'BINARY'.
+	
+	self assert: card aimids size equals: 1.
+	imid := card aimids anyOne.
+	self assert: (imid isKindOf: ICAIMId).
+	self assert: imid isPreferred.
+	self deny: imid isWork.
+	self deny: imid isHome.
+	self assert: imid id equals: 'avbry'.
+	
+	self assert: card icqids isEmpty.
+	
+	self assert: card msnids size equals: 1.
+	imid := card msnids anyOne.
+	self assert: (imid isKindOf: ICMSNId).
+	self assert: imid isPreferred.
+	self deny: imid isWork.
+	self deny: imid isHome.
+	self assert: imid id equals: 'avi666@hotmail.com'.
+	
+
+	
+]
+
+{ #category : 'tests - parsing' }
+ICVCardParserTest >> testParseAviEmailAddress [ 
+
+| emailAddress |
+	
+	cards := ICCardHandParser parseVCardString: self aviCardString.
+
+	self assert: cards size equals: 1.
+	card := cards anyOne.
+	
+	self assert: card emailAddresses size equals: 2.
+	emailAddress := card emailAddresses first.
+	self assert: emailAddress address equals: 'avi@smallthought.com'.
+	self assert: emailAddress isWork.
+	self assert: emailAddress isPreferred.
+	self deny: emailAddress isHome.
+	self assert: emailAddress isInternet.
+	self deny: emailAddress isX400.
+	
+	emailAddress := card emailAddresses second.
+	self assert: emailAddress address equals: 'avi.bryant@gmail.com'.
+	self deny: emailAddress isWork.
+	self deny: emailAddress isPreferred.
+	self assert: emailAddress isHome.
+	self assert: emailAddress isInternet.
+	self deny: emailAddress isX400.
+	
+	
+]
+
+{ #category : 'tests - parsing' }
+ICVCardParserTest >> testParseAviName [
+
+| name |
+	
+	cards := ICCardHandParser parseVCardString: self aviCardString.
+
+	self assert: cards size equals: 1.
+	card := cards anyOne.
 	
 	self assert: card fullname equals: 'Avi Bryant'.
 	self assert: card version equals: 3.0.
@@ -724,12 +828,56 @@ ICVCardParserTest >> testParseAviName [
 	self assert: name additionalNames isEmptyOrNil.
 	self assert: name honorificPrefixes isEmptyOrNil.
 	self assert: name honorificSuffixes isEmptyOrNil.
+	
+]
 
+{ #category : 'tests - parsing' }
+ICVCardParserTest >> testParseAviPhoneNumber [
+
+| phoneNumber |
+	
+	cards := ICCardHandParser parseVCardString: self aviCardString.
+
+	self assert: cards size equals: 1.
+	card := cards anyOne.
+	
+	self assert: card phoneNumbers size equals: 1.
+	phoneNumber := card phoneNumbers first.
+	self assert: phoneNumber number equals: '(778) xxx-xxxx'.
+	self assert: phoneNumber isHome.
+	self assert: phoneNumber isPreferred.
+	self deny: phoneNumber isWork.
+	self deny: phoneNumber isBulletinBoard.
+	self deny: phoneNumber isCar.
+	self deny: phoneNumber isCellular.
+	self deny: phoneNumber isFax.
+	self deny: phoneNumber isISDN.
+	self deny: phoneNumber isModem.
+	self deny: phoneNumber isPager.
+	self deny: phoneNumber isVoice.
+	self deny: phoneNumber isVoiceMessage.
+	
+	
+]
+
+{ #category : 'tests - parsing' }
+ICVCardParserTest >> testParseAviPosition [ 
+	
+	cards := ICCardHandParser parseVCardString: self aviCardString.
+
+	self assert: cards size equals: 1.
+	card := cards anyOne.
+	
+	
+	self assert: card yahooids isEmpty.
+	self assert: (card timeZone isKindOf: ICUtcOffset).
+	self assert: card timeZone totalSeconds equals: (5 * 60 * 60) negated
+	
 ]
 
 { #category : 'tests - parsing' }
 ICVCardParserTest >> testParseEric [
-	| cards card name imid |
+	| name imid |
 	cards := ICCardHandParser parseVCardString: self ericCardString.
 	self assert: cards size equals: 1.
 	card := cards anyOne.
@@ -779,7 +927,7 @@ ICVCardParserTest >> testParseEric [
 
 { #category : 'tests - parsing' }
 ICVCardParserTest >> testParseGoofy [
-	| cards card address name phoneNumber |
+	| address name phoneNumber |
 	cards := ICCardHandParser parseVCardString: self goofyCardString.
 	self assert: cards size equals: 1.
 	card := cards anyOne.
@@ -854,7 +1002,7 @@ ICVCardParserTest >> testParseGoofy [
 
 { #category : 'tests - parsing' }
 ICVCardParserTest >> testParseMaeve [
-	| cards card name imid |
+	| name imid |
 	cards := ICCardHandParser parseVCardString: self maeveCardString.
 	self assert: cards size equals: 1.
 	card := cards anyOne.
@@ -900,7 +1048,6 @@ ICVCardParserTest >> testParseMaeve [
 ICVCardParserTest >> testParseMaeveUrl [
 	"The vCard uses backslashes (\) to escape characters in URLs, which is not compliant with the vCard 3.0 specification. According to RFC 6350, URLs should be encoded properly without needing to escape characters. For example, spaces in URLs should be encoded as %20 instead of being escaped with a backslash."
 
-	| cards card |
 	cards := ICCardHandParser parseVCardString: self maeveCardString.
 	self assert: cards size equals: 1.
 	card := cards anyOne.
@@ -912,7 +1059,7 @@ ICVCardParserTest >> testParseMaeveUrl [
 
 { #category : 'tests - parsing' }
 ICVCardParserTest >> testParseOscar [
-	| cards card address name phoneNumber emailAddress organization |
+	| address name phoneNumber emailAddress organization |
 	cards := ICCardHandParser parseVCardString: self oscarCardString.
 	self assert: cards size equals: 1.
 	card := cards anyOne.
@@ -1051,7 +1198,7 @@ Neubrueckstrasse 10'.
 
 { #category : 'tests - parsing' }
 ICVCardParserTest >> testParseOscarUrl [
-	| cards card |
+
 	cards := ICCardHandParser parseVCardString: self oscarCardString.
 	self assert: cards size equals: 1.
 	card := cards anyOne.

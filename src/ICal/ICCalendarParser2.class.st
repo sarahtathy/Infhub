@@ -90,7 +90,7 @@ ICCalendarParser2 class >> startingStateForcalendar [
 { #category : 'utilities' }
 ICCalendarParser2 >> asSelector: aString [
 	| parts |
-	parts := aString subStrings: #($-).
+	parts := aString substrings: #($-).
 	^String streamContents: [ :stream |
 		parts allButFirst do: [ :each |
 			stream nextPutAll: each asLowercase ].

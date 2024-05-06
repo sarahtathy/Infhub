@@ -12,7 +12,7 @@ ICRecurrenceRuleTest >> testHours [
 	
 	rule addHour: 5.	
 	expected := 'FREQ=MONTHLY;BYHOUR=5'.
-	self assert: expected = rule asICalString.
+	self assert: expected equals: rule asICalString.
 	
 	rule addHour: 15.	
 	firstOption := 'FREQ=MONTHLY;BYHOUR=15,5'.
@@ -45,22 +45,22 @@ ICRecurrenceRuleTest >> testRepetition [
 	
 	rule count: 4.	
 	expected := 'FREQ=MONTHLY;COUNT=4'.
-	self assert: expected = rule asICalString.
+	self assert: expected equals: rule asICalString.
 	
 	rule until: (self dateClass year: 1997 month: 3 day: 10).
 	expected := 'FREQ=MONTHLY;UNTIL=19970310'.
-	self assert: expected = rule asICalString.
+	self assert: expected equals: rule asICalString.
 	
 	rule count: 2.
 	expected := 'FREQ=MONTHLY;COUNT=2'.
-	self assert: expected = rule asICalString.
+	self assert: expected equals: rule asICalString.
 ]
 
 { #category : 'testing' }
 ICRecurrenceRuleTest >> testSimple [
 	| rule |
 	rule := ICRecurrenceRule frequency: 'MONTHLY'.
-	self assert: 'FREQ=MONTHLY' = rule asICalString
+	self assert: 'FREQ=MONTHLY' equals: rule asICalString
 ]
 
 { #category : 'testing' }

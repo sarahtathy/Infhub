@@ -7,60 +7,60 @@ Class {
 
 { #category : 'testing' }
 ICConversionTest >> testBoolean [
-	self assert: 'TRUE'  = true asICalString.
-	self assert: 'FALSE'  = false asICalString.
+	self assert: 'TRUE'  equals: true asICalString.
+	self assert: 'FALSE'  equals: false asICalString.
 ]
 
 { #category : 'testing' }
 ICConversionTest >> testDate [
 	| date |
 	date := self dateClass year: 1901 month: 1 day: 1.
-	self assert: '19010101'  = date asICalString.
-	self assert: '1901-01-01' = date asVCardString.
+	self assert: '19010101'  equals: date asICalString.
+	self assert: '1901-01-01' equals: date asVCardString.
 	
 	date := self dateClass year: 1901 month: 2 day: 1.
-	self assert: '19010201'  = date asICalString.
-	self assert: '1901-02-01'  = date asVCardString.
+	self assert: '19010201'  equals: date asICalString.
+	self assert: '1901-02-01'  equals: date asVCardString.
 	
 	date := self dateClass year: 1901 month: 11 day: 22 .
-	self assert: '19011122'  = date asICalString.
-	self assert: '1901-11-22'  = date asVCardString.
+	self assert: '19011122'  equals: date asICalString.
+	self assert: '1901-11-22'  equals: date asVCardString.
 	
 	date := self dateClass year: 1997 month: 7 day: 14 .
-	self assert: '19970714'  = date asICalString.
-	self assert: '1997-07-14'  = date asVCardString.
+	self assert: '19970714'  equals: date asICalString.
+	self assert: '1997-07-14'  equals: date asVCardString.
 ]
 
 { #category : 'testing' }
 ICConversionTest >> testDateAndTime [
 	| dateAndTime |
 	dateAndTime := self dateAndTimeClass  year: 1950 month: 11 day: 22 hour: 22 minute: 33 second: 44.
-	self assert: '19501122T223344'  = dateAndTime asICalString.
+	self assert: '19501122T223344'  equals: dateAndTime asICalString.
 	
 	dateAndTime := self dateAndTimeClass  year: 1950 month: 1 day: 2 hour: 3 minute: 4 second: 5.
-	self assert: '19500102T030405'  = dateAndTime asICalString.
+	self assert: '19500102T030405'  equals: dateAndTime asICalString.
 	
 	dateAndTime := self dateAndTimeClass  year: 1998 month: 1 day: 19 hour: 7 minute: 0 second: 0.
-	self assert: '19980119T070000'  = dateAndTime asICalString.
+	self assert: '19980119T070000'  equals: dateAndTime asICalString.
 	
 	dateAndTime := self dateAndTimeClass  year: 1998 month: 1 day: 18 hour: 23 minute: 0 second: 0.
-	self assert: '19980118T230000'  = dateAndTime asICalString.
+	self assert: '19980118T230000'  equals: dateAndTime asICalString.
 ]
 
 { #category : 'testing' }
 ICConversionTest >> testDateAndTimeUtc [
 	| dateAndTime |
 	dateAndTime := self dateAndTimeClass  year: 1950 month: 11 day: 22 hour: 22 minute: 33 second: 44 offset: (self durationClass seconds: 0).
-	self assert: '19501122T223344Z'  = dateAndTime asICalUtcString.
+	self assert: '19501122T223344Z'  equals: dateAndTime asICalUtcString.
 	
 	dateAndTime := self dateAndTimeClass  year: 1950 month: 1 day: 2 hour: 3 minute: 4 second: 5 offset: (self durationClass seconds: 0).
-	self assert: '19500102T030405Z'  = dateAndTime asICalUtcString.
+	self assert: '19500102T030405Z'  equals: dateAndTime asICalUtcString.
 	
 	dateAndTime := self dateAndTimeClass  year: 1998 month: 1 day: 19 hour: 7 minute: 0 second: 0 offset: (self durationClass seconds: 0).
-	self assert: '19980119T070000Z'  = dateAndTime asICalUtcString.
+	self assert: '19980119T070000Z'  equals: dateAndTime asICalUtcString.
 	
 	dateAndTime := self dateAndTimeClass  year: 1998 month: 1 day: 18 hour: 23 minute: 0 second: 0 offset: (self durationClass seconds: 0).
-	self assert: '19980118T230000Z'  = dateAndTime asICalUtcString.
+	self assert: '19980118T230000Z'  equals: dateAndTime asICalUtcString.
 ]
 
 { #category : 'testing' }
@@ -189,37 +189,37 @@ ICConversionTest >> testParseDuration [
 	| duration string |
 	string := 'P15DT5H0M20S'.
 	duration := self durationClass fromICalString: string.
-	self assert: string  = duration asICalString.
-	self assert: duration = (self durationClass days: 15 hours: 5 minutes: 0 seconds: 20).
+	self assert: string  equals: duration asICalString.
+	self assert: duration equals: (self durationClass days: 15 hours: 5 minutes: 0 seconds: 20).
 	
 	string := '-P15DT5H0M20S'.
 	duration := self durationClass fromICalString: string.
-	self assert: string  = duration asICalString.
-	self assert: duration = (self durationClass days: 15 hours: 5 minutes: 0 seconds: 20) negated.
+	self assert: string  equals: duration asICalString.
+	self assert: duration equals: (self durationClass days: 15 hours: 5 minutes: 0 seconds: 20) negated.
 	
 	string := 'P7W'.
 	duration := self durationClass fromICalString: string.
-	self assert: string  = duration asICalString.
-	self assert: duration = (self durationClass weeks: 7).
+	self assert: string  equals: duration asICalString.
+	self assert: duration equals: (self durationClass weeks: 7).
 	
 	string := '-P7W'.
 	duration := self durationClass fromICalString: string.
-	self assert: string  = duration asICalString.
-	self assert: duration = (self durationClass weeks: 7 negated).
-	self assert: duration = (self durationClass weeks: 7) negated.
+	self assert: string  equals: duration asICalString.
+	self assert: duration equals: (self durationClass weeks: 7 negated).
+	self assert: duration equals: (self durationClass weeks: 7) negated.
 	
 	string := 'PT5M'.
 	duration := self durationClass fromICalString: string.
-	self assert: 'PT0H5M0S'  = duration asICalString.
-	self assert: duration = (self durationClass days: 0 hours: 0 minutes: 5 seconds: 0).
+	self assert: 'PT0H5M0S'  equals: duration asICalString.
+	self assert: duration equals: (self durationClass days: 0 hours: 0 minutes: 5 seconds: 0).
 	
 	string := '-PT5M'.
 	duration := self durationClass fromICalString: string.
-	self assert: '-PT0H5M0S'  = duration asICalString.
-	self assert: duration = (self durationClass days: 0 hours: 0 minutes: 5 seconds: 0) negated.
-	self assert: duration = (self durationClass days: 0 hours: 0 minutes: 5 negated seconds: 0).
+	self assert: '-PT0H5M0S'  equals: duration asICalString.
+	self assert: duration equals: (self durationClass days: 0 hours: 0 minutes: 5 seconds: 0) negated.
+	self assert: duration equals: (self durationClass days: 0 hours: 0 minutes: 5 negated seconds: 0).
 	
-	self assert: (self durationClass fromICalString: 'PT0H5M0S') = (self durationClass fromICalString: 'PT5M').
+	self assert: (self durationClass fromICalString: 'PT0H5M0S') equals: (self durationClass fromICalString: 'PT5M').
 ]
 
 { #category : 'testing' }
@@ -227,13 +227,13 @@ ICConversionTest >> testParseFloat [
 	| float string |
 	string := '-3.14'.
 	float := Float fromICalString: string.
-	self assert: string  = float asICalString.
-	self assert: float = -3.14.
+	self assert: string  equals: float asICalString.
+	self assert: float equals: -3.14.
 	
 	string := '1.333'.
 	float := Float fromICalString: string.
-	self assert: string  = float asICalString.
-	self assert: float = 1.333.
+	self assert: string  equals: float asICalString.
+	self assert: float equals: 1.333.
 ]
 
 { #category : 'testing' }
@@ -241,23 +241,23 @@ ICConversionTest >> testParseInteger [
 	| integer string |
 	string := '-1'.
 	integer := Integer fromICalString: string.
-	self assert: string  = integer asICalString.
-	self assert: integer = -1.
+	self assert: string  equals: integer asICalString.
+	self assert: integer equals: -1.
 	
 	string := '1337'.
 	integer := Integer fromICalString: string.
-	self assert: string  = integer asICalString.
-	self assert: integer = 1337.
+	self assert: string  equals: integer asICalString.
+	self assert: integer equals: 1337.
 ]
 
 { #category : 'testing' }
 ICConversionTest >> testParseParameterString [
 	| string |
 	string := 'TESTME'.
-	self assert: 'TESTME' = string asICalParameterString.
+	self assert: 'TESTME' equals: string asICalParameterString.
 	
 	string := 'TEST;ME'.
-	self assert: '"TEST;ME"' = string asICalParameterString.
+	self assert: '"TEST;ME"' equals: string asICalParameterString.
 ]
 
 { #category : 'testing' }
@@ -280,13 +280,13 @@ ICConversionTest >> testParseString [
 	| string value |
 	string := 'test me!'.
 	value := String fromICalString: string.
-	self assert: string = value asICalString.
+	self assert: string equals: value asICalString.
 	
 	string := '":\\\,\;\n'.
 	value := String fromICalString: string.
-	self assert: value = '":\,;
+	self assert: value equals: '":\,;
 '.
-	self assert: string = value asICalString
+	self assert: string equals: value asICalString
 ]
 
 { #category : 'testing' }
@@ -372,13 +372,13 @@ ICConversionTest >> testSelector [
 ICConversionTest >> testSplitComma [
 	| parts |
 	parts := 'a,b,c' splitAtCommas.
-	self assert: parts = #('a' 'b' 'c') asOrderedCollection.
+	self assert: parts equals: #('a' 'b' 'c') asOrderedCollection.
 	
 	parts := 'a\,b,c' splitAtCommas.
-	self assert: parts = #('a\,b' 'c') asOrderedCollection.
+	self assert: parts equals: #('a\,b' 'c') asOrderedCollection.
 	
 	parts := 'a\,b\,c' splitAtCommas.
-	self assert: parts = #('a\,b\,c') asOrderedCollection.
+	self assert: parts equals: #('a\,b\,c') asOrderedCollection.
 	
 	"parts := splitter splitAtCommas: ',,'.
 	self assert: parts = #('' '' '') asOrderedCollection.
@@ -391,26 +391,26 @@ ICConversionTest >> testSplitComma [
 ICConversionTest >> testTime [
 	| time |
 	time := self timeClass hour: 22 minute: 33 second: 44.
-	self assert: '223344'  = time asICalString.
+	self assert: '223344' equals: time asICalString.
 	
 	time := self timeClass hour: 0 minute: 0 second: 0.
-	self assert: '000000'  = time asICalString.
+	self assert: '000000'  equals: time asICalString.
 	
 	time := self timeClass hour: 1 minute: 2 second: 3.
-	self assert: '010203'  = time asICalString.
+	self assert: '010203'  equals: time asICalString.
 ]
 
 { #category : 'testing' }
 ICConversionTest >> testTimeUtc [
 	| time |
 	time := self timeClass hour: 22 minute: 33 second: 44.
-	self assert: '223344Z'  = time asICalUtcString.
+	self assert: '223344Z' equals: time asICalUtcString.
 	
 	time := self timeClass hour: 0 minute: 0 second: 0.
-	self assert: '000000Z'  = time asICalUtcString.
+	self assert: '000000Z'  equals: time asICalUtcString.
 	
 	time := self timeClass hour: 1 minute: 2 second: 3.
-	self assert: '010203Z'  = time asICalUtcString.
+	self assert: '010203Z'  equals: time asICalUtcString.
 ]
 
 { #category : 'testing' }
@@ -418,18 +418,18 @@ ICConversionTest >> testTimezoneName [
 	| name |
 	name := ICTimezoneName fromICalString: 'EST' parameters: Dictionary new.
 	
-	self assert: name text = 'EST'.
+	self assert: name text equals: 'EST'.
 	self assert: name language isNil.
 
 	name := ICTimezoneName fromICalString: 'HNE' parameters: (Dictionary with: 'LANGUAGE' -> 'fr-CA').
 	
-	self assert: name text = 'HNE'.
-	self assert: name language = 'fr-CA'.
+	self assert: name text equals: 'HNE'.
+	self assert: name language equals: 'fr-CA'.
 	
 	name := ICTimezoneName fromICalString: 'EST' parameters: (Dictionary with: 'LANGUAGE' -> 'en').
 	
-	self assert: name text = 'EST'.
-	self assert: name language = 'en'
+	self assert: name text equals: 'EST'.
+	self assert: name language equals: 'en'
 	
 	
 ]
@@ -471,31 +471,31 @@ ICConversionTest >> testUtcOffset [
 	| offset |
 	offset := ICUtcOffset fromICalString: '-0500'.
 	self deny: offset positive.
-	self assert: offset hours = 5.
-	self assert: offset minutes = 0.
-	self assert: offset seconds = 0.
-	self assert: '-0500'  = offset asICalString.
+	self assert: offset hours equals: 5.
+	self assert: offset minutes equals: 0.
+	self assert: offset seconds equals: 0.
+	self assert: '-0500'  equals: offset asICalString.
 	
 	offset := ICUtcOffset fromICalString: '+0100'.
 	self assert: offset positive.
-	self assert: offset hours = 1.
-	self assert: offset minutes = 0.
-	self assert: offset seconds = 0.
-	self assert: '+0100'  = offset asICalString.
+	self assert: offset hours equals: 1.
+	self assert: offset minutes equals: 0.
+	self assert: offset seconds equals: 0.
+	self assert: '+0100'  equals: offset asICalString.
 	
 	offset := ICUtcOffset fromICalString: '+010005'.
 	self assert: offset positive.
-	self assert: offset hours = 1.
-	self assert: offset minutes = 0.
-	self assert: offset seconds = 5.
-	self assert: '+010005'  = offset asICalString.
+	self assert: offset hours equals: 1.
+	self assert: offset minutes equals: 0.
+	self assert: offset seconds equals: 5.
+	self assert: '+010005'  equals: offset asICalString.
 	
 	offset := ICUtcOffset fromICalString: '-010005'.
 	self deny: offset positive.
-	self assert: offset hours = 1.
-	self assert: offset minutes = 0.
-	self assert: offset seconds = 5.
-	self assert: '-010005'  = offset asICalString.
+	self assert: offset hours equals: 1.
+	self assert: offset minutes equals: 0.
+	self assert: offset seconds equals: 5.
+	self assert: '-010005'  equals: offset asICalString.
 ]
 
 { #category : 'testing' }
@@ -504,5 +504,5 @@ ICConversionTest >> testWeeks [
 	0 to: 10 do: [ :week |
 		0 to: 6 do: [ :day |
 			duration := self durationClass days: week * 7 + day.
-			self assert: duration weeks = week ] ]
+			self assert: duration weeks equals: week ] ]
 ]

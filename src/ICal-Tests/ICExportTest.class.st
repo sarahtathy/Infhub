@@ -233,8 +233,8 @@ ICExportTest >> testExportDateEvent [
 				, 'END:VEVENT' , String crlf 
 				, self standardCalendarFooter.
 	export dataStream contents 
-		keysAndValuesDo: [:index :value | self assert: value = (str at: index)].
-	self assert: export dataStream contents = str
+		keysAndValuesDo: [:index :value | self assert: value equals: (str at: index)].
+	self assert: export dataStream contents equals: str
 ]
 
 { #category : 'testing' }
@@ -342,7 +342,7 @@ ICExportTest >> testExportLine [
 		'aaabbbcccddd dddcccbbbaaa zzz yyy xxx xxx yyy zzz bla foo bar xyz zyx ttttt', String crlf,
 		'  fff ggg hhh', String crlf.
 
-	self assert: (iCalExporter exportLine: line) dataStream contents = expected.
+	self assert: (iCalExporter exportLine: line) dataStream contents equals: expected.
 ]
 
 { #category : 'testing' }
@@ -386,8 +386,8 @@ ICExportTest >> testExportTimezoneFictitiousEastern [
 'END:VTIMEZONE', String crlf, 
 self standardCalendarFooter.
 	export dataStream contents 
-		keysAndValuesDo: [:index :value | self assert: value = (str at: index)].
-	self assert: export dataStream contents = str
+		keysAndValuesDo: [:index :value | self assert: value equals: (str at: index)].
+	self assert: export dataStream contents equals: str
 ]
 
 { #category : 'testing' }
@@ -423,8 +423,8 @@ ICExportTest >> testExportTimezoneFictitiousEasternThreeRules [
 'END:VTIMEZONE', String crlf, 
 self standardCalendarFooter.
 	export dataStream contents 
-		keysAndValuesDo: [:index :value | self assert: value = (str at: index)].
-	self assert: export dataStream contents = str
+		keysAndValuesDo: [:index :value | self assert: value equals: (str at: index)].
+	self assert: export dataStream contents equals: str
 ]
 
 { #category : 'testing' }
@@ -453,8 +453,8 @@ ICExportTest >> testExportTimezoneRecurrenceDate [
 'END:VTIMEZONE', String crlf,
 self standardCalendarFooter.
 	export dataStream contents 
-		keysAndValuesDo: [:index :value | self assert: value = (str at: index)].
-	self assert: export dataStream contents = str
+		keysAndValuesDo: [:index :value | self assert: value equals: (str at: index)].
+	self assert: export dataStream contents equals: str
 ]
 
 { #category : 'testing' }
@@ -484,8 +484,8 @@ ICExportTest >> testExportTimezoneWithEndDate [
 'END:VTIMEZONE', String crlf, 
 self standardCalendarFooter.
 	export dataStream contents 
-		keysAndValuesDo: [:index :value | self assert: value = (str at: index)].
-	self assert: export dataStream contents = str
+		keysAndValuesDo: [:index :value | self assert: value equals: (str at: index)].
+	self assert: export dataStream contents equals: str
 ]
 
 { #category : 'testing' }
@@ -508,8 +508,8 @@ ICExportTest >> testExportTodo [
 				, 'END:VTODO' , String crlf 
 				, self standardCalendarFooter.
 	export dataStream contents 
-		keysAndValuesDo: [:index :value | self assert: value = (str at: index)].
-	self assert: export dataStream contents = str
+		keysAndValuesDo: [:index :value | self assert: value equals: (str at: index)].
+	self assert: export dataStream contents equals: str
 ]
 
 { #category : 'testing' }
@@ -549,16 +549,16 @@ ICExportTest >> testExportUmlautLineNoBreak [
 
 { #category : 'testing' }
 ICExportTest >> testICalDate [
-	self assert: event start asDate asICalString = '20050425'.
-	self assert: event end asDate asICalString = '20050425'
+	self assert: event start asDate asICalString equals: '20050425'.
+	self assert: event end asDate asICalString equals: '20050425'
 ]
 
 { #category : 'testing' }
 ICExportTest >> testICalDateAndTime [
 	self 
-		assert: event start asICalString = '20050425T104500'.
+		assert: event start asICalString equals: '20050425T104500'.
 	self 
-		assert: event end asICalString = '20050425T120900'
+		assert: event end asICalString equals: '20050425T120900'
 ]
 
 { #category : 'private' }

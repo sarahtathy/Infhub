@@ -35,7 +35,7 @@ ICRemoveCategoryTest >> testRemove [
 	
 	self assert: (calendar categories includes: category).
   	self remove: 'irishdance'.
-  	self assert: (calendar categories size equals: (numCats - 1)).
+  	self assert: calendar categories size equals: numCats - 1. 
 	self deny: (calendar categories includes: category).
   	self should: [ calendar categoryWithSummary: 'irishdance' ] raise: Error
   

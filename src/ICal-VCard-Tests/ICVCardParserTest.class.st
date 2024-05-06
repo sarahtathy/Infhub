@@ -833,7 +833,7 @@ ICVCardParserTest >> testParseAviName [
 
 { #category : 'tests - parsing' }
 ICVCardParserTest >> testParseAviPhoneNumber [
-
+  
 | phoneNumber |
 	
 	cards := ICCardHandParser parseVCardString: self aviCardString.

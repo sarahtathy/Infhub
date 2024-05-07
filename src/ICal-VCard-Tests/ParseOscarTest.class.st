@@ -6,8 +6,27 @@ Class {
 }
 
 { #category : 'tests - parsing' }
-ParseOscarTest >> testParseOscarAddress [
-	| address |
+ParseOscarTest >> testParseOscarEmailAddress [
+
+	cards := ICCardHandParser parseVCardString: self oscarCardString.
+	self assert: cards size equals: 1.
+	card := cards anyOne.
+	
+	self assert: card emailAddresses size equals: 1.
+	emailAddress := card emailAddresses first.
+	self assert: emailAddress address equals: 'oscar.nierstrasz@acm.org'.
+	self assert: emailAddress isWork.
+	self assert: emailAddress isPreferred.
+	self deny: emailAddress isHome.
+	self assert: emailAddress isInternet.
+	self deny: emailAddress isX400.
+	
+
+]
+
+{ #category : 'tests - parsing' }
+ParseOscarTest >> testParseOscarFirstAddress [
+	
 	cards := ICCardHandParser parseVCardString: self oscarCardString.
 	self assert: cards size equals: 1.
 	card := cards anyOne.
@@ -34,70 +53,13 @@ Neubrueckstrasse 10'.
 	self assert: address postalcode equals: 'CH-3012'.
 	self assert: address country equals: 'SWITZERLAND'.
 	
-	address := card addresses second.
-	
-	self assert: address isHome.
-	self deny: address isDomestic.
-	self deny: address isInternational.
-	self deny: address isParcel.
-	self deny: address isPostal.
-	self deny: address isPreferred.
-	self deny: address isWork.
-	
-	self assert: address poBox isEmptyOrNil.
-	self assert: address extended isEmptyOrNil.
-	
-	self assert: address street equals: 'Fluhmattweg 41'.
-	self assert: address locality equals: 'Kehrsatz'.
-	self assert: address region isEmptyOrNil.
-	self assert: address postalcode equals: '3122'.
-	self assert: address country equals: 'SWITZERLAND'.
-	
-	address := card addresses third.
-	
-	self assert: address isHome.
-	self deny: address isDomestic.
-	self deny: address isInternational.
-	self deny: address isParcel.
-	self deny: address isPostal.
-	self deny: address isPreferred.
-	self deny: address isWork.
-	
-	self assert: address poBox isEmptyOrNil.
-	self assert: address extended isEmptyOrNil.
-	
-	self assert: address street equals: 'Schuetzenmattstrasse 14, room 103'.
-	self assert: address locality isEmptyOrNil.
-	self assert: address region isEmptyOrNil.
-	self assert: address postalcode isEmptyOrNil.
-	self assert: address country isEmptyOrNil.
 	
 	
-	
-]
-
-{ #category : 'tests - parsing' }
-ParseOscarTest >> testParseOscarEmailAddress [
-	| emailAddress |
-	cards := ICCardHandParser parseVCardString: self oscarCardString.
-	self assert: cards size equals: 1.
-	card := cards anyOne.
-	
-	self assert: card emailAddresses size equals: 1.
-	emailAddress := card emailAddresses first.
-	self assert: emailAddress address equals: 'oscar.nierstrasz@acm.org'.
-	self assert: emailAddress isWork.
-	self assert: emailAddress isPreferred.
-	self deny: emailAddress isHome.
-	self assert: emailAddress isInternet.
-	self deny: emailAddress isX400.
-	
-
 ]
 
 { #category : 'tests - parsing' }
 ParseOscarTest >> testParseOscarName [ 
-	|  name  |
+	
 	cards := ICCardHandParser parseVCardString: self oscarCardString.
 	self assert: cards size equals: 1.
 	card := cards anyOne.
@@ -134,7 +96,7 @@ ParseOscarTest >> testParseOscarOrganization [
 
 { #category : 'tests - parsing' }
 ParseOscarTest >> testParseOscarPhoneNumber [
-	|  phoneNumber |
+
 	cards := ICCardHandParser parseVCardString: self oscarCardString.
 	self assert: cards size equals: 1.
 	card := cards anyOne.
@@ -185,6 +147,67 @@ ParseOscarTest >> testParseOscarPhoneNumber [
 	self deny: phoneNumber isVoice.
 	self deny: phoneNumber isVoiceMessage.
 	
+]
+
+{ #category : 'tests - parsing' }
+ParseOscarTest >> testParseOscarSecondAddress [
+	
+	cards := ICCardHandParser parseVCardString: self oscarCardString.
+	self assert: cards size equals: 1.
+	card := cards anyOne.
+	
+	self assert: card addresses size equals: 3.
+	
+	address := card addresses second.
+	
+	self assert: address isHome.
+	self deny: address isDomestic.
+	self deny: address isInternational.
+	self deny: address isParcel.
+	self deny: address isPostal.
+	self deny: address isPreferred.
+	self deny: address isWork.
+	
+	self assert: address poBox isEmptyOrNil.
+	self assert: address extended isEmptyOrNil.
+	
+	self assert: address street equals: 'Fluhmattweg 41'.
+	self assert: address locality equals: 'Kehrsatz'.
+	self assert: address region isEmptyOrNil.
+	self assert: address postalcode equals: '3122'.
+	self assert: address country equals: 'SWITZERLAND'.
+	
+]
+
+{ #category : 'tests - parsing' }
+ParseOscarTest >> testParseOscarThirdAddress [
+	
+	cards := ICCardHandParser parseVCardString: self oscarCardString.
+	self assert: cards size equals: 1.
+	card := cards anyOne.
+	
+	self assert: card addresses size equals: 3.
+	
+	address := card addresses third.
+
+	self assert: address isHome.
+	self deny: address isDomestic.
+	self deny: address isInternational.
+	self deny: address isParcel.
+	self deny: address isPostal.
+	self deny: address isPreferred.
+	self deny: address isWork.
+
+	self assert: address poBox isEmptyOrNil.
+	self assert: address extended isEmptyOrNil.
+
+	self assert: address street equals: 'Schuetzenmattstrasse 14, room 103'.
+	self assert: address locality isEmptyOrNil.
+	self assert: address region isEmptyOrNil.
+	self assert: address postalcode isEmptyOrNil.
+	self assert: address country isEmptyOrNil.
+	
+
 ]
 
 { #category : 'tests - parsing' }

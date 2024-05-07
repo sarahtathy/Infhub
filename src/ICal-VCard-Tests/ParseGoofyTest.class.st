@@ -7,7 +7,7 @@ Class {
 
 { #category : 'tests - parsing' }
 ParseGoofyTest >> testParseGoofyAddress [ 
-	| address |
+
 	cards := ICCardHandParser parseVCardString: self goofyCardString.
 	self assert: cards size equals: 1.
 	card := cards anyOne.
@@ -36,29 +36,8 @@ ParseGoofyTest >> testParseGoofyAddress [
 ]
 
 { #category : 'tests - parsing' }
-ParseGoofyTest >> testParseGoofyName [
-	| name |
-	cards := ICCardHandParser parseVCardString: self goofyCardString.
-	self assert: cards size equals: 1.
-	card := cards anyOne.
-	
-	self assert: card fullname equals: 'Markus Tschannen'.
-	self assert: card version equals: 2.1.
-	self assert: card birthday equals: (self dateClass year: 1980 month: 10 day: 30).
-	name := card name.
-	self assert: name notNil.
-	self assert: name familyName equals: 'Tschannen'.
-	self assert: name givenName equals: 'Markus'.
-	self assert: name additionalNames isEmptyOrNil.
-	self assert: name honorificPrefixes isEmptyOrNil.
-	self assert: name honorificSuffixes isEmptyOrNil.
-	
-	self assert: card emailAddresses isEmpty.
-]
+ParseGoofyTest >> testParseGoofyFirstPhoneNumber [ 
 
-{ #category : 'tests - parsing' }
-ParseGoofyTest >> testParseGoofyPhoneNumber [ 
-	| phoneNumber |
 	cards := ICCardHandParser parseVCardString: self goofyCardString.
 	self assert: cards size equals: 1.
 	card := cards anyOne.
@@ -79,6 +58,52 @@ ParseGoofyTest >> testParseGoofyPhoneNumber [
 	self assert: phoneNumber isVoice.
 	self deny: phoneNumber isVoiceMessage.
 	
+	
+	
+	
+]
+
+{ #category : 'tests - parsing' }
+ParseGoofyTest >> testParseGoofyName [
+	
+	cards := ICCardHandParser parseVCardString: self goofyCardString.
+	self assert: cards size equals: 1.
+	card := cards anyOne.
+	
+	self assert: card fullname equals: 'Markus Tschannen'.
+	self assert: card version equals: 2.1.
+	self assert: card birthday equals: (self dateClass year: 1980 month: 10 day: 30).
+	name := card name.
+	self assert: name notNil.
+	self assert: name familyName equals: 'Tschannen'.
+	self assert: name givenName equals: 'Markus'.
+	self assert: name additionalNames isEmptyOrNil.
+	self assert: name honorificPrefixes isEmptyOrNil.
+	self assert: name honorificSuffixes isEmptyOrNil.
+	
+	self assert: card emailAddresses isEmpty.
+]
+
+{ #category : 'tests - parsing' }
+ParseGoofyTest >> testParseGoofyPosition [ 
+	cards := ICCardHandParser parseVCardString: self goofyCardString.
+	self assert: cards size equals: 1.
+	card := cards anyOne.
+	
+	self assert: (card timeZone isKindOf: String).
+	self assert: card timeZone equals: '-05:00; EST; Raleigh/North America'.
+	self assert: card geo equals: (37.386013@ (-122.082932))
+]
+
+{ #category : 'tests - parsing' }
+ParseGoofyTest >> testParseGoofySecondPhoneNumber [ 
+
+	cards := ICCardHandParser parseVCardString: self goofyCardString.
+	self assert: cards size equals: 1.
+	card := cards anyOne.
+	
+	self assert: card phoneNumbers size equals: 2.
+
 	phoneNumber := card phoneNumbers second.
 	self assert: phoneNumber number equals: '+41 78 845 24 12'.
 	self assert: phoneNumber isHome.
@@ -94,19 +119,5 @@ ParseGoofyTest >> testParseGoofyPhoneNumber [
 	self deny: phoneNumber isVoice.
 	self deny: phoneNumber isVoiceMessage.
 	
-	self assert: card emailAddresses isEmpty.
-	self assert: (card timeZone isKindOf: String).
-	self assert: card timeZone equals: '-05:00; EST; Raleigh/North America'.
-	self assert: card geo equals: (37.386013@ (-122.082932))
-]
-
-{ #category : 'tests - parsing' }
-ParseGoofyTest >> testParseGoofyPosition [ 
-	cards := ICCardHandParser parseVCardString: self goofyCardString.
-	self assert: cards size equals: 1.
-	card := cards anyOne.
 	
-	self assert: (card timeZone isKindOf: String).
-	self assert: card timeZone equals: '-05:00; EST; Raleigh/North America'.
-	self assert: card geo equals: (37.386013@ (-122.082932))
 ]

@@ -8,8 +8,6 @@ Class {
 { #category : 'tests - parsing' }
 ParseAviTest >> testParseAviAddress [
 
-| address |
-	
 	cards := ICCardHandParser parseVCardString: self aviCardString.
 
 	self assert: cards size equals: 1.
@@ -40,8 +38,6 @@ ParseAviTest >> testParseAviAddress [
 { #category : 'tests - parsing' }
 ParseAviTest >> testParseAviAimids [
 
-| imid |
-	
 	cards := ICCardHandParser parseVCardString: self aviCardString.
 
 	self assert: cards size equals: 1.
@@ -73,8 +69,6 @@ ParseAviTest >> testParseAviAimids [
 
 { #category : 'tests - parsing' }
 ParseAviTest >> testParseAviEmailAddress [ 
-
-| emailAddress |
 	
 	cards := ICCardHandParser parseVCardString: self aviCardString.
 
@@ -90,6 +84,7 @@ ParseAviTest >> testParseAviEmailAddress [
 	self assert: emailAddress isInternet.
 	self deny: emailAddress isX400.
 	
+	
 	emailAddress := card emailAddresses second.
 	self assert: emailAddress address equals: 'avi.bryant@gmail.com'.
 	self deny: emailAddress isWork.
@@ -104,8 +99,6 @@ ParseAviTest >> testParseAviEmailAddress [
 { #category : 'tests - parsing' }
 ParseAviTest >> testParseAviName [
 
-| name |
-	
 	cards := ICCardHandParser parseVCardString: self aviCardString.
 
 	self assert: cards size equals: 1.
@@ -125,9 +118,7 @@ ParseAviTest >> testParseAviName [
 
 { #category : 'tests - parsing' }
 ParseAviTest >> testParseAviPhoneNumber [
-  
-| phoneNumber |
-	
+
 	cards := ICCardHandParser parseVCardString: self aviCardString.
 
 	self assert: cards size equals: 1.

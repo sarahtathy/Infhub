@@ -38,12 +38,12 @@ ICVCard class >> iCalType [
 
 { #category : 'adding' }
 ICVCard >> addAddress: anAddress [
-	^self addresses add: anAddress
+	self addresses add: anAddress
 ]
 
 { #category : 'adding' }
 ICVCard >> addAimid: anInstantMessageId [
-	^self aimids add: anInstantMessageId
+	self aimids add: anInstantMessageId
 ]
 
 { #category : 'adding' }
@@ -54,17 +54,17 @@ ICVCard >> addEmailAddress: anEmailAddress [
 
 { #category : 'adding' }
 ICVCard >> addIcqid: anInstantMessageId [
-	^self icqids add: anInstantMessageId
+	self icqids add: anInstantMessageId
 ]
 
 { #category : 'adding' }
 ICVCard >> addMsnid: anInstantMessageId [
-	^self msnids add: anInstantMessageId
+	self msnids add: anInstantMessageId
 ]
 
 { #category : 'adding' }
 ICVCard >> addNote: aString [
-	^self notes add: aString
+	self notes add: aString
 ]
 
 { #category : 'adding' }
@@ -75,7 +75,7 @@ ICVCard >> addPhoneNumber: aPhoneNumber [
 
 { #category : 'adding' }
 ICVCard >> addYahooid: anInstantMessageId [
-	^self yahooids add: anInstantMessageId
+	self yahooids add: anInstantMessageId
 ]
 
 { #category : 'accessing' }

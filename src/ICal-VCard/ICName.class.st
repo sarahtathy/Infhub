@@ -45,7 +45,7 @@ ICName class >> unsplit: aString [
 
 { #category : 'adding' }
 ICName >> addAdditionalName: aString [
-	^self additionalNames add: aString
+	self additionalNames add: aString
 ]
 
 { #category : 'adding' }

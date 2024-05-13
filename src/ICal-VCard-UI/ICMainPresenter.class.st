@@ -5,7 +5,7 @@ CMMainPresenter provides functionalities for adding contacts, updating the conta
 
 "
 Class {
-	#name : 'ICCMMainPresenter',
+	#name : 'ICMainPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'contactList',
@@ -22,18 +22,18 @@ Class {
 }
 
 { #category : 'commands' }
-ICCMMainPresenter class >> buildCommandsGroupWith: presenter forRoot: rootCommandGroup [
+ICMainPresenter class >> buildCommandsGroupWith: presenter forRoot: rootCommandGroup [
 
 	rootCommandGroup
 		register:
 			((CmCommandGroup named: 'contact manager commands') asSpecGroup
-				register: ICCMAddVCardCommand forSpec;
-				register: ICCMRemoveVCardCommand forSpec;
+				register: ICAddVCardCommand forSpec;
+				register: ICRemoveVCardCommand forSpec;
 				yourself)
 ]
 
 { #category : 'operations' }
-ICCMMainPresenter >> addContact [
+ICMainPresenter >> addContact [
 	
 	addPresenter openModal isOk
 		ifFalse: [ ^ self ].
@@ -47,20 +47,20 @@ ICCMMainPresenter >> addContact [
 ]
 
 { #category : 'accessing' }
-ICCMMainPresenter >> contactManager [
+ICMainPresenter >> contactManager [
 	"Answer the receiver's <ContactManager>"
 
 	^ self application contactManager
 ]
 
 { #category : 'accessing' }
-ICCMMainPresenter >> contacts: aCollection [
+ICMainPresenter >> contacts: aCollection [
 
 	contactList items: aCollection.
 ]
 
 { #category : 'layout' }
-ICCMMainPresenter >> defaultLayout [ 
+ICMainPresenter >> defaultLayout [ 
 
 	^ SpBoxLayout newTopToBottom 
 		add: contactList;
@@ -69,14 +69,14 @@ ICCMMainPresenter >> defaultLayout [
 ]
 
 { #category : 'initialization' }
-ICCMMainPresenter >> initialize [ 
+ICMainPresenter >> initialize [ 
 
 	super initialize.
 	model := self application contacts.
 ]
 
 { #category : 'initialization' }
-ICCMMainPresenter >> initializeContactList [
+ICMainPresenter >> initializeContactList [
 
 	contactList := self newTable
 		addColumn: (SpStringTableColumn new
@@ -97,15 +97,15 @@ ICCMMainPresenter >> initializeContactList [
 ]
 
 { #category : 'initialization' }
-ICCMMainPresenter >> initializePresenters [ 
+ICMainPresenter >> initializePresenters [ 
 
 	self initializeContactList.
-	addPresenter := self instantiate: ICCMAddPresenter.
+	addPresenter := self instantiate: ICAddPresenter.
 	statusBar := self newStatusBar.
 ]
 
 { #category : 'initialization' }
-ICCMMainPresenter >> initializeWindow: aWindowPresenter [
+ICMainPresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
 		title: 'Contact Manager';
@@ -114,7 +114,7 @@ ICCMMainPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : 'initialization' }
-ICCMMainPresenter >> newCMToolbar [
+ICMainPresenter >> newCMToolbar [
 
 	^ self newToolbar
 		  add: (self newToolbarButton
@@ -141,14 +141,14 @@ ICCMMainPresenter >> newCMToolbar [
 ]
 
 { #category : 'operations' }
-ICCMMainPresenter >> removeContact [
+ICMainPresenter >> removeContact [
 	
 	self contactManager removeContact: self selectedContact.
 	self updateItems.
 ]
 
 { #category : 'accessing' }
-ICCMMainPresenter >> selectedContact [
+ICMainPresenter >> selectedContact [
 	"Answer a <ICVCard> representing the currently selected contact"
 	
 	^ contactList selectedItem
@@ -156,7 +156,7 @@ ICCMMainPresenter >> selectedContact [
 ]
 
 { #category : 'operations' }
-ICCMMainPresenter >> updateItems [
+ICMainPresenter >> updateItems [
 
 	contactList items: self contactManager contacts.
 	self updatePresenter

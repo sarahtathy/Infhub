@@ -7,7 +7,7 @@ ICCMMainApplication new start.
 ```
 "
 Class {
-	#name : 'ICCMMainApplication',
+	#name : 'ICMainApplication',
 	#superclass : 'SpApplication',
 	#instVars : [
 		'contacts',
@@ -19,50 +19,50 @@ Class {
 }
 
 { #category : 'private' }
-ICCMMainApplication class >> menuNoteTakersOn: aBuilder [
+ICMainApplication class >> menuNoteTakersOn: aBuilder [
 	<worldMenu>
 
 	(aBuilder item: #ICContactManager)
 		parent: #Tools;
 		label: 'The Contact Manager';
 		icon: (self iconNamed: #catalog);
-		action: [ ICCMMainApplication new run ];
+		action: [ ICMainApplication new run ];
 		help: 'The Contact Manager';
 		order: 630
 ]
 
 { #category : 'accessing' }
-ICCMMainApplication >> contactManager [
+ICMainApplication >> contactManager [
 
 	^ contactManager
 ]
 
 { #category : 'accessing' }
-ICCMMainApplication >> contactManager: anObject [
+ICMainApplication >> contactManager: anObject [
 
 	contactManager := anObject
 ]
 
 { #category : 'instance creation' }
-ICCMMainApplication >> contacts [
+ICMainApplication >> contacts [
 
 	^ contacts
 ]
 
 { #category : 'accessing' }
-ICCMMainApplication >> contacts: anObject [
+ICMainApplication >> contacts: anObject [
 
 	contacts := anObject
 ]
 
 { #category : 'initialization' }
-ICCMMainApplication >> defaultContactManager [
+ICMainApplication >> defaultContactManager [
 
 	^ ICContactManager uniqueInstance 
 ]
 
 { #category : 'initialization' }
-ICCMMainApplication >> initialize [
+ICMainApplication >> initialize [
 
 	super initialize.
 	contacts := OrderedCollection new.
@@ -70,9 +70,9 @@ ICCMMainApplication >> initialize [
 ]
 
 { #category : 'running' }
-ICCMMainApplication >> start [
+ICMainApplication >> start [
 
-	(ICCMMainPresenter newApplication: self) 
+	(ICMainPresenter newApplication: self) 
 		"contacts: self contacts;"
 		open
 ]

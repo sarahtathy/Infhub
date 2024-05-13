@@ -392,7 +392,6 @@ ICVCardParserTest >> oscarCardString [
 { #category : 'tests - parsing' }
 ICVCardParserTest >> parseAndReturnFirstFromString: aviCardString [
 	
- 	| cards |
 	cards := ICCardHandParser parseVCardString:  aviCardString.
 	self assert: cards size equals: 1.
 	^ cards anyOne.

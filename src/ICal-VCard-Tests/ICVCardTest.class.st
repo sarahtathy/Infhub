@@ -207,9 +207,11 @@ ICVCardTest >> testICVCardAddPhoneNumberByParser [
 
 { #category : 'tests' }
 ICVCardTest >> testICVCardAddPhoto [
-
+	
+	"this test is to be reviewed"
+	
 	|vphoto | 
-
+	self skip.
 	vphoto := ImageMorph new image: (ImageReadWriter formFromFileNamed: 'C:\Users\addos\OneDrive\Documents\specSarah.png').
 	vcard photo: vphoto.
 

@@ -28,6 +28,8 @@ ICVCardTest >> testICVCardAddAIMId [
 	imid := vcard aimids first.
 	self assert: imid id equals: 'sth'.
 	self assert: (imid isKindOf: ICAIMId).
+	
+
 ]
 
 { #category : 'tests' }
@@ -47,7 +49,7 @@ ICVCardTest >> testICVCardAddAVersion [
 	vcard version: 3.0.
 
 	self assert: vcard version equals: 3.0.
-
+    
 
 
 ]

@@ -12,7 +12,10 @@ Class {
 	#instVars : [
 		'nameText',
 		'phoneNumber',
-		'emailText'
+		'emailText',
+		'lastName',
+		'addressText',
+		'birthday'
 	],
 	#category : 'ICal-VCard-UI-Spec',
 	#package : 'ICal-VCard-UI',
@@ -20,20 +23,45 @@ Class {
 }
 
 { #category : 'layout' }
+ICAddPresenter >> address [ 
+	^ addressText text
+
+]
+
+{ #category : 'layout' }
+ICAddPresenter >> birthday [  
+	^ birthday text
+
+]
+
+{ #category : 'layout' }
 ICAddPresenter >> defaultLayout [
 
 	^ SpGridLayout build: [ :builder |
-		  builder
-			  beColumnNotHomogeneous;
-			  column: 2 withConstraints: #beExpand;
-			  add: 'Name';
-			  add: nameText;
-			  nextRow;
-			  add: 'PhoneNumbers';
-			  add: phoneNumber;
-			  nextRow;
-			  add: 'Email';
-			  add: emailText ]
+	  builder
+		  beColumnNotHomogeneous;
+		  column: 2 withConstraints: #beExpand;
+		  add: 'Name';
+		  add: nameText;
+		  nextRow;
+		  add: 'Lastname';
+		  add: lastName;
+		  nextRow;
+		  add: 'PhoneNumbers';
+		  add: phoneNumber;
+		  nextRow;
+		  add: 'Address';
+		  add: addressText ;
+		  nextRow;
+		  add: 'Email';
+		  add: emailText;
+		  nextRow; 
+		  add: 'Birthday';
+		  add: birthday ]
+
+
+
+
 ]
 
 { #category : 'layout' }
@@ -43,14 +71,17 @@ ICAddPresenter >> email [
 ]
 
 { #category : 'initialization' }
-ICAddPresenter >> initializeDialogWindow: aDialogPresenter [
+ICAddPresenter >> initializeDialogWindow: aDialogPresenter [	
+	
+	| cancelButton saveButton |
+	
 	aDialogPresenter centered.
-	aDialogPresenter
-		addButton: 'Cancel' do: [ :presenter | presenter close ];
-		addButton: 'Save' do: [ :presenter | presenter beOk;
-	close ].
-
-
+   cancelButton := aDialogPresenter addButton: 'Cancel' do: [ :presenter | presenter close ].
+   cancelButton icon: (self iconNamed: #smallCancel). "Appliquer le style visuel du bouton Cancel"
+    
+   saveButton := aDialogPresenter addButton: 'Save' do: [ :presenter | presenter beOk; close ].
+	saveButton icon: (self iconNamed: #smallOk).
+    
 ]
 
 { #category : 'initialization' }
@@ -58,7 +89,23 @@ ICAddPresenter >> initializePresenters [
 	
 	nameText := self newTextInput.
 	emailText := self newTextInput.
-	phoneNumber := self newTextInput
+	phoneNumber := self newTextInput.
+	lastName := self newTextInput.
+	addressText := self newTextInput.
+	birthday := self newTextInput. 
+	"example : '2024-05-14 for a birthday date. 
+	
+	day := self newNumberInput 
+				rangeMinimum: 1 maximum: 31.
+	year := self newNumberInput
+				rangeMinimum: 1900 maximum: Year current year;
+				yourself. 
+	month := self newNumberInput
+				rangeMinimum: 1 maximum: 12;
+				yourself."
+				
+	 
+	
 
 ]
 
@@ -66,8 +113,14 @@ ICAddPresenter >> initializePresenters [
 ICAddPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 	title: 'Contact';
-	initialExtent: 400 @ 250
+	initialExtent: 400 @ 280
 
+]
+
+{ #category : 'layout' }
+ICAddPresenter >> lastname [ 
+		
+	^ lastName text
 ]
 
 { #category : 'layout' }

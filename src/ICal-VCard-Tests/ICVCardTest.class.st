@@ -211,11 +211,11 @@ ICVCardTest >> testICVCardAddPhoto [
 	"this test is to be reviewed"
 	
 	|vphoto | 
-	self skip.
-	vphoto := ImageMorph new image: (ImageReadWriter formFromFileNamed: 'C:\Users\addos\OneDrive\Documents\specSarah.png').
+	
+	vphoto := ByteArray streamContents: [ :stream | (ZnEasy getJpeg:'https://picsum.photos/536/354') writeOn: stream ]. 
 	vcard photo: vphoto.
 
-	self assert: (vcard photo isKindOf: ImageMorph).
+	self assert: (vcard photo isKindOf: ByteArray).
 
 
 

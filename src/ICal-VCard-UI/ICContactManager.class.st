@@ -57,15 +57,26 @@ ICContactManager >> addContact: aContact [
 ]
 
 { #category : 'adding' }
-ICContactManager >> addContactName: aString phoneNumber: aString2 email: aString3 [ 
+ICContactManager >> addContactName: aString lastname: aString2 phoneNumber: aString3 address: aString4 email: aString5 birthday: aString6 [
 
+	"self addContact: (
+		ICVCard new
+			fullname: aString , ' ', aString2;
+			name: (ICName new familyName: aString2; givenName: aString);
+			addPhoneNumber: (ICPhoneNumber new number: aString3);
+			addAddress: (ICAddress fromVCardString: aString4 parameters: Dictionary new) ;
+			addEmailAddress: (ICEmailAddress new address: aString5);
+			birthday: aString6; 
+			yourself)"
+		
 	self addContact: (
 		ICVCard new
-			name: aString;
-			addPhoneNumber: aString2;
-			addEmailAddress: aString3;
+			fullname: aString , ' ', aString2;
+			addPhoneNumber: aString3;
+			addAddress: aString4 ;
+			addEmailAddress: aString5 ;
+			birthday: aString6; 
 			yourself)
-		
 ]
 
 { #category : 'accessing' }

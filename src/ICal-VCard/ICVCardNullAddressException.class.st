@@ -13,5 +13,5 @@ Class {
 { #category : 'accessing' }
 ICVCardNullAddressException class >> exception: anVcard [
 
-^ self signal: 'The Vcard: ' , anVcard fullname, ' has a nil address!'
+	^ self signal: 'The Vcard: ' , anVcard fullname, ' has a nil address!'
 ]

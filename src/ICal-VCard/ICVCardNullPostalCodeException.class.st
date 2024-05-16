@@ -9,5 +9,5 @@ Class {
 { #category : 'accessing' }
 ICVCardNullPostalCodeException class >> exception: anAddress [
 
-^ self signal: 'Code postal ', anAddress postalcode , ' is invalid, please correct!'
+	^ self signal: 'Code postal ', anAddress postalcode , ' is invalid, please correct!'
 ]

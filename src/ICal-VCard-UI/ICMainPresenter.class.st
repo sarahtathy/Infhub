@@ -50,7 +50,7 @@ ICMainPresenter >> addContact [
 ICMainPresenter >> contactManager [
 	"Answer the receiver's <ContactManager>"
 
-	^ self application contactManager
+	^ ICContactManager uniqueInstance 
 ]
 
 { #category : 'accessing' }

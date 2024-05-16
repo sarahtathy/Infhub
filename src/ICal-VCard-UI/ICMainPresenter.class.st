@@ -40,8 +40,11 @@ ICMainPresenter >> addContact [
 		
 	self contactManager
 		addContactName: addPresenter name
+		lastname: addPresenter lastname 
 		phoneNumber: addPresenter phoneNumbers
-		email: addPresenter email.
+		address: addPresenter address 
+		email: addPresenter email
+		birthday: addPresenter birthday.
 	
 	self updateItems.
 ]
@@ -79,17 +82,29 @@ ICMainPresenter >> initialize [
 ICMainPresenter >> initializeContactList [
 
 	contactList := self newTable
-		addColumn: (SpStringTableColumn new
+		"addColumn: (SpStringTableColumn new
 			title: 'Name';
 			evaluated: #name;
-			yourself);
+			yourself);"
+		addColumn: (SpStringTableColumn new
+			title: 'Fullname';
+			evaluated: #fullname;
+			yourself);	
 		addColumn: (SpStringTableColumn new 
 			title: 'Number';
-			evaluated: [ : contact | (contact phoneNumbers collect: #phoneNumber) joinUsing: ','  ];
+			evaluated: [ : contact | (contact phoneNumbers "collect: #phoneNumber") joinUsing: ','  ];
+			yourself);
+		addColumn: (SpStringTableColumn new 
+			title: 'Address';
+			evaluated: [ : contact | (contact addresses "collect: #phoneNumber") joinUsing: ','  ];
 			yourself);
 		addColumn: (SpStringTableColumn new
 			title: 'Email';
-			evaluated: [ : contact | (contact emailAddresses collect: #address) joinUsing: ',' ];
+			evaluated: [ : contact | (contact emailAddresses "collect: #address") joinUsing: ',' ];
+			yourself);
+		addColumn: (SpStringTableColumn new 
+			title: 'Birthday';
+			evaluated: #birthday;
 			yourself);
 		contextMenu: [ (self rootCommandsGroup / 'contact manager commands') beRoot asMenuPresenter ];
 		items: self contactManager contacts;

@@ -11,11 +11,13 @@ Class {
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'nameText',
-		'phoneNumber',
+		'phoneNumber1',
+		'phoneNumber2',
 		'emailText',
 		'lastName',
 		'addressText',
-		'birthday'
+		'birthday',
+		'countryAndFlags'
 	],
 	#category : 'ICal-VCard-UI-Spec',
 	#package : 'ICal-VCard-UI',
@@ -30,7 +32,7 @@ ICAddPresenter >> address [
 
 { #category : 'layout' }
 ICAddPresenter >> birthday [  
-	^ birthday text
+	^ birthday date
 
 ]
 
@@ -47,8 +49,11 @@ ICAddPresenter >> defaultLayout [
 		  add: 'Lastname';
 		  add: lastName;
 		  nextRow;
-		  add: 'PhoneNumbers';
-		  add: phoneNumber;
+		  add: 'Principal phone number';
+		  add: phoneNumber1;
+		  nextRow;
+		  add: 'Second phone number';
+		  add: phoneNumber2;
 		  nextRow;
 		  add: 'Address';
 		  add: addressText ;
@@ -89,21 +94,12 @@ ICAddPresenter >> initializePresenters [
 	
 	nameText := self newTextInput.
 	emailText := self newTextInput.
-	phoneNumber := self newTextInput.
+	phoneNumber1 := self newTextInput.
+	phoneNumber2 := self newTextInput.
 	lastName := self newTextInput.
 	addressText := self newTextInput.
-	birthday := self newTextInput. 
-	"example : '2024-05-14 for a birthday date. 
-	
-	day := self newNumberInput 
-				rangeMinimum: 1 maximum: 31.
-	year := self newNumberInput
-				rangeMinimum: 1900 maximum: Year current year;
-				yourself. 
-	month := self newNumberInput
-				rangeMinimum: 1 maximum: 12;
-				yourself."
-				
+	birthday := SpDatePresenter new. 
+	countryAndFlags := SpCountryCodesPresenter new.
 	 
 	
 
@@ -130,8 +126,22 @@ ICAddPresenter >> name [
 ]
 
 { #category : 'layout' }
+ICAddPresenter >> phoneNumber1 [
+	^ phoneNumber1 text
+		
+
+]
+
+{ #category : 'layout' }
+ICAddPresenter >> phoneNumber2 [
+	^ phoneNumber2 text
+		
+
+]
+
+{ #category : 'layout' }
 ICAddPresenter >> phoneNumbers [
-	^ phoneNumber text
+	
 		
 
 ]

@@ -75,7 +75,7 @@ ICMainPresenter >> defaultLayout [
 ICMainPresenter >> initialize [ 
 
 	super initialize.
-	model := self application contacts.
+	model := self contactManager contacts.
 ]
 
 { #category : 'initialization' }

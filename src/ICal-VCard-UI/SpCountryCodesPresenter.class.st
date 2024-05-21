@@ -68,3 +68,9 @@ SpCountryCodesPresenter >> initializePresenters [
 	
 	
 ]
+
+{ #category : 'initialization' }
+SpCountryCodesPresenter >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter initialExtent: 10@10
+]

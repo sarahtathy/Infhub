@@ -3,70 +3,71 @@ Class {
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'list',
-		'countryData'
+		'dictionaryImages'
 	],
 	#category : 'ICal-VCard-UI-Spec',
 	#package : 'ICal-VCard-UI',
 	#tag : 'Spec'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
+SpCountryCodesPresenter >> asIdentifier: aFilename [
+    " Private - Taken and adapted from Seaside "
+
+    | mainPart |
+    
+    mainPart := (aFilename copyUpToLast: $.) 
+		select: [ :each | each isAlphaNumeric or: [ each = $_ ] ].
+    [ mainPart first isDigit ] whileTrue: [ mainPart := mainPart allButFirst ].
+    ^ mainPart asLowercase copyReplaceAll: '_' with: ' '.
+
+]
+
+{ #category : 'layout' }
 SpCountryCodesPresenter >> defaultLayout [ 
 
 	^ SpBoxLayout newVertical 
-		add: (SpBoxLayout newLeftToRight 
-			add: list;
-			yourself);
-		yourself 
+			add: list height: 30;
+			yourself 
 ]
 
-{ #category : 'as yet unclassified' }
-SpCountryCodesPresenter >> iconFor: countryCode [
-    "Return the flag corresponding to the country"
+{ #category : 'layout' }
+SpCountryCodesPresenter >> flagsOfCountry [ 
 
-  | url |
-    url := self urlForCountryCode: countryCode.
-    ^ self iconFromUrl: url.
-]
-
-{ #category : 'as yet unclassified' }
-SpCountryCodesPresenter >> iconFromUrl: url [
-
-	| image |
-	image := ZnEasy get: url.
-
-	^ (Form fromBinaryStream: image contents readStream) scaledToSize:
-		  16 @ 16
-]
-
-{ #category : 'as yet unclassified' }
-SpCountryCodesPresenter >> initializePresenters [
+	| aFilename | 
 	
-	self loadCountryData.
-	list := self newDropList.
-	list
-		items: (countryData collect: [:each | each at: 'cca2']);
-		displayIcon: [ :elem | self iconFor: elem ].
+	dictionaryImages := Dictionary new. 
+	aFilename := 'C:\Users\addos\OneDrive\Documents\tiny'.
+	aFilename asFileReference entries do: [ : entry |
+    dictionaryImages 
+		at: ( self asIdentifier: entry name ) 
+		put: entry asFileReference  ].
+	
+	
+
+	
 ]
 
-{ #category : 'as yet unclassified' }
-SpCountryCodesPresenter >> initializeWindow: aWindowPresenter [
+{ #category : 'layout' }
+SpCountryCodesPresenter >> iconFor: imageEntry [
+    "Return the flag corresponding to the country
 
-	aWindowPresenter
-		title: 'test';
-		initialExtent: 400 @ 100
+
+    ^ self iconFromImage: image."
+	| image | 
+	
+   image := imageEntry binaryReadStreamDo: [ :stream | Form fromBinaryStream: stream ].
+	^ image 
 ]
 
-{ #category : 'as yet unclassified' }
-SpCountryCodesPresenter >> loadCountryData [
- 
-	|jsonResponse | 
-	jsonResponse := ZnEasy get: 'https://restcountries.com/v3.1/all'.
-	countryData := NeoJSONReader fromString: jsonResponse contents. 
-]
+{ #category : 'initialization' }
+SpCountryCodesPresenter >> initializePresenters [ 
 
-{ #category : 'as yet unclassified' }
-SpCountryCodesPresenter >> urlForCountryCode: countryCode [ 
+	self flagsOfCountry.
+	list := SpDropListPresenter new.
+	list items: dictionaryImages keys.
+	list displayIcon: [ :item | self iconFor: (dictionaryImages at: item) ] .
 
-	^ 'https://flagcdn.com/w320/' , countryCode asLowercase , '.png'.
+	
+	
 ]

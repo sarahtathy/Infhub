@@ -32,7 +32,16 @@ SpCountryCodesPresenter >> defaultLayout [
 ]
 
 { #category : 'layout' }
-SpCountryCodesPresenter >> flagsOfCountry [ 
+SpCountryCodesPresenter >> iconFor: imageEntry [
+    "Return the flag corresponding to the country" 
+	| image | 
+	
+   image := imageEntry binaryReadStreamDo: [ :stream | Form fromBinaryStream: stream ].
+	^ image 
+]
+
+{ #category : 'layout' }
+SpCountryCodesPresenter >> initializeFlags [ 
 
 	| aFilename | 
 	
@@ -48,22 +57,10 @@ SpCountryCodesPresenter >> flagsOfCountry [
 	
 ]
 
-{ #category : 'layout' }
-SpCountryCodesPresenter >> iconFor: imageEntry [
-    "Return the flag corresponding to the country
-
-
-    ^ self iconFromImage: image."
-	| image | 
-	
-   image := imageEntry binaryReadStreamDo: [ :stream | Form fromBinaryStream: stream ].
-	^ image 
-]
-
 { #category : 'initialization' }
 SpCountryCodesPresenter >> initializePresenters [ 
 
-	self flagsOfCountry.
+	self initializeFlags.
 	list := SpDropListPresenter new.
 	list items: dictionaryImages keys.
 	list displayIcon: [ :item | self iconFor: (dictionaryImages at: item) ] .

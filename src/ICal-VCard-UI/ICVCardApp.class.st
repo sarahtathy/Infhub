@@ -7,10 +7,9 @@ ICCMMainApplication new start.
 ```
 "
 Class {
-	#name : 'ICMainApplication',
+	#name : 'ICVCardApp',
 	#superclass : 'SpApplication',
 	#instVars : [
-		'contacts',
 		'contactManager'
 	],
 	#category : 'ICal-VCard-UI-Spec',
@@ -19,60 +18,47 @@ Class {
 }
 
 { #category : 'private' }
-ICMainApplication class >> menuNoteTakersOn: aBuilder [
+ICVCardApp class >> menuNoteTakersOn: aBuilder [
 	<worldMenu>
 
-	(aBuilder item: #ICContactManager)
+	(aBuilder item: #ICVCardManager)
 		parent: #Tools;
 		label: 'The Contact Manager';
 		icon: (self iconNamed: #catalog);
-		action: [ ICMainApplication new run ];
+		action: [ ICVCardApp new run ];
 		help: 'The Contact Manager';
 		order: 630
 ]
 
 { #category : 'accessing' }
-ICMainApplication >> contactManager [
+ICVCardApp >> contactManager [
 
 	^ contactManager
 ]
 
 { #category : 'accessing' }
-ICMainApplication >> contactManager: anObject [
+ICVCardApp >> contactManager: anObject [
 
 	contactManager := anObject
 ]
 
-{ #category : 'instance creation' }
-ICMainApplication >> contacts [
+{ #category : 'initialization' }
+ICVCardApp >> defaultContactManager [
 
-	^ contacts
-]
-
-{ #category : 'accessing' }
-ICMainApplication >> contacts: anObject [
-
-	contacts := anObject
+	^ ICVCardManager uniqueInstance 
 ]
 
 { #category : 'initialization' }
-ICMainApplication >> defaultContactManager [
-
-	^ ICContactManager uniqueInstance 
-]
-
-{ #category : 'initialization' }
-ICMainApplication >> initialize [
+ICVCardApp >> initialize [
 
 	super initialize.
-	contacts := OrderedCollection new.
 	contactManager := self defaultContactManager.
 ]
 
 { #category : 'running' }
-ICMainApplication >> start [
+ICVCardApp >> start [
 
-	(ICMainPresenter newApplication: self) 
+	(ICVCardMainPresenter newApplication: self) 
 		"contacts: self contacts;"
 		open
 ]

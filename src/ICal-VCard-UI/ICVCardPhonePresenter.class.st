@@ -2,7 +2,7 @@
 This class provides the displayer of phone numbers for the class `ICAddPresenter`.
 "
 Class {
-	#name : 'ICPhoneNumberPresenter',
+	#name : 'ICVCardPhonePresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'textField',
@@ -15,13 +15,13 @@ Class {
 }
 
 { #category : 'initialization' }
-ICPhoneNumberPresenter >> country [ 
+ICVCardPhonePresenter >> country [ 
 
 	^ selectedCountry 
 ]
 
 { #category : 'layout' }
-ICPhoneNumberPresenter >> defaultLayout [ 
+ICVCardPhonePresenter >> defaultLayout [ 
 
 	^ SpBoxLayout newLeftToRight 
 		add: countryCodePresenter width:70;
@@ -30,7 +30,14 @@ ICPhoneNumberPresenter >> defaultLayout [
 ]
 
 { #category : 'initialization' }
-ICPhoneNumberPresenter >> initializePresenters [ 
+ICVCardPhonePresenter >> editable: aBoolean [ 
+
+	textField editable: aBoolean.
+	 
+]
+
+{ #category : 'initialization' }
+ICVCardPhonePresenter >> initializePresenters [ 
 
 countryCodePresenter := SpCountryCodesPresenter new.
 countryCodePresenter initializePresenters.
@@ -40,13 +47,13 @@ selectedCountry := ''
 ]
 
 { #category : 'initialization' }
-ICPhoneNumberPresenter >> text [ 
+ICVCardPhonePresenter >> text [ 
 
 	^ textField text
 ]
 
 { #category : 'initialization' }
-ICPhoneNumberPresenter >> updateCountry [ 
+ICVCardPhonePresenter >> updateCountry [ 
 
 selectedCountry := countryCodePresenter selectedItem
 ]

@@ -16,8 +16,7 @@ Class {
 		'emailText',
 		'lastName',
 		'addressText',
-		'birthday',
-		'countryAndFlags'
+		'birthday'
 	],
 	#category : 'ICal-VCard-UI-Spec',
 	#package : 'ICal-VCard-UI',
@@ -32,7 +31,7 @@ ICAddPresenter >> address [
 
 { #category : 'layout' }
 ICAddPresenter >> birthday [  
-	^ birthday date
+	^ birthday text
 
 ]
 
@@ -42,7 +41,7 @@ ICAddPresenter >> defaultLayout [
 	^ SpGridLayout build: [ :builder |
 	  builder
 		  beColumnNotHomogeneous;
-		  column: 2 withConstraints: #beExpand;
+		  column: 3 withConstraints: #beExpand;
 		  add: 'Name';
 		  add: nameText;
 		  nextRow;
@@ -53,7 +52,7 @@ ICAddPresenter >> defaultLayout [
 		  add: phoneNumber1;
 		  nextRow;
 		  add: 'Second phone number';
-		  add: phoneNumber2;
+		  add: phoneNumber2 ;
 		  nextRow;
 		  add: 'Address';
 		  add: addressText ;
@@ -94,15 +93,18 @@ ICAddPresenter >> initializePresenters [
 	
 	nameText := self newTextInput.
 	emailText := self newTextInput.
-	phoneNumber1 := self newTextInput.
-	phoneNumber2 := self newTextInput.
 	lastName := self newTextInput.
 	addressText := self newTextInput.
-	birthday := SpDatePresenter new. 
-	countryAndFlags := SpCountryCodesPresenter new.
-	 
-	
+	birthday := self newTextInput. 
+	"countryCodePresenter := SpCountryCodesPresenter new."
 
+   phoneNumber1 := ICPhoneNumberPresenter new.
+	phoneNumber1 initializePresenters.
+   phoneNumber2 := ICPhoneNumberPresenter new. 
+	phoneNumber2 initializePresenters
+	
+	
+	
 ]
 
 { #category : 'initialization' }
@@ -135,13 +137,6 @@ ICAddPresenter >> phoneNumber1 [
 { #category : 'layout' }
 ICAddPresenter >> phoneNumber2 [
 	^ phoneNumber2 text
-		
-
-]
-
-{ #category : 'layout' }
-ICAddPresenter >> phoneNumbers [
-	
 		
 
 ]

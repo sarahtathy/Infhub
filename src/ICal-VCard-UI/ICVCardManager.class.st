@@ -51,7 +51,7 @@ ICVCardManager class >> uniqueInstance [
 	^ UniqueInstance ifNil: [ UniqueInstance := self basicNew ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 ICVCardManager >> addContact: aContact [
 
 	self contacts add: aContact 

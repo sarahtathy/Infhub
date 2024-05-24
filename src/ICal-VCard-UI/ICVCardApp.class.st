@@ -30,18 +30,6 @@ ICVCardApp class >> menuNoteTakersOn: aBuilder [
 		order: 630
 ]
 
-{ #category : 'accessing' }
-ICVCardApp >> contactManager [
-
-	^ contactManager
-]
-
-{ #category : 'accessing' }
-ICVCardApp >> contactManager: anObject [
-
-	contactManager := anObject
-]
-
 { #category : 'initialization' }
 ICVCardApp >> defaultContactManager [
 
@@ -61,4 +49,16 @@ ICVCardApp >> start [
 	(ICVCardMainPresenter newApplication: self) 
 		"contacts: self contacts;"
 		open
+]
+
+{ #category : 'accessing' }
+ICVCardApp >> vcardManager [
+
+	^ contactManager
+]
+
+{ #category : 'accessing' }
+ICVCardApp >> vcardManager: anObject [
+
+	contactManager := anObject
 ]

@@ -16,8 +16,7 @@ Class {
 		'emailText',
 		'lastName',
 		'addressText',
-		'birthday',
-		'contactList'
+		'birthday'
 	],
 	#category : 'ICal-VCard-UI-Spec',
 	#package : 'ICal-VCard-UI',
@@ -31,66 +30,50 @@ ICContactPresenter >> address [
 ]
 
 { #category : 'layout' }
+ICContactPresenter >> address: anAddress [
+
+	addressText text: anAddress 
+]
+
+{ #category : 'layout' }
 ICContactPresenter >> birthday [  
 	^ birthday text
 
 ]
 
 { #category : 'layout' }
-ICContactPresenter >> defaultInputPort [ 
+ICContactPresenter >> birthday: aBirthday [ 
 
-	^ SpModelPort newPresenter: self
+	birthday text: aBirthday 
 ]
 
 { #category : 'layout' }
 ICContactPresenter >> defaultLayout [
 
 	^ SpGridLayout build: [ :builder |
-	  builder
-		  beColumnNotHomogeneous;
-		  column: 3 withConstraints: #beExpand;
-		  add: 'Name';
-		  add: nameText;
-		  nextRow;
-		  add: 'Lastname';
-		  add: lastName;
-		  nextRow;
-		  add: 'Principal phone number';
-		  add: phoneNumber1;
-		  nextRow;
-		  add: 'Second phone number';
-		  add: phoneNumber2 ;
-		  nextRow;
-		  add: 'Address';
-		  add: addressText ;
-		  nextRow;
-		  add: 'Email';
-		  add: emailText;
-		  nextRow; 
-		  add: 'Birthday';
-		  add: birthday ]
-
-
-
-
-]
-
-{ #category : 'layout' }
-ICContactPresenter >> defaultOutputPort [ 
-
-	^ contactList defaultOutputPort 
-]
-
-{ #category : 'layout' }
-ICContactPresenter >> editable: aBoolean [
-
-	nameText editable: aBoolean.
-	addressText editable: aBoolean.
-	emailText editable: aBoolean.
-	lastName editable: aBoolean.
-	birthday editable: aBoolean.
-	phoneNumber1 editable: aBoolean.
-	phoneNumber2 editable: aBoolean. 
+		  builder
+			  beColumnNotHomogeneous;
+			  column: 3 withConstraints: #beExpand;
+			  add: 'Name';
+			  add: nameText;
+			  nextRow;
+			  add: 'Lastname';
+			  add: lastName;
+			  nextRow;
+			  add: 'Principal phone number';
+			  add: phoneNumber1;
+			  nextRow;
+			  add: 'Second phone number';
+			  add: phoneNumber2;
+			  nextRow;
+			  add: 'Address';
+			  add: addressText;
+			  nextRow;
+			  add: 'Email';
+			  add: emailText;
+			  nextRow;
+			  add: 'Birthday';
+			  add: birthday ]
 ]
 
 { #category : 'layout' }
@@ -100,36 +83,15 @@ ICContactPresenter >> email [
 ]
 
 { #category : 'layout' }
-ICContactPresenter >> initializeContactList [
+ICContactPresenter >> email: anEmail [ 
 
-	contactList := self newTable
-		"addColumn: (SpStringTableColumn new
-			title: 'Name';
-			evaluated: #name;
-			yourself);"
-		addColumn: (SpStringTableColumn new
-			title: 'Fullname';
-			evaluated: #fullname;
-			yourself);	
-		addColumn: (SpStringTableColumn new 
-			title: 'Number';
-			evaluated: [ : contact | (contact phoneNumbers "collect: #phoneNumber") joinUsing: ','  ];
-			yourself);
-		addColumn: (SpStringTableColumn new 
-			title: 'Address';
-			evaluated: [ : contact | (contact addresses "collect: #phoneNumber") joinUsing: ','  ];
-			yourself);
-		addColumn: (SpStringTableColumn new
-			title: 'Email';
-			evaluated: [ : contact | (contact emailAddresses "collect: #address") joinUsing: ',' ];
-			yourself);
-		addColumn: (SpStringTableColumn new 
-			title: 'Birthday';
-			evaluated: #birthday;
-			yourself);
-		contextMenu: [ (self rootCommandsGroup / 'contact manager commands') beRoot asMenuPresenter ];
-		items: self contactManager contacts;
-		yourself.
+	emailText text: anEmail 
+]
+
+{ #category : 'layout' }
+ICContactPresenter >> initialExtentForWindow [
+
+	^ (400 @300) scaledByDisplayScaleFactor
 ]
 
 { #category : 'initialization' }
@@ -149,48 +111,21 @@ ICContactPresenter >> initializeDialogWindow: aDialogPresenter [
 { #category : 'initialization' }
 ICContactPresenter >> initializePresenters [
 
-	contactList := self newTable
-		"addColumn: (SpStringTableColumn new
-			title: 'Name';
-			evaluated: #name;
-			yourself);"
-		addColumn: (SpStringTableColumn new
-			title: 'Fullname';
-			evaluated: #fullname;
-			yourself);	
-		addColumn: (SpStringTableColumn new 
-			title: 'Number';
-			evaluated: [ : contact | (contact phoneNumbers "collect: #phoneNumber") joinUsing: ','  ];
-			yourself);
-		addColumn: (SpStringTableColumn new 
-			title: 'Address';
-			evaluated: [ : contact | (contact addresses "collect: #phoneNumber") joinUsing: ','  ];
-			yourself);
-		addColumn: (SpStringTableColumn new
-			title: 'Email';
-			evaluated: [ : contact | (contact emailAddresses "collect: #address") joinUsing: ',' ];
-			yourself);
-		addColumn: (SpStringTableColumn new 
-			title: 'Birthday';
-			evaluated: #birthday;
-			yourself);
-		contextMenu: [ (self rootCommandsGroup / 'contact manager commands') beRoot asMenuPresenter ];
-		items: self contactManager contacts;
-		yourself.
+	nameText := self newTextInput.
+	lastName := self newTextInput.
+	addressText := self newTextInput.
+	emailText := self newTextInput.
+	phoneNumber1 := self instantiate: ICVCardPhonePresenter.
+	phoneNumber2 := self instantiate: ICVCardPhonePresenter.
+	birthday := self newTextInput
 ]
 
 { #category : 'initialization' }
 ICContactPresenter >> initializeWindow: aWindowPresenter [
+
 	aWindowPresenter
-	title: 'Contact';
-	initialExtent: 400 @ 280
-
-]
-
-{ #category : 'layout' }
-ICContactPresenter >> items: aCollection [ 
-
-	contactList items: aCollection 
+		title: 'Contact';
+		initialExtent: self initialExtentForWindow 
 ]
 
 { #category : 'layout' }
@@ -200,9 +135,36 @@ ICContactPresenter >> lastname [
 ]
 
 { #category : 'layout' }
+ICContactPresenter >> lastname: aLastName [
+
+	lastName text: aLastName 
+]
+
+{ #category : 'layout' }
+ICContactPresenter >> model: anICvcard [
+
+	| vlastname vfirstname vname | 
+	
+	vname := anICvcard fullname splitOn: ' '.
+	vfirstname := vname at: 1.
+	vlastname := vname at: 2.
+	self address: anICvcard addresses first.
+	self name: vfirstname. 
+	self lastname: vlastname.
+	self email: anICvcard emailAddresses first.
+	self birthday: anICvcard birthday
+]
+
+{ #category : 'layout' }
 ICContactPresenter >> name [
 	^ nameText text
 
+]
+
+{ #category : 'accessing' }
+ICContactPresenter >> name: aName [ 
+
+	nameText text: aName 
 ]
 
 { #category : 'layout' }
@@ -213,6 +175,12 @@ ICContactPresenter >> phoneNumber1 [
 ]
 
 { #category : 'layout' }
+ICContactPresenter >> phoneNumber1: number1 [ 
+
+	phoneNumber1 text: number1 
+]
+
+{ #category : 'layout' }
 ICContactPresenter >> phoneNumber2 [
 	^ phoneNumber2 text
 		
@@ -220,7 +188,7 @@ ICContactPresenter >> phoneNumber2 [
 ]
 
 { #category : 'layout' }
-ICContactPresenter >> selectedItem [ 
+ICContactPresenter >> phoneNumber2: number2 [ 
 
-	^ contactList selectedItem 
+	phoneNumber2 text: number2 
 ]

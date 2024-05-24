@@ -11,8 +11,8 @@ Class {
 		'contactList',
 		'statusBar',
 		'model',
-		'addPresenter',
-		'detailOfContact'
+		'detailOfContact',
+		'contactPresenter'
 	],
 	#category : 'ICal-VCard-UI-Spec',
 	#package : 'ICal-VCard-UI',
@@ -31,57 +31,32 @@ ICVCardMainPresenter class >> buildCommandsGroupWith: presenter forRoot: rootCom
 ]
 
 { #category : 'operations' }
-ICVCardMainPresenter >> addContact [
-	
-	addPresenter openModal isOk
-		ifFalse: [ ^ self ].
-		
-	self contactManager
-		addContactName: addPresenter name
-		lastname: addPresenter lastname 
-		phoneNumber1: addPresenter phoneNumber1  
-		address: addPresenter address 
-		email: addPresenter email
-		birthday: addPresenter birthday
-		phoneNumber2: addPresenter phoneNumber2.
-	
-	self updateItems.
-]
-
-{ #category : 'operations' }
 ICVCardMainPresenter >> clickFilmAtIndex: anIndex [
 
-	addPresenter contactList clickAtIndex: anIndex
+	contactPresenter clickAtIndex: anIndex
 
 ]
 
 { #category : 'operations' }
-ICVCardMainPresenter >> connectPresenters [ 
+ICVCardMainPresenter >> contactList [ 
 
-contactList transmitTo: detailOfContact .
-]
-
-{ #category : 'accessing' }
-ICVCardMainPresenter >> contactManager [
-	"Answer the receiver's <ContactManager>"
-
-	^ ICVCardManager uniqueInstance 
+	^ contactList 
 ]
 
 { #category : 'layout' }
-ICVCardMainPresenter >> defaultLayout [ 
+ICVCardMainPresenter >> defaultLayout [
 
-	^ SpBoxLayout newTopToBottom 
-		add: contactList;
-		add: detailOfContact; 
-		add: statusBar expand: false;
-		yourself
+	^ SpBoxLayout newTopToBottom
+		  add: contactList;
+		  add: detailOfContact;
+		  add: statusBar expand: false;
+		  yourself
 ]
 
 { #category : 'operations' }
 ICVCardMainPresenter >> detailOfContact [
- 
-	^detailOfContact 
+
+	^ detailOfContact 
 ]
 
 { #category : 'initialization' }
@@ -91,21 +66,31 @@ ICVCardMainPresenter >> initialExtentForWindow [
 ]
 
 { #category : 'initialization' }
-ICVCardMainPresenter >> initialize [ 
+ICVCardMainPresenter >> initialize [
 
 	super initialize.
-	model := self contactManager contacts.
+	model := self vcardManager contacts.
+]
+
+{ #category : 'initialization' }
+ICVCardMainPresenter >> initializeContactList [
+
+	contactList := self instantiate: ICContactListPresenter
+]
+
+{ #category : 'initialization' }
+ICVCardMainPresenter >> initializeDetailOfContact [
+
+	detailOfContact := self instantiate: ICContactPresenter
 ]
 
 { #category : 'initialization' }
 ICVCardMainPresenter >> initializePresenters [ 
 
-	self initializePresenters.
-	addPresenter := self instantiate: ICContactPresenter.
+	self initializeContactList .
+	self initializeDetailOfContact.
 	statusBar := self newStatusBar.
 	
-	detailOfContact := self instantiate: ICContactPresenter. 
-	detailOfContact editable: false 
 ]
 
 { #category : 'initialization' }
@@ -124,7 +109,7 @@ ICVCardMainPresenter >> newCMToolbar [
 		  add: (self newToolbarButton
 				   label: 'Add';
 				   icon: (self iconNamed: #smallAdd);
-				   action: [ self addContact ];
+				   action: [ self contactList addContact ];
 				   yourself);
 		  add: (self newToolbarButton
 				   label: 'Remove';
@@ -147,11 +132,11 @@ ICVCardMainPresenter >> newCMToolbar [
 { #category : 'operations' }
 ICVCardMainPresenter >> removeContact [
 	
-	self contactManager removeContact: self selectedContact.
+	self vcardManager removeContact: self selectedContact.
 	self updateItems.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 ICVCardMainPresenter >> selectedContact [
 	"Answer a <ICVCard> representing the currently selected contact"
 	
@@ -159,9 +144,21 @@ ICVCardMainPresenter >> selectedContact [
 	
 ]
 
-{ #category : 'operations' }
+{ #category : 'initialization' }
+ICVCardMainPresenter >> updateDetail: anICvcard [ 
+
+	anICvcard ifNotNil: [detailOfContact model: anICvcard] 
+]
+
+{ #category : 'initialization' }
 ICVCardMainPresenter >> updateItems [
 
-	contactList items: self contactManager contacts.
+	contactList items: self vcardManager contacts.
 	self updatePresenter
+]
+
+{ #category : 'initialization' }
+ICVCardMainPresenter >> vcardManager [
+
+	^ ICVCardManager uniqueInstance 
 ]

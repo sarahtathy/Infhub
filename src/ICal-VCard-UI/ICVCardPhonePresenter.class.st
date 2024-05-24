@@ -23,12 +23,12 @@ ICVCardPhonePresenter >> country [
 ]
 
 { #category : 'layout' }
-ICVCardPhonePresenter >> defaultLayout [ 
+ICVCardPhonePresenter >> defaultLayout [
 
-	^ SpBoxLayout newLeftToRight 
-		add: countryCodePresenter width:70;
-		add: textField width: 100;
-		yourself 
+	^ SpBoxLayout newLeftToRight
+		  add: countryCodePresenter width: 70;
+		  add: textField width: 100;
+		  yourself  
 ]
 
 { #category : 'initialization' }

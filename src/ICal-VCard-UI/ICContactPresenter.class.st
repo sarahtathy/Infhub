@@ -143,16 +143,19 @@ ICContactPresenter >> lastname: aLastName [
 { #category : 'layout' }
 ICContactPresenter >> model: anICvcard [
 
-	| vlastname vfirstname vname | 
-	
+	| vlastname vfirstname vname firstNumber secondNumber|
 	vname := anICvcard fullname splitOn: ' '.
 	vfirstname := vname at: 1.
 	vlastname := vname at: 2.
+	firstNumber := anICvcard phoneNumbers at: 1.
+	secondNumber := anICvcard phoneNumbers at: 2.
 	self address: anICvcard addresses first.
-	self name: vfirstname. 
+	self name: vfirstname.
 	self lastname: vlastname.
 	self email: anICvcard emailAddresses first.
-	self birthday: anICvcard birthday
+	self birthday: anICvcard birthday.
+	self phoneNumber1: firstNumber.
+	self phoneNumber2: secondNumber
 ]
 
 { #category : 'layout' }

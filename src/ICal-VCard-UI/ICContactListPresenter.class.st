@@ -100,6 +100,13 @@ ICContactListPresenter >> items: aCollection [
 	contactList items: aCollection
 ]
 
+{ #category : 'operations' }
+ICContactListPresenter >> removeContact [
+
+	self vcardManager removeContact: self selectedContact.
+	self updateItems
+]
+
 { #category : 'accessing' }
 ICContactListPresenter >> selectedContact [
 	"Answer a <ICVCard> representing the currently selected contact"

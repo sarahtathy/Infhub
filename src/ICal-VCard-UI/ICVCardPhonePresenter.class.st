@@ -17,9 +17,9 @@ Class {
 }
 
 { #category : 'initialization' }
-ICVCardPhonePresenter >> country [ 
+ICVCardPhonePresenter >> country [
 
-	^ selectedCountry 
+	^ selectedCountry
 ]
 
 { #category : 'layout' }
@@ -52,6 +52,12 @@ selectedCountry := ''
 ICVCardPhonePresenter >> text [ 
 
 	^ textField text
+]
+
+{ #category : 'initialization' }
+ICVCardPhonePresenter >> text: aText [ 
+
+	textField text: aText 
 ]
 
 { #category : 'initialization' }

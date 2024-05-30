@@ -3483,14 +3483,14 @@ SpCountryCodesPresenter class >> zimbabweIconContents [
 
 { #category : 'layout' }
 SpCountryCodesPresenter >> asIdentifier: aFilename [
-    " Private - Taken and adapted from Seaside "
 
-    | mainPart |
-    
-    mainPart := (aFilename copyUpToLast: $.) 
-		select: [ :each | each isAlphaNumeric or: [ each = $_ ] ].
-    [ mainPart first isDigit ] whileTrue: [ mainPart := mainPart allButFirst ].
-    ^ mainPart asLowercase copyReplaceAll: '_' with: ' '.
+    | mainPart capitalizedMainPart |
+    mainPart := (aFilename copyUpToLast: $.) select: [:each |
+        each isAlphaNumeric or: [each = $_]].
+    [mainPart first isDigit] whileTrue: [
+        mainPart := mainPart allButFirst].
+    capitalizedMainPart := mainPart asLowercase copyReplaceAll: '_' with: ' '.
+    ^ capitalizedMainPart capitalized.
 
 ]
 
@@ -3512,32 +3512,25 @@ SpCountryCodesPresenter >> iconFor: imageEntry [
 ]
 
 { #category : 'layout' }
-SpCountryCodesPresenter >> initializeFlags [ 
+SpCountryCodesPresenter >> initializeFlags [
 
-	| aFilename | 
-	
-	dictionaryImages := Dictionary new. 
+	| aFilename |
+	dictionaryImages := Dictionary new.
 	aFilename := 'C:\Users\addos\OneDrive\Documents\tiny'.
-	aFilename asFileReference entries do: [ : entry |
-    dictionaryImages 
-		at: ( self asIdentifier: entry name ) 
-		put: entry asFileReference  ].
-	
-	
-
-	
+	aFilename asFileReference entries do: [ :entry |
+		dictionaryImages
+			at: (self asIdentifier: entry name)
+			put: entry asFileReference ]
 ]
 
 { #category : 'initialization' }
-SpCountryCodesPresenter >> initializePresenters [ 
+SpCountryCodesPresenter >> initializePresenters [
 
 	self initializeFlags.
 	list := SpDropListPresenter new.
-	list items: dictionaryImages keys.
-	list displayIcon: [ :item | self iconFor: (dictionaryImages at: item) ] .
-
-	
-	
+	list items: (dictionaryImages keys) asSortedCollection.
+	list displayIcon: [ :item |
+		self iconFor: (dictionaryImages at: item) ]
 ]
 
 { #category : 'initialization' }

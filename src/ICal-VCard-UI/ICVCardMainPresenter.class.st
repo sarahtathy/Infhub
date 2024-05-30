@@ -114,7 +114,7 @@ ICVCardMainPresenter >> newCMToolbar [
 		  add: (self newToolbarButton
 				   label: 'Remove';
 				   icon: (self iconNamed: #smallDelete);
-				   action: [ self removeContact ];
+				   action: [ contactList removeContact ];
 				   yourself);
 		  add: (self newToolbarButton
 				   label: 'Help';
@@ -129,32 +129,10 @@ ICVCardMainPresenter >> newCMToolbar [
 		  yourself
 ]
 
-{ #category : 'operations' }
-ICVCardMainPresenter >> removeContact [
-	
-	self vcardManager removeContact: self selectedContact.
-	self updateItems.
-]
-
-{ #category : 'initialization' }
-ICVCardMainPresenter >> selectedContact [
-	"Answer a <ICVCard> representing the currently selected contact"
-	
-	^ contactList selectedItem
-	
-]
-
 { #category : 'initialization' }
 ICVCardMainPresenter >> updateDetail: anICvcard [ 
 
 	anICvcard ifNotNil: [detailOfContact model: anICvcard] 
-]
-
-{ #category : 'initialization' }
-ICVCardMainPresenter >> updateItems [
-
-	contactList items: self vcardManager contacts.
-	self updatePresenter
 ]
 
 { #category : 'initialization' }

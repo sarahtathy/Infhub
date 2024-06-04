@@ -253,3 +253,40 @@ ICVCardTest >> testICVCardCreateNameByParser [
 
 
 ]
+
+{ #category : 'tests' }
+ICVCardTest >> testICVCardNullAddressException [
+
+	|newVcard | 
+
+	newVcard := ICVCard new fullname: 'Sarah Tathy'.
+	"[ newVcard checkAddress ]
+	        on: ICVCardNullAddressException 
+	        do: [ :exception | 
+	            self assert: (exception message equals: 'Vcard Sarah Tathy has a nil address!') ]."
+	    
+	self should: [newVcard checkAddress]
+			raise: ICVCardNullAddressException
+			description: 'The Vcard Sarah Tathy has a nil address'. 
+
+
+]
+
+{ #category : 'tests' }
+ICVCardTest >> testICVCardNullPostalCodeException [
+
+	|newVcard address| 
+
+	newVcard := ICVCard new fullname: 'Sarah Tathy'.
+	address := ICAddress new street: '10 avenue halley'; postalcode: '5900a'.
+	newVcard addAddress: address.
+	"self should: [newVcard checkAddress] raise: ICVCardNullAddressException "
+	self should: [newVcard checkPostalcode ]
+			raise: ICVCardNullPostalCodeException 
+			description: 'The postal code 5900a is invalid, please correct!'
+		
+
+
+
+
+]

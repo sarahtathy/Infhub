@@ -22,13 +22,14 @@ ICContactManager uniqueInstance removeContact: aContact
 ```
 "
 Class {
-	#name : 'ICContactManager',
+	#name : 'ICVCardManager',
 	#superclass : 'Object',
 	#instVars : [
-		'contacts'
+		'contacts',
+		'vcard'
 	],
 	#classVars : [
-		'UniqueInstace'
+		'UniqueInstance'
 	],
 	#classInstVars : [
 		'contacts'
@@ -39,25 +40,25 @@ Class {
 }
 
 { #category : 'class initialization' }
-ICContactManager class >> initialize [
+ICVCardManager class >> initialize [
 
 	self uniqueInstance reset
 ]
 
 { #category : 'instance creation' }
-ICContactManager class >> uniqueInstance [
+ICVCardManager class >> uniqueInstance [
 
-	^ UniqueInstace ifNil: [ UniqueInstace := self basicNew ]
+	^ UniqueInstance ifNil: [ UniqueInstance := self basicNew ]
 ]
 
-{ #category : 'accessing' }
-ICContactManager >> addContact: aContact [
+{ #category : 'initialization' }
+ICVCardManager >> addContact: aContact [
 
 	self contacts add: aContact 
 ]
 
 { #category : 'adding' }
-ICContactManager >> addContactName: aString lastname: aString2 phoneNumber: aString3 address: aString4 email: aString5 birthday: aString6 [
+ICVCardManager >> addContactName: aString lastname: aString2 phoneNumber1: aString3 address: aString4 email: aString5 birthday: aString6 phoneNumber2: aString7 [
 
 	"self addContact: (
 		ICVCard new
@@ -73,6 +74,7 @@ ICContactManager >> addContactName: aString lastname: aString2 phoneNumber: aStr
 		ICVCard new
 			fullname: aString , ' ', aString2;
 			addPhoneNumber: aString3;
+			addPhoneNumber: aString7;
 			addAddress: aString4 ;
 			addEmailAddress: aString5 ;
 			birthday: aString6; 
@@ -80,19 +82,25 @@ ICContactManager >> addContactName: aString lastname: aString2 phoneNumber: aStr
 ]
 
 { #category : 'accessing' }
-ICContactManager >> contacts [
+ICVCardManager >> contacts [
 	^ contacts 
 		ifNil: [ contacts := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
-ICContactManager >> removeContact: anICVCard [
+ICVCardManager >> removeContact: anICVCard [
 	
 	self contacts remove: anICVCard 
 ]
 
 { #category : 'initialization' }
-ICContactManager >> reset [
+ICVCardManager >> reset [
 
-	UniqueInstace := nil.
+	UniqueInstance := nil.
+]
+
+{ #category : 'accessing' }
+ICVCardManager >> vcard [ 
+
+	^ vcard 
 ]

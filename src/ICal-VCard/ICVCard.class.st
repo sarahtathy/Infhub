@@ -135,6 +135,28 @@ ICVCard >> categories: aCollection [
 	categories := aCollection
 ]
 
+{ #category : 'adding' }
+ICVCard >> checkAddress [
+
+addresses isEmptyOrNil ifTrue: [ICVCardNullAddressException exception: self]
+
+]
+
+{ #category : 'accessing' }
+ICVCard >> checkPostalcode [
+
+| aString | 
+
+aString := '[0-9]{5}'.
+1 to: addresses size do: [ :index | 
+	|addr | 
+	addr := addresses at: index.
+	(addr postalcode matchesRegex: aString) ifFalse: [ ICVCardNullPostalCodeException exception: addr ]
+	]    
+
+
+]
+
 { #category : 'public' }
 ICVCard >> convertPhotoToJpeg [
 	(self photo notNil and: [ self photo isKindOf: ByteArray ])

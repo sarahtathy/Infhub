@@ -73,15 +73,15 @@ ICContactListPresenter >> initializePresenters [
 				                evaluated: [ :contact |
 					                contact emailAddresses joinUsing: ',' "collect: #address" ];
 				                yourself);
-		               addColumn: (SpStringTableColumn new
+		               "addColumn: (SpStringTableColumn new
 				                title: 'Birthday';
 				                evaluated: #birthday;
-				                yourself);
+				                yourself);"
 		               contextMenu: [
 			               (self rootCommandsGroup / 'contact manager commands')
 				               beRoot asMenuPresenter ];
-		               whenSelectedItemChangedDo: [ :selection |
-		               self owner updateDetail: selection ];
+		               "whenSelectedItemChangedDo: [ :selection |
+		               self owner updateDetail: selection ];"
 		               items: self vcardManager contacts;
 		               yourself
 ]

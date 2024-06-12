@@ -45,15 +45,15 @@ ICContactListPresenter >> defaultLayout [
 ]
 
 { #category : 'operations' }
-ICContactListPresenter >> initialExtentForWindow [ 
+ICContactListPresenter >> initialExtentForWindow [
 
- ^ (900 @ 100) scaledByDisplayScaleFactor 
+	^ (840 @ 80) scaledByDisplayScaleFactor
 ]
 
 { #category : 'initialization' }
 ICContactListPresenter >> initializePresenters [
 
-	contactList := self newTable 
+	contactList := self newTable
 		               addColumn: (SpStringTableColumn new
 				                title: 'Fullname';
 				                evaluated: #fullname;
@@ -61,27 +61,27 @@ ICContactListPresenter >> initializePresenters [
 		               addColumn: (SpStringTableColumn new
 				                title: 'Number(s)';
 				                evaluated: [ :contact |
-					                contact phoneNumbers joinUsing: ',' "collect: #phoneNumber" ];
+					                contact phoneNumbers joinUsing: ',' ];
 				                yourself);
-		               addColumn: (SpStringTableColumn new
+		               "addColumn: (SpStringTableColumn new
 				                title: 'Address';
 				                evaluated: [ :contact |
-					                contact addresses joinUsing: ',' "collect: #phoneNumber" ];
+					                contact addresses joinUsing: ','  ];
 				                yourself);
 		               addColumn: (SpStringTableColumn new
 				                title: 'Email';
 				                evaluated: [ :contact |
-					                contact emailAddresses joinUsing: ',' "collect: #address" ];
+					                contact emailAddresses joinUsing: ',' ];
 				                yourself);
-		               "addColumn: (SpStringTableColumn new
+		               addColumn: (SpStringTableColumn new
 				                title: 'Birthday';
 				                evaluated: #birthday;
 				                yourself);"
 		               contextMenu: [
 			               (self rootCommandsGroup / 'contact manager commands')
 				               beRoot asMenuPresenter ];
-		               "whenSelectedItemChangedDo: [ :selection |
-		               self owner updateDetail: selection ];"
+		               whenSelectedItemChangedDo: [ :selection |
+		               self owner updateDetail: selection ];
 		               items: self vcardManager contacts;
 		               yourself
 ]

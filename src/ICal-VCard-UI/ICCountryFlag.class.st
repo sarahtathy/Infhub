@@ -2466,13 +2466,11 @@ ICCountryFlag class >> zimbabweFlag [
 
 { #category : 'creating' }
 ICCountryFlag >> createCountryFlag [
-
-"This method is just the script that provides countries flags "
-
+	"This method is just the script that provides countries flags "
 
 	"yu := SpCountryCodesPresenter new listOfCountries.
 	dic := Dictionary new.
-
+  
 
 
 	1 to: yu size by: 2 do: [ :i |
@@ -2494,7 +2492,9 @@ ICCountryFlag >> createCountryFlag [
 			^ ' , imageForm4
 			classified: 'flags'.
 		newdic at: normalizedFlagName , 'Flag' put: m.
-		ICCountryFlag new perform: (normalizedFlagName , 'Flag') asSymbol ]" 
+		ICCountryFlag new perform: (normalizedFlagName , 'Flag') asSymbol ]"
+
+	
 ]
 
 { #category : 'flags' }

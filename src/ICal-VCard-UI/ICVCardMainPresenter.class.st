@@ -60,9 +60,9 @@ ICVCardMainPresenter >> detailOfContact [
 ]
 
 { #category : 'initialization' }
-ICVCardMainPresenter >> initialExtentForWindow [ 
+ICVCardMainPresenter >> initialExtentForWindow [
 
- ^ (900 @ 900) scaledByDisplayScaleFactor 
+	^ (840 @ 730) scaledByDisplayScaleFactor
 ]
 
 { #category : 'initialization' }

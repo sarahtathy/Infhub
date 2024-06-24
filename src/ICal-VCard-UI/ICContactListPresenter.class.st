@@ -32,7 +32,8 @@ ICContactListPresenter >> addContact [
 		email: contactPresenter email
 		birthday: contactPresenter birthday
 		phoneNumber2: contactPresenter phoneNumber2.
-		
+
+
 	self updateItems
 ]
 
@@ -123,7 +124,7 @@ ICContactListPresenter >> updateItems [
 ]
 
 { #category : 'operations' }
-ICContactListPresenter >> vcardManager [ 
+ICContactListPresenter >> vcardManager [
 
- ^ ICVCardManager uniqueInstance 
+		^ ICVCardManager uniqueInstance
 ]

@@ -258,6 +258,21 @@ ICVCard >> isOrganization [
 		
 ]
 
+{ #category : 'adding' }
+ICVCard >> listOfInformation [
+
+	| hello |
+	hello := OrderedCollection new.
+	hello
+		add: self birthday;
+		add: self fullname;
+		add: self name asString.
+
+
+
+	^ hello
+]
+
 { #category : 'accessing' }
 ICVCard >> msnids [
 	^msnids
@@ -388,6 +403,39 @@ ICVCard >> version [
 { #category : 'accessing' }
 ICVCard >> version: aFloat [ 
 	version := aFloat
+]
+
+{ #category : 'exporting' }
+ICVCard >> writeVCardInStonFile [
+
+	| x script stream vcardname dic |
+	vcardname := self fullname copyReplaceAll: ' ' with: '_'.
+	x := FileLocator home / 'Documents'.
+	(x / 'Contacts') isDirectory ifFalse: [
+		(x / 'Contacts') ensureCreateDirectory ].
+	x := x / 'Contacts'.
+	script := (x / vcardname , 'ston') asFileReference.
+	script asFileReference isFile ifTrue: [
+		script := x / (x nextNameFor: vcardname extension: 'ston') ].
+	script := script asFileReference.
+	stream := script writeStream.
+
+	STON
+	 put: self listOfInformation asArray asJsonOnStreamPretty: stream;
+	 put: self addresses asArray asJsonOnStreamPretty: stream;
+	 put: self emailAddresses asArray asJsonOnStreamPretty: stream;
+	 put: self phoneNumbers asArray asJsonOnStreamPretty: stream.
+	
+	stream close stream close
+
+	"dic := Dictionary new.
+	dic 
+	at: 'BD' put: self birthday;
+	at: 'FN' put: self fullname;
+	at: 'N' put: self name;
+	at: 'EA' put: self emailAddresses;
+	at: 'PN' put: self phoneNumbers.
+	STON put: dic asDictionary asJsonOnStreamPretty: stream."
 ]
 
 { #category : 'accessing' }

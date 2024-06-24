@@ -53,7 +53,6 @@ ICContactPresenter >> defaultLayout [
 	^ SpGridLayout build: [ :builder |
 		  builder
 			  beColumnNotHomogeneous;
-			  column: 3 withConstraints: #beExpand;
 			  add: 'Name';
 			  add: nameText;
 			  nextRow;
@@ -73,7 +72,10 @@ ICContactPresenter >> defaultLayout [
 			  add: emailText;
 			  nextRow;
 			  add: 'Birthday';
-			  add: birthday ]
+			  add: birthday;
+				nextRow;
+				add: 'Picture';
+				add: picturePresenter ]
 ]
 
 { #category : 'layout' }
@@ -117,7 +119,8 @@ ICContactPresenter >> initializePresenters [
 	emailText := self newTextInput.
 	phoneNumber1 := self instantiate: ICVCardPhonePresenter.
 	phoneNumber2 := self instantiate: ICVCardPhonePresenter.
-	birthday := self newTextInput
+	birthday := self newTextInput.
+	"picturePresenter := self instantiate: StOpenFilePresenter"
 ]
 
 { #category : 'initialization' }

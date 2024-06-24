@@ -33,6 +33,7 @@ ICContactListPresenter >> addContact [
 		birthday: contactPresenter birthday
 		phoneNumber2: contactPresenter phoneNumber2.
 
+	self vcardManager writeInSton.
 
 	self updateItems
 ]

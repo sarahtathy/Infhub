@@ -63,7 +63,7 @@ ICVCardManager >> addContact [
 ICVCardManager >> addContact: aContact [
 
 	self contacts add: aContact.
-	aContact writeVCardInStonFile.
+	
 ]
 
 { #category : 'adding' }
@@ -139,6 +139,15 @@ ICVCardManager >> contacts [
 		ifNil: [ contacts := OrderedCollection new ]
 ]
 
+{ #category : 'writing' }
+ICVCardManager >> readContactSton: aContactSton [
+
+	
+	^ STON reader
+		  on: aContactSton readStream;
+		  next
+]
+
 { #category : 'accessing' }
 ICVCardManager >> removeContact: anICVCard [
 	
@@ -155,4 +164,13 @@ ICVCardManager >> reset [
 ICVCardManager >> vcard [
 
 	^ vcard ifNil: [ vcard := ICVCard new ]
+]
+
+{ #category : 'writing' }
+ICVCardManager >> writeInSton [
+
+	'contacts.ston' asFileReference writeStreamDo: [ :stream |
+		STON writer
+			on: stream;
+			nextPut: (self contacts do: [ :each | each writeInSton ]) ] 
 ]

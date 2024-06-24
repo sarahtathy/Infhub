@@ -16,7 +16,8 @@ Class {
 		'emailText',
 		'lastName',
 		'addressText',
-		'birthday'
+		'birthday',
+		'picturePresenter'
 	],
 	#category : 'ICal-VCard-UI-Spec',
 	#package : 'ICal-VCard-UI',
@@ -120,7 +121,7 @@ ICContactPresenter >> initializePresenters [
 	phoneNumber1 := self instantiate: ICVCardPhonePresenter.
 	phoneNumber2 := self instantiate: ICVCardPhonePresenter.
 	birthday := self newTextInput.
-	"picturePresenter := self instantiate: StOpenFilePresenter"
+	picturePresenter := self newImage.
 ]
 
 { #category : 'initialization' }

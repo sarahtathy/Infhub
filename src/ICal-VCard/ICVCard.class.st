@@ -406,36 +406,12 @@ ICVCard >> version: aFloat [
 ]
 
 { #category : 'exporting' }
-ICVCard >> writeVCardInStonFile [
+ICVCard >> writeInSton [ 
 
-	| x script stream vcardname dic |
-	vcardname := self fullname copyReplaceAll: ' ' with: '_'.
-	x := FileLocator home / 'Documents'.
-	(x / 'Contacts') isDirectory ifFalse: [
-		(x / 'Contacts') ensureCreateDirectory ].
-	x := x / 'Contacts'.
-	script := (x / vcardname , 'ston') asFileReference.
-	script asFileReference isFile ifTrue: [
-		script := x / (x nextNameFor: vcardname extension: 'ston') ].
-	script := script asFileReference.
-	stream := script writeStream.
-
-	STON
-	 put: self listOfInformation asArray asJsonOnStreamPretty: stream;
-	 put: self addresses asArray asJsonOnStreamPretty: stream;
-	 put: self emailAddresses asArray asJsonOnStreamPretty: stream;
-	 put: self phoneNumbers asArray asJsonOnStreamPretty: stream.
-	
-	stream close stream close
-
-	"dic := Dictionary new.
-	dic 
-	at: 'BD' put: self birthday;
-	at: 'FN' put: self fullname;
-	at: 'N' put: self name;
-	at: 'EA' put: self emailAddresses;
-	at: 'PN' put: self phoneNumbers.
-	STON put: dic asDictionary asJsonOnStreamPretty: stream."
+	^ String streamContents: [ :stream |
+		  STON writer
+			  on: stream;
+			  nextPut: self ]
 ]
 
 { #category : 'accessing' }

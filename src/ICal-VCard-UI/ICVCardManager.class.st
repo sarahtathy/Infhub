@@ -26,7 +26,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'contacts',
-		'vcard'
+		'vcard',
+		'vcardGenerator'
 	],
 	#classVars : [
 		'UniqueInstance'
@@ -52,14 +53,54 @@ ICVCardManager class >> uniqueInstance [
 ]
 
 { #category : 'initialization' }
+ICVCardManager >> addContact [
+
+	self contacts add: vcard.
+	vcard := nil.
+]
+
+{ #category : 'initialization' }
 ICVCardManager >> addContact: aContact [
 
-	self contacts add: aContact 
+	self contacts add: aContact.
+	
+]
+
+{ #category : 'adding' }
+ICVCardManager >> addContactAddress: anAddress [ 
+
+	vcard addAddress: anAddress
+]
+
+{ #category : 'adding' }
+ICVCardManager >> addContactBirthday: aBirthday [
+
+	vcard birthday: aBirthday
+]
+
+{ #category : 'adding' }
+ICVCardManager >> addContactEmail: anEmail [
+
+	vcard addEmailAddress: anEmail 
+]
+
+{ #category : 'adding' }
+ICVCardManager >> addContactFromFile: aContactName [
+
+	| stream listOfInformation |
+	stream := aContactName asFileReference readStream.
+	listOfInformation := STON fromStream: stream.
+	listOfInformation traceCr
+]
+
+{ #category : 'adding' }
+ICVCardManager >> addContactName: aString lastname: aLastName [
+
+	vcard fullname: aString , ' ' , aLastName
 ]
 
 { #category : 'adding' }
 ICVCardManager >> addContactName: aString lastname: aString2 phoneNumber1: aString3 address: aString4 email: aString5 birthday: aString6 phoneNumber2: aString7 [
-
 	"self addContact: (
 		ICVCard new
 			fullname: aString , ' ', aString2;
@@ -67,24 +108,44 @@ ICVCardManager >> addContactName: aString lastname: aString2 phoneNumber1: aStri
 			addPhoneNumber: (ICPhoneNumber new number: aString3);
 			addAddress: (ICAddress fromVCardString: aString4 parameters: Dictionary new) ;
 			addEmailAddress: (ICEmailAddress new address: aString5);
-			birthday: aString6; 
+			birthday: aString6;   
 			yourself)"
-		
-	self addContact: (
-		ICVCard new
-			fullname: aString , ' ', aString2;
-			addPhoneNumber: aString3;
-			addPhoneNumber: aString7;
-			addAddress: aString4 ;
-			addEmailAddress: aString5 ;
-			birthday: aString6; 
-			yourself)
+
+	self addContact: (ICVCard new
+			 fullname: aString , ' ' , aString2;
+			 addPhoneNumber: aString3;
+			 addPhoneNumber: aString7;
+			 addAddress: aString4;
+			 addEmailAddress: aString5;
+			 birthday: aString6;
+			 yourself)
+]
+
+{ #category : 'adding' }
+ICVCardManager >> addContactPhoneNumber1: phone1 [
+
+	vcard addPhoneNumber: phone1 
+]
+
+{ #category : 'adding' }
+ICVCardManager >> addContactPhoneNumber2: phone2 [
+
+	vcard addPhoneNumber: phone2
 ]
 
 { #category : 'accessing' }
 ICVCardManager >> contacts [
 	^ contacts 
 		ifNil: [ contacts := OrderedCollection new ]
+]
+
+{ #category : 'writing' }
+ICVCardManager >> readContactSton: aContactSton [
+
+	
+	^ STON reader
+		  on: aContactSton readStream;
+		  next
 ]
 
 { #category : 'accessing' }
@@ -100,7 +161,16 @@ ICVCardManager >> reset [
 ]
 
 { #category : 'accessing' }
-ICVCardManager >> vcard [ 
+ICVCardManager >> vcard [
 
-	^ vcard 
+	^ vcard ifNil: [ vcard := ICVCard new ]
+]
+
+{ #category : 'writing' }
+ICVCardManager >> writeInSton [
+
+	'contacts.ston' asFileReference writeStreamDo: [ :stream |
+		STON writer
+			on: stream;
+			nextPut: (self contacts do: [ :each | each writeInSton ]) ] 
 ]

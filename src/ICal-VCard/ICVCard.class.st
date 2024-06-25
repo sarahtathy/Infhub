@@ -258,6 +258,21 @@ ICVCard >> isOrganization [
 		
 ]
 
+{ #category : 'adding' }
+ICVCard >> listOfInformation [
+
+	| hello |
+	hello := OrderedCollection new.
+	hello
+		add: self birthday;
+		add: self fullname;
+		add: self name asString.
+
+
+
+	^ hello
+]
+
 { #category : 'accessing' }
 ICVCard >> msnids [
 	^msnids
@@ -388,6 +403,15 @@ ICVCard >> version [
 { #category : 'accessing' }
 ICVCard >> version: aFloat [ 
 	version := aFloat
+]
+
+{ #category : 'exporting' }
+ICVCard >> writeInSton [ 
+
+	^ String streamContents: [ :stream |
+		  STON writer
+			  on: stream;
+			  nextPut: self ]
 ]
 
 { #category : 'accessing' }

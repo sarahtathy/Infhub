@@ -10,13 +10,14 @@ Class {
 	#name : 'ICContactPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'nameText',
-		'phoneNumber1',
-		'phoneNumber2',
-		'emailText',
-		'lastName',
-		'addressText',
-		'birthday'
+		'nameTextPresenter',
+		'phoneNumber1Presenter',
+		'phoneNumber2Presenter',
+		'emailTextPresenter',
+		'lastNameTextPresenter',
+		'addressTextPresenter',
+		'birthdayPresenter',
+		'picturePresenter'
 	],
 	#category : 'ICal-VCard-UI-Spec',
 	#package : 'ICal-VCard-UI',
@@ -24,27 +25,27 @@ Class {
 }
 
 { #category : 'layout' }
-ICContactPresenter >> address [ 
-	^ addressText text
+ICContactPresenter >> address [
 
+	^ addressTextPresenter text
 ]
 
 { #category : 'layout' }
 ICContactPresenter >> address: anAddress [
 
-	addressText text: anAddress 
+	addressTextPresenter text: anAddress
 ]
 
 { #category : 'layout' }
-ICContactPresenter >> birthday [  
-	^ birthday text
+ICContactPresenter >> birthday [
 
+	^ birthdayPresenter text
 ]
 
 { #category : 'layout' }
-ICContactPresenter >> birthday: aBirthday [ 
+ICContactPresenter >> birthday: aBirthday [
 
-	birthday text: aBirthday 
+	birthdayPresenter text: aBirthday
 ]
 
 { #category : 'layout' }
@@ -53,39 +54,41 @@ ICContactPresenter >> defaultLayout [
 	^ SpGridLayout build: [ :builder |
 		  builder
 			  beColumnNotHomogeneous;
-			  column: 3 withConstraints: #beExpand;
 			  add: 'Name';
-			  add: nameText;
+			  add: nameTextPresenter;
 			  nextRow;
 			  add: 'Lastname';
-			  add: lastName;
+			  add: lastNameTextPresenter ;
 			  nextRow;
 			  add: 'Principal phone number';
-			  add: phoneNumber1;
+			  add: phoneNumber1Presenter;
 			  nextRow;
 			  add: 'Second phone number';
-			  add: phoneNumber2;
+			  add: phoneNumber2Presenter;
 			  nextRow;
 			  add: 'Address';
-			  add: addressText;
+			  add: addressTextPresenter;
 			  nextRow;
 			  add: 'Email';
-			  add: emailText;
+			  add: emailTextPresenter;
 			  nextRow;
 			  add: 'Birthday';
-			  add: birthday ]
+			  add: birthdayPresenter;
+			  nextRow;
+			  add: 'Picture';
+			  add: picturePresenter ]
 ]
 
 { #category : 'layout' }
 ICContactPresenter >> email [
-		
-	^ emailText text
+
+	^ emailTextPresenter text
 ]
 
 { #category : 'layout' }
-ICContactPresenter >> email: anEmail [ 
+ICContactPresenter >> email: anEmail [
 
-	emailText text: anEmail 
+	emailTextPresenter text: anEmail
 ]
 
 { #category : 'layout' }
@@ -111,13 +114,14 @@ ICContactPresenter >> initializeDialogWindow: aDialogPresenter [
 { #category : 'initialization' }
 ICContactPresenter >> initializePresenters [
 
-	nameText := self newTextInput.
-	lastName := self newTextInput.
-	addressText := self newTextInput.
-	emailText := self newTextInput.
-	phoneNumber1 := self instantiate: ICVCardPhonePresenter.
-	phoneNumber2 := self instantiate: ICVCardPhonePresenter.
-	birthday := self newTextInput
+	nameTextPresenter := self newTextInput.
+	lastNameTextPresenter := self newTextInput.
+	addressTextPresenter := self newTextInput.
+	emailTextPresenter := self newTextInput.
+	phoneNumber1Presenter := self instantiate: ICVCardPhonePresenter.
+	phoneNumber2Presenter := self instantiate: ICVCardPhonePresenter.
+	birthdayPresenter := self newTextInput.
+	picturePresenter := self newImage
 ]
 
 { #category : 'initialization' }
@@ -129,15 +133,15 @@ ICContactPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : 'layout' }
-ICContactPresenter >> lastname [ 
-		
-	^ lastName text
+ICContactPresenter >> lastname [
+
+	^ lastNameTextPresenter text
 ]
 
 { #category : 'layout' }
 ICContactPresenter >> lastname: aLastName [
 
-	lastName text: aLastName 
+	lastNameTextPresenter text: aLastName
 ]
 
 { #category : 'layout' }
@@ -160,38 +164,36 @@ ICContactPresenter >> model: anICvcard [
 
 { #category : 'layout' }
 ICContactPresenter >> name [
-	^ nameText text
 
+	^ nameTextPresenter text
 ]
 
 { #category : 'accessing' }
-ICContactPresenter >> name: aName [ 
+ICContactPresenter >> name: aName [
 
-	nameText text: aName 
+	nameTextPresenter text: aName
 ]
 
 { #category : 'layout' }
 ICContactPresenter >> phoneNumber1 [
-	^ phoneNumber1 text
-		
 
+	^ phoneNumber1Presenter text
 ]
 
 { #category : 'layout' }
-ICContactPresenter >> phoneNumber1: number1 [ 
+ICContactPresenter >> phoneNumber1: number1 [
 
-	phoneNumber1 text: number1 
+	phoneNumber1Presenter text: number1
 ]
 
 { #category : 'layout' }
 ICContactPresenter >> phoneNumber2 [
-	^ phoneNumber2 text
-		
 
+	^ phoneNumber2Presenter text
 ]
 
 { #category : 'layout' }
-ICContactPresenter >> phoneNumber2: number2 [ 
+ICContactPresenter >> phoneNumber2: number2 [
 
-	phoneNumber2 text: number2 
+	phoneNumber2Presenter text: number2
 ]

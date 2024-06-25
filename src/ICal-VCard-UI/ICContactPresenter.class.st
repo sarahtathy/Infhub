@@ -17,7 +17,8 @@ Class {
 		'lastNameTextPresenter',
 		'addressTextPresenter',
 		'birthdayPresenter',
-		'picturePresenter'
+		'picturePresenter',
+		'selectImageButtonPresenter'
 	],
 	#category : 'ICal-VCard-UI-Spec',
 	#package : 'ICal-VCard-UI',
@@ -51,32 +52,37 @@ ICContactPresenter >> birthday: aBirthday [
 { #category : 'layout' }
 ICContactPresenter >> defaultLayout [
 
-	^ SpGridLayout build: [ :builder |
-		  builder
-			  beColumnNotHomogeneous;
-			  add: 'Name';
-			  add: nameTextPresenter;
-			  nextRow;
-			  add: 'Lastname';
-			  add: lastNameTextPresenter ;
-			  nextRow;
-			  add: 'Principal phone number';
-			  add: phoneNumber1Presenter;
-			  nextRow;
-			  add: 'Second phone number';
-			  add: phoneNumber2Presenter;
-			  nextRow;
-			  add: 'Address';
-			  add: addressTextPresenter;
-			  nextRow;
-			  add: 'Email';
-			  add: emailTextPresenter;
-			  nextRow;
-			  add: 'Birthday';
-			  add: birthdayPresenter;
-			  nextRow;
-			  add: 'Picture';
-			  add: picturePresenter ]
+	^ SpBoxLayout newLeftToRight
+		  add: (SpGridLayout build: [ :builder |
+					   builder
+						   beColumnNotHomogeneous;
+						   add: 'Name';
+						   add: nameTextPresenter;
+						   nextRow;
+						   add: 'Lastname';
+						   add: lastNameTextPresenter;
+						   nextRow;
+						   add: 'Principal phone number';
+						   add: phoneNumber1Presenter;
+						   nextRow;
+						   add: 'Second phone number';
+						   add: phoneNumber2Presenter;
+						   nextRow;
+						   add: 'Address';
+						   add: addressTextPresenter;
+						   nextRow;
+						   add: 'Email';
+						   add: emailTextPresenter;
+						   nextRow;
+						   add: 'Birthday';
+						   add: birthdayPresenter ])
+		  width: 450;
+		  add: (SpBoxLayout newTopToBottom
+				   add: 'Picture' expand: false;
+					add: selectImageButtonPresenter expand: false;
+				   add: picturePresenter;
+				   yourself);
+		  yourself
 ]
 
 { #category : 'layout' }
@@ -94,7 +100,7 @@ ICContactPresenter >> email: anEmail [
 { #category : 'layout' }
 ICContactPresenter >> initialExtentForWindow [
 
-	^ (400 @300) scaledByDisplayScaleFactor
+	^ (600 @ 350) scaledByDisplayScaleFactor
 ]
 
 { #category : 'initialization' }
@@ -121,6 +127,10 @@ ICContactPresenter >> initializePresenters [
 	phoneNumber1Presenter := self instantiate: ICVCardPhonePresenter.
 	phoneNumber2Presenter := self instantiate: ICVCardPhonePresenter.
 	birthdayPresenter := self newTextInput.
+	selectImageButtonPresenter := self newButton 
+		label: 'Select';
+		action: [ self selectImage ];
+		yourself.
 	picturePresenter := self newImage
 ]
 
@@ -142,22 +152,6 @@ ICContactPresenter >> lastname [
 ICContactPresenter >> lastname: aLastName [
 
 	lastNameTextPresenter text: aLastName
-]
-
-{ #category : 'layout' }
-ICContactPresenter >> model: anICvcard [
-
-	| firstNumber secondNumber|
-
-	firstNumber := anICvcard phoneNumbers at: 1.
-	secondNumber := anICvcard phoneNumbers at: 2.
-	self address: anICvcard addresses first.
-	self name: anICvcard name givenName.
-	self lastname: anICvcard name familyName.
-	self email: anICvcard emailAddresses first.
-	self birthday: anICvcard birthday.
-	self phoneNumber1: firstNumber.
-	self phoneNumber2: secondNumber
 ]
 
 { #category : 'layout' }
@@ -194,4 +188,46 @@ ICContactPresenter >> phoneNumber2 [
 ICContactPresenter >> phoneNumber2: number2 [
 
 	phoneNumber2Presenter text: number2
+]
+
+{ #category : 'layout' }
+ICContactPresenter >> photo [
+
+	^ picturePresenter image
+]
+
+{ #category : 'accessing' }
+ICContactPresenter >> picturePresenter [
+
+	^ picturePresenter
+]
+
+{ #category : 'accessing' }
+ICContactPresenter >> picturePresenter: anObject [
+
+	picturePresenter := anObject
+]
+
+{ #category : 'initialization' }
+ICContactPresenter >> selectImage [
+
+	| selectedFile |
+	((selectedFile := StOpenFilePresenter new openModal) notNil and: [  selectedFile isFile ]) 
+		ifTrue: [ picturePresenter image: (ImageReadWriter formFromFileNamed: selectedFile fullName) ]
+]
+
+{ #category : 'layout' }
+ICContactPresenter >> updateModel: anICvcard [
+
+	| firstNumber secondNumber |
+	firstNumber := anICvcard phoneNumbers at: 1.
+	secondNumber := anICvcard phoneNumbers at: 2.
+	self address: anICvcard addresses first.
+	self name: anICvcard name givenName.
+	self lastname: anICvcard name familyName.
+	self email: anICvcard emailAddresses first.
+	self birthday: anICvcard birthday.
+	self phoneNumber1: firstNumber.
+	self phoneNumber2: secondNumber.
+	self picturePresenter image: anICvcard photo 
 ]

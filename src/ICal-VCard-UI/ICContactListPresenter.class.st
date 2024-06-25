@@ -27,16 +27,7 @@ ICContactListPresenter >> addContact [
 	contactPresenter := self instantiate: ICContactPresenter.
 	contactPresenter openModal isOk ifFalse: [ ^ self ].
 
-	newContact := self vcardManager
-		              addContactName: (icGenerator createName: (ICName new givenName: contactPresenter name; familyName: contactPresenter lastname; yourself) asVCardString)
-		              phoneNumber1: (icGenerator createPhoneNumber: contactPresenter phoneNumber1)
-		              address: (icGenerator createAddress: (ICAddress new street: contactPresenter address) asVCardString)
-		              email: (icGenerator createEmailAddress: contactPresenter email)
-		              birthday: contactPresenter birthday
-							phoneNumber2: (icGenerator createPhoneNumber: contactPresenter phoneNumber2).
-	"newContact photo:
-		(icGenerator photo: contactPresenter picturePresenter)."
-
+	newContact := self createNewContact.
 	self updateItems
 
 	"contactPresenter := self instantiate: ICContactPresenter.
@@ -54,6 +45,25 @@ ICContactListPresenter >> addContact [
 	self vcardManager writeInSton.
 
 	self updateItems"
+]
+
+{ #category : 'operations' }
+ICContactListPresenter >> createNewContact [
+
+	self vcardManager
+		addContactName: (icGenerator createName: (ICName new
+					  givenName: contactPresenter name;
+					  familyName: contactPresenter lastname;
+					  yourself) asVCardString)
+		phoneNumber1:
+		(icGenerator createPhoneNumber: contactPresenter phoneNumber1)
+		address: (icGenerator createAddress:
+				 (ICAddress new street: contactPresenter address) asVCardString)
+		email: (icGenerator createEmailAddress: contactPresenter email)
+		birthday: contactPresenter birthday
+		phoneNumber2:
+		(icGenerator createPhoneNumber: contactPresenter phoneNumber2)
+		photo: (icGenerator photo: contactPresenter photo).
 ]
 
 { #category : 'layout' }
@@ -88,7 +98,8 @@ ICContactListPresenter >> initializePresenters [
 				                yourself);
 		               addColumn: (SpStringTableColumn new
 				                title: 'Number(s)';
-				                evaluated: [ :contact | self phoneNumbersFor: contact ];
+				                evaluated: [ :contact |
+					                self phoneNumbersFor: contact ];
 				                yourself);
 		               addColumn: (SpStringTableColumn new
 				                title: 'Address';
@@ -97,7 +108,8 @@ ICContactListPresenter >> initializePresenters [
 				                yourself);
 		               addColumn: (SpStringTableColumn new
 				                title: 'Email';
-				                evaluated: [ :contact | self emailAddressesFor: contact ];
+				                evaluated: [ :contact |
+					                self emailAddressesFor: contact ];
 				                yourself);
 		               addColumn: (SpStringTableColumn new
 				                title: 'Birthday';

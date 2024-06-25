@@ -101,35 +101,7 @@ ICVCardManager >> addContactFromFile: aContactName [
 ]
 
 { #category : 'adding' }
-ICVCardManager >> addContactName: aString lastname: aLastName [
-
-	vcard fullname: aString , ' ' , aLastName
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactName: aString lastname: aString2 phoneNumber1: aString3 address: aString4 email: aString5 birthday: aString6 phoneNumber2: aString7 [
-	"self addContact: (
-		ICVCard new
-			fullname: aString , ' ', aString2;
-			name: (ICName new familyName: aString2; givenName: aString);
-			addPhoneNumber: (ICPhoneNumber new number: aString3);
-			addAddress: (ICAddress fromVCardString: aString4 parameters: Dictionary new) ;
-			addEmailAddress: (ICEmailAddress new address: aString5);
-			birthday: aString6;   
-			yourself)"
-
-	self addContact: (ICVCard new
-			 fullname: aString , ' ' , aString2;
-			 addPhoneNumber: aString3;
-			 addPhoneNumber: aString7;
-			 addAddress: aString4;
-			 addEmailAddress: aString5;
-			 birthday: aString6;
-			 yourself)
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactName: icName phoneNumber1: aString3 address: aString4 email: aString5 birthday: aString6 phoneNumber2: aString7 [
+ICVCardManager >> addContactName: icName phoneNumber1: aString3 address: aString4 email: aString5 birthday: aString6 phoneNumber2: aString7 photo: aPicture [
 
 	self addContact: (ICVCard new
 			 name: icName;
@@ -138,6 +110,7 @@ ICVCardManager >> addContactName: icName phoneNumber1: aString3 address: aString
 			 addAddress: aString4;
 			 addEmailAddress: aString5;
 			 birthday: aString6;
+			 photo: aPicture;
 			 yourself)
 ]
 

@@ -266,6 +266,17 @@ ICVCardGenerator >> org:  aString parameters: aDictionary [
 ]
 
 { #category : 'processing-properties' }
+ICVCardGenerator >> photo: aString [
+
+	| value |
+	value := self
+		         createValue: aString
+		         parameters: Dictionary new
+		         default: ZnUrl iCalType.
+	^ value
+]
+
+{ #category : 'processing-properties' }
 ICVCardGenerator >> photo: aString parameters: aDictionary [
 
 	| value |

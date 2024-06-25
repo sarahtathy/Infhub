@@ -114,7 +114,7 @@ ICVCardMainPresenter >> newCMToolbar [
 		  add: (self newToolbarButton
 				   label: 'Remove';
 				   icon: (self iconNamed: #smallDelete);
-				   action: [ contactList removeContact ];
+				   action: [ self removeContact ];
 				   yourself);
 		  add: (self newToolbarButton
 				   label: 'Help';
@@ -130,9 +130,17 @@ ICVCardMainPresenter >> newCMToolbar [
 ]
 
 { #category : 'initialization' }
-ICVCardMainPresenter >> updateDetail: anICvcard [ 
+ICVCardMainPresenter >> removeContact [
 
-	anICvcard ifNotNil: [detailOfContact model: anICvcard] 
+	(self confirm: 'Are you sure you want to remove the contact ?')
+		ifFalse: [ ^ self ]. 
+	contactList removeContact
+]
+
+{ #category : 'initialization' }
+ICVCardMainPresenter >> updateDetail: anICvcard [
+
+	anICvcard ifNotNil: [ detailOfContact updateModel: anICvcard ]
 ]
 
 { #category : 'initialization' }

@@ -289,8 +289,9 @@ ICVCard >> name [
 ]
 
 { #category : 'accessing' }
-ICVCard >> name: aName [ 
-	name := aName
+ICVCard >> name: anICName [ 
+	name := anICName.
+	fullname := anICName familyName , ' ' , anICName givenName 
 ]
 
 { #category : 'accessing' }

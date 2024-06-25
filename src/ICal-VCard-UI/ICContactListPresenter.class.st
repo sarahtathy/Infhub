@@ -11,7 +11,8 @@ Class {
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'contactList',
-		'contactPresenter'
+		'contactPresenter',
+		'icGenerator'
 	],
 	#category : 'ICal-VCard-UI-Spec',
 	#package : 'ICal-VCard-UI',
@@ -21,7 +22,24 @@ Class {
 { #category : 'operations' }
 ICContactListPresenter >> addContact [
 
+	| newContact |
+	icGenerator := ICVCardGenerator new.
 	contactPresenter := self instantiate: ICContactPresenter.
+	contactPresenter openModal isOk ifFalse: [ ^ self ].
+
+	newContact := self vcardManager
+		              addContactName: (icGenerator createName: (ICName new givenName: contactPresenter name; familyName: contactPresenter lastname; yourself) asVCardString)
+		              phoneNumber1: (icGenerator createPhoneNumber: contactPresenter phoneNumber1)
+		              address: (icGenerator createAddress: (ICAddress new street: contactPresenter address) asVCardString)
+		              email: (icGenerator createEmailAddress: contactPresenter email)
+		              birthday: contactPresenter birthday
+							phoneNumber2: (icGenerator createPhoneNumber: contactPresenter phoneNumber2).
+	"newContact photo:
+		(icGenerator photo: contactPresenter picturePresenter)."
+
+	self updateItems
+
+	"contactPresenter := self instantiate: ICContactPresenter.
 	contactPresenter openModal isOk ifFalse: [ ^ self ].
 
 	self vcardManager
@@ -35,7 +53,7 @@ ICContactListPresenter >> addContact [
 
 	self vcardManager writeInSton.
 
-	self updateItems
+	self updateItems"
 ]
 
 { #category : 'layout' }
@@ -44,6 +62,14 @@ ICContactListPresenter >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		  add: contactList;
 		  yourself
+]
+
+{ #category : 'initialization' }
+ICContactListPresenter >> emailAddressesFor: contact [
+
+	^ contact emailAddresses 
+		  inject: String empty
+		  into: [ :acc :n | acc , ', ' , n address ]
 ]
 
 { #category : 'operations' }
@@ -58,27 +84,25 @@ ICContactListPresenter >> initializePresenters [
 	contactList := self newTable
 		               addColumn: (SpStringTableColumn new
 				                title: 'Fullname';
-				                evaluated: #fullname;
+				                evaluated: [ :e | e fullname ];
 				                yourself);
 		               addColumn: (SpStringTableColumn new
 				                title: 'Number(s)';
-				                evaluated: [ :contact |
-					                contact phoneNumbers joinUsing: ',' ];
+				                evaluated: [ :contact | self phoneNumbersFor: contact ];
 				                yourself);
-		               "addColumn: (SpStringTableColumn new
+		               addColumn: (SpStringTableColumn new
 				                title: 'Address';
 				                evaluated: [ :contact |
-					                contact addresses joinUsing: ','  ];
+					                contact addresses joinUsing: ',' ];
 				                yourself);
 		               addColumn: (SpStringTableColumn new
 				                title: 'Email';
-				                evaluated: [ :contact |
-					                contact emailAddresses joinUsing: ',' ];
+				                evaluated: [ :contact | self emailAddressesFor: contact ];
 				                yourself);
 		               addColumn: (SpStringTableColumn new
 				                title: 'Birthday';
 				                evaluated: #birthday;
-				                yourself);"
+				                yourself);
 		               contextMenu: [
 			               (self rootCommandsGroup / 'contact manager commands')
 				               beRoot asMenuPresenter ];
@@ -100,6 +124,14 @@ ICContactListPresenter >> items: aCollection [
 	"Shortcut method to set the receiver's plugins to aCollection"
 
 	contactList items: aCollection
+]
+
+{ #category : 'initialization' }
+ICContactListPresenter >> phoneNumbersFor: contact [
+
+	^ contact phoneNumbers 
+		inject: String empty 
+		into: [ : acc : n | acc , ', ' , n number ]
 ]
 
 { #category : 'operations' }

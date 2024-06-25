@@ -47,6 +47,13 @@ ICVCardManager class >> initialize [
 ]
 
 { #category : 'instance creation' }
+ICVCardManager class >> reset [
+	<script>
+	
+	UniqueInstance := nil
+]
+
+{ #category : 'instance creation' }
 ICVCardManager class >> uniqueInstance [
 
 	^ UniqueInstance ifNil: [ UniqueInstance := self basicNew ]
@@ -113,6 +120,19 @@ ICVCardManager >> addContactName: aString lastname: aString2 phoneNumber1: aStri
 
 	self addContact: (ICVCard new
 			 fullname: aString , ' ' , aString2;
+			 addPhoneNumber: aString3;
+			 addPhoneNumber: aString7;
+			 addAddress: aString4;
+			 addEmailAddress: aString5;
+			 birthday: aString6;
+			 yourself)
+]
+
+{ #category : 'adding' }
+ICVCardManager >> addContactName: icName phoneNumber1: aString3 address: aString4 email: aString5 birthday: aString6 phoneNumber2: aString7 [
+
+	self addContact: (ICVCard new
+			 name: icName;
 			 addPhoneNumber: aString3;
 			 addPhoneNumber: aString7;
 			 addAddress: aString4;

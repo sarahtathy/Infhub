@@ -33,7 +33,7 @@ ICContactPresenter >> address [
 { #category : 'layout' }
 ICContactPresenter >> address: anAddress [
 
-	addressTextPresenter text: anAddress
+	addressTextPresenter text: anAddress asString
 ]
 
 { #category : 'layout' }
@@ -88,7 +88,7 @@ ICContactPresenter >> email [
 { #category : 'layout' }
 ICContactPresenter >> email: anEmail [
 
-	emailTextPresenter text: anEmail
+	emailTextPresenter text: anEmail address 
 ]
 
 { #category : 'layout' }
@@ -147,15 +147,13 @@ ICContactPresenter >> lastname: aLastName [
 { #category : 'layout' }
 ICContactPresenter >> model: anICvcard [
 
-	| vlastname vfirstname vname firstNumber secondNumber|
-	vname := anICvcard fullname splitOn: ' '.
-	vfirstname := vname at: 1.
-	vlastname := vname at: 2.
+	| firstNumber secondNumber|
+
 	firstNumber := anICvcard phoneNumbers at: 1.
 	secondNumber := anICvcard phoneNumbers at: 2.
 	self address: anICvcard addresses first.
-	self name: vfirstname.
-	self lastname: vlastname.
+	self name: anICvcard name givenName.
+	self lastname: anICvcard name familyName.
 	self email: anICvcard emailAddresses first.
 	self birthday: anICvcard birthday.
 	self phoneNumber1: firstNumber.

@@ -50,8 +50,8 @@ ICContactListPresenter >> createNewContact [
 		phoneNumber2:
 		(icGenerator createPhoneNumber: contactPresenter phoneNumber2)
 		photo: (icGenerator photo: contactPresenter photo).
-		
-	self vcardManager writeInSton.
+
+	self vcardManager writeInSton   
 ]
 
 { #category : 'layout' }

@@ -24,7 +24,7 @@ CMIntegrationTests >> testAddContact [
 		               familyName: 'claire';
 		               givenName: 'lune'.
 
-	contactManager
+	contactManager    
 		addContactName: nameContact
 		phoneNumber1: '05664'
 		address: '50 rue pont, 78000 bg'
@@ -33,8 +33,7 @@ CMIntegrationTests >> testAddContact [
 		phoneNumber2: ''
 		photo: 'inria.png'.
 
-	self assert: contactManager contacts size equals: 1.
-
+	self assert: contactManager contacts size equals: 1
 ]
 
 { #category : 'tests' }
@@ -115,8 +114,8 @@ CMIntegrationTests >> testRemoveContact [
 		               familyName: 'claire';
 		               givenName: 'lune'.
 
-	contactManager 
-		addContactName: nameContact
+	contactManager
+		addContactName: nameContact    
 		phoneNumber1: '05664'
 		address: '50 rue pont, 78000 bg'
 		email: 'lune@gmail.com'

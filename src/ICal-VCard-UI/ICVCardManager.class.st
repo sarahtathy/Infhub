@@ -60,35 +60,10 @@ ICVCardManager class >> uniqueInstance [
 ]
 
 { #category : 'initialization' }
-ICVCardManager >> addContact [
-
-	self contacts add: vcard.
-	vcard := nil.
-]
-
-{ #category : 'initialization' }
 ICVCardManager >> addContact: aContact [
 
 	self contacts add: aContact.
 	
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactAddress: anAddress [ 
-
-	vcard addAddress: anAddress
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactBirthday: aBirthday [
-
-	vcard birthday: aBirthday
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactEmail: anEmail [
-
-	vcard addEmailAddress: anEmail 
 ]
 
 { #category : 'adding' }
@@ -112,18 +87,6 @@ ICVCardManager >> addContactName: icName phoneNumber1: aString3 address: aString
 			 birthday: aString6;
 			 photo: aPicture;
 			 yourself)
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactPhoneNumber1: phone1 [
-
-	vcard addPhoneNumber: phone1 
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactPhoneNumber2: phone2 [
-
-	vcard addPhoneNumber: phone2
 ]
 
 { #category : 'accessing' }

@@ -18,6 +18,23 @@ CMIntegrationTests >> setUp [
 
 { #category : 'tests' }
 CMIntegrationTests >> testAddContact [
+
+	| nameContact |
+	nameContact := ICName new
+		               familyName: 'claire';
+		               givenName: 'lune'.
+
+	contactManager
+		addContactName: nameContact
+		phoneNumber1: '05664'
+		address: '50 rue pont, 78000 bg'
+		email: 'lune@gmail.com'
+		birthday: '08-01-2000'
+		phoneNumber2: ''
+		photo: 'inria.png'.
+
+	self assert: contactManager contacts size equals: 1.
+
 ]
 
 { #category : 'tests' }
@@ -93,6 +110,23 @@ CMIntegrationTests >> testListContacts [
 CMIntegrationTests >> testRemoveContact [
 	"Test removing a single contact in the contact manager"
 
+	| nameContact |
+	nameContact := ICName new
+		               familyName: 'claire';
+		               givenName: 'lune'.
+
+	contactManager 
+		addContactName: nameContact
+		phoneNumber1: '05664'
+		address: '50 rue pont, 78000 bg'
+		email: 'lune@gmail.com'
+		birthday: '08-01-2000'
+		phoneNumber2: ''
+		photo: 'inria.png'.
+
+
+	contactManager removeContact: (contactManager contacts at: 1).
+	self assert: contactManager contacts isEmpty
 ]
 
 { #category : 'tests' }

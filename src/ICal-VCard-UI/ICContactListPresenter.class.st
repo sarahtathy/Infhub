@@ -30,21 +30,7 @@ ICContactListPresenter >> addContact [
 	newContact := self createNewContact.
 	self updateItems
 
-	"contactPresenter := self instantiate: ICContactPresenter.
-	contactPresenter openModal isOk ifFalse: [ ^ self ].
-
-	self vcardManager
-		addContactName: contactPresenter name
-		lastname: contactPresenter lastname
-		phoneNumber1: contactPresenter phoneNumber1
-		address: contactPresenter address
-		email: contactPresenter email
-		birthday: contactPresenter birthday
-		phoneNumber2: contactPresenter phoneNumber2.
-
-	self vcardManager writeInSton.
-
-	self updateItems"
+	
 ]
 
 { #category : 'operations' }
@@ -64,6 +50,8 @@ ICContactListPresenter >> createNewContact [
 		phoneNumber2:
 		(icGenerator createPhoneNumber: contactPresenter phoneNumber2)
 		photo: (icGenerator photo: contactPresenter photo).
+		
+	self vcardManager writeInSton.
 ]
 
 { #category : 'layout' }

@@ -116,17 +116,17 @@ ICVCardManager >> reset [
 	UniqueInstance := nil.
 ]
 
-{ #category : 'accessing' }
-ICVCardManager >> vcard [
-
-	^ vcard ifNil: [ vcard := ICVCard new ]
-]
-
 { #category : 'writing' }
-ICVCardManager >> writeInSton [
+ICVCardManager >> saveContactInSton [
 
 	'contacts.ston' asFileReference writeStreamDo: [ :stream |
 		STON writer
 			on: stream;
-			nextPut: (self contacts do: [ :each | each writeInSton ]) ] 
+			nextPut: (self contacts do: [ :each | each saveContactInSton ]) ] 
+]
+
+{ #category : 'accessing' }
+ICVCardManager >> vcard [
+
+	^ vcard ifNil: [ vcard := ICVCard new ]
 ]

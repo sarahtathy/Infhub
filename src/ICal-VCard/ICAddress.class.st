@@ -76,6 +76,18 @@ ICAddress class >> typePostal [
 ]
 
 { #category : 'converting' }
+ICAddress >> asString [
+
+	^ String streamContents: [ :stream |
+		  stream
+			  << self street asString;
+			  << $,;
+			  << self postalcode asString;
+			  << $,;
+				<< self locality asString ]
+]
+
+{ #category : 'accessing' }
 ICAddress >> asVCardString [
 	^String streamContents: [ :stream |
 		self poBox ifNotNil: [

@@ -64,7 +64,7 @@ ICVCard >> addMsnid: anInstantMessageId [
 
 { #category : 'adding' }
 ICVCard >> addNote: aString [
-	self notes add: aString
+	self contacts add: aString
 ]
 
 { #category : 'adding' }
@@ -157,6 +157,11 @@ aString := '[0-9]{5}'.
 
 ]
 
+{ #category : 'accessing' }
+ICVCard >> contacts [
+	^notes
+]
+
 { #category : 'public' }
 ICVCard >> convertPhotoToJpeg [
 	(self photo notNil and: [ self photo isKindOf: ByteArray ])
@@ -190,7 +195,7 @@ ICVCard >> exportOn: anExporter [
 	anExporter exportGeo: self geo.
 	anExporter exportOrganization: self organization.
 	anExporter exportCategories: self categories.
-	anExporter exportNotes: self notes.
+	anExporter exportNotes: self contacts.
 	anExporter exportUrl: self url.
 	
 	anExporter exportAim: self aimids.
@@ -289,8 +294,9 @@ ICVCard >> name [
 ]
 
 { #category : 'accessing' }
-ICVCard >> name: aName [ 
-	name := aName
+ICVCard >> name: anICName [ 
+	name := anICName.
+	fullname := anICName familyName , ' ' , anICName givenName 
 ]
 
 { #category : 'accessing' }
@@ -301,11 +307,6 @@ ICVCard >> nickname [
 { #category : 'accessing' }
 ICVCard >> nickname: aString [ 
 	nickname := aString
-]
-
-{ #category : 'accessing' }
-ICVCard >> notes [
-	^notes
 ]
 
 { #category : 'accessing' }
@@ -365,6 +366,15 @@ ICVCard >> removePhoneNumber: aPhoneNumber [
 	^self phoneNumbers remove: aPhoneNumber
 ]
 
+{ #category : 'exporting' }
+ICVCard >> saveContactInSton [ 
+
+	^ String streamContents: [ :stream |
+		  STON writer
+			  on: stream;
+			  nextPut: self ]
+]
+
 { #category : 'accessing' }
 ICVCard >> timeZone [
 	^timeZone
@@ -403,15 +413,6 @@ ICVCard >> version [
 { #category : 'accessing' }
 ICVCard >> version: aFloat [ 
 	version := aFloat
-]
-
-{ #category : 'exporting' }
-ICVCard >> writeInSton [ 
-
-	^ String streamContents: [ :stream |
-		  STON writer
-			  on: stream;
-			  nextPut: self ]
 ]
 
 { #category : 'accessing' }

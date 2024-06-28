@@ -47,16 +47,16 @@ ICVCardManager class >> initialize [
 ]
 
 { #category : 'instance creation' }
+ICVCardManager class >> reset [
+	<script>
+	
+	UniqueInstance := nil
+]
+
+{ #category : 'instance creation' }
 ICVCardManager class >> uniqueInstance [
 
 	^ UniqueInstance ifNil: [ UniqueInstance := self basicNew ]
-]
-
-{ #category : 'initialization' }
-ICVCardManager >> addContact [
-
-	self contacts add: vcard.
-	vcard := nil.
 ]
 
 { #category : 'initialization' }
@@ -64,24 +64,6 @@ ICVCardManager >> addContact: aContact [
 
 	self contacts add: aContact.
 	
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactAddress: anAddress [ 
-
-	vcard addAddress: anAddress
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactBirthday: aBirthday [
-
-	vcard birthday: aBirthday
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactEmail: anEmail [
-
-	vcard addEmailAddress: anEmail 
 ]
 
 { #category : 'adding' }
@@ -94,43 +76,17 @@ ICVCardManager >> addContactFromFile: aContactName [
 ]
 
 { #category : 'adding' }
-ICVCardManager >> addContactName: aString lastname: aLastName [
-
-	vcard fullname: aString , ' ' , aLastName
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactName: aString lastname: aString2 phoneNumber1: aString3 address: aString4 email: aString5 birthday: aString6 phoneNumber2: aString7 [
-	"self addContact: (
-		ICVCard new
-			fullname: aString , ' ', aString2;
-			name: (ICName new familyName: aString2; givenName: aString);
-			addPhoneNumber: (ICPhoneNumber new number: aString3);
-			addAddress: (ICAddress fromVCardString: aString4 parameters: Dictionary new) ;
-			addEmailAddress: (ICEmailAddress new address: aString5);
-			birthday: aString6;   
-			yourself)"
+ICVCardManager >> addContactName: icName phoneNumber1: aString3 address: aString4 email: aString5 birthday: aString6 phoneNumber2: aString7 photo: aPicture [
 
 	self addContact: (ICVCard new
-			 fullname: aString , ' ' , aString2;
+			 name: icName;
 			 addPhoneNumber: aString3;
 			 addPhoneNumber: aString7;
 			 addAddress: aString4;
 			 addEmailAddress: aString5;
 			 birthday: aString6;
+			 photo: aPicture;
 			 yourself)
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactPhoneNumber1: phone1 [
-
-	vcard addPhoneNumber: phone1 
-]
-
-{ #category : 'adding' }
-ICVCardManager >> addContactPhoneNumber2: phone2 [
-
-	vcard addPhoneNumber: phone2
 ]
 
 { #category : 'accessing' }
@@ -160,17 +116,17 @@ ICVCardManager >> reset [
 	UniqueInstance := nil.
 ]
 
-{ #category : 'accessing' }
-ICVCardManager >> vcard [
-
-	^ vcard ifNil: [ vcard := ICVCard new ]
-]
-
 { #category : 'writing' }
-ICVCardManager >> writeInSton [
+ICVCardManager >> saveContactInSton [
 
 	'contacts.ston' asFileReference writeStreamDo: [ :stream |
 		STON writer
 			on: stream;
-			nextPut: (self contacts do: [ :each | each writeInSton ]) ] 
+			nextPut: (self contacts do: [ :each | each saveContactInSton ]) ] 
+]
+
+{ #category : 'accessing' }
+ICVCardManager >> vcard [
+
+	^ vcard ifNil: [ vcard := ICVCard new ]
 ]

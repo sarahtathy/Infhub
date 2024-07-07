@@ -67,15 +67,6 @@ ICVCardManager >> addContact: aContact [
 ]
 
 { #category : 'adding' }
-ICVCardManager >> addContactFromFile: aContactName [
-
-	| stream listOfInformation |
-	stream := aContactName asFileReference readStream.
-	listOfInformation := STON fromStream: stream.
-	listOfInformation traceCr
-]
-
-{ #category : 'adding' }
 ICVCardManager >> addContactName: icName phoneNumber1: aString3 address: aString4 email: aString5 birthday: aString6 phoneNumber2: aString7 photo: aPicture [
 
 	self addContact: (ICVCard new
@@ -95,6 +86,19 @@ ICVCardManager >> contacts [
 		ifNil: [ contacts := OrderedCollection new ]
 ]
 
+{ #category : 'actions' }
+ICVCardManager >> importContact [
+
+	| contactsImported file |
+	file := self selectFile.
+	contactsImported := OrderedCollection new.
+	(file extension = 'ston' ) ifTrue: [ contactsImported := self readContactSton:
+		                    (file asFileReference )].
+	
+
+	contactsImported do: [ :contact | self addContact: contact ]
+]
+
 { #category : 'writing' }
 ICVCardManager >> readContactSton: aContactSton [
 
@@ -106,8 +110,9 @@ ICVCardManager >> readContactSton: aContactSton [
 
 { #category : 'accessing' }
 ICVCardManager >> removeContact: anICVCard [
-	
-	self contacts remove: anICVCard 
+
+	self contacts remove: anICVCard.
+	self saveContactInSton 
 ]
 
 { #category : 'initialization' }
@@ -123,6 +128,15 @@ ICVCardManager >> saveContactInSton [
 		STON writer
 			on: stream;
 			nextPut: (self contacts do: [ :each | each saveContactInSton ]) ] 
+]
+
+{ #category : 'accessing' }
+ICVCardManager >> selectFile [ 
+
+	| selectedFile |
+	((selectedFile := StOpenFilePresenter new openModal) notNil and: [
+		 selectedFile isFile ])
+	ifTrue: [ ^ selectedFile ]
 ]
 
 { #category : 'accessing' }

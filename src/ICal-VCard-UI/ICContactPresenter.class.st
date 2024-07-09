@@ -154,7 +154,7 @@ ICContactPresenter >> initializeDialogWindow: aDialogPresenter [
 	cancelButton icon: (self iconNamed: #smallCancel). "Appliquer le style visuel du bouton Cancel"
 
 	saveButton := aDialogPresenter addButton: 'Save' do: [ :presenter |
-		              (self checkName or: [ self checkPrincipalPhoneNumber ])
+		              (self checkName "or: [ self checkPrincipalPhoneNumber ]")
 		              ifFalse: [
 			              presenter
 				              beOk;

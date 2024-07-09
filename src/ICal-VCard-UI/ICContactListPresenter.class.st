@@ -49,9 +49,8 @@ ICContactListPresenter >> createNewContact [
 		birthday: contactPresenter birthday
 		phoneNumber2:
 		(icGenerator createPhoneNumber: contactPresenter phoneNumber2)
-		photo: (icGenerator photo: contactPresenter photo).
+		photo: (icGenerator photo: contactPresenter photo)
 
-	self vcardManager saveContactInSton 
 ]
 
 { #category : 'layout' }

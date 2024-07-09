@@ -63,7 +63,7 @@ ICVCardManager class >> uniqueInstance [
 ICVCardManager >> addContact: aContact [
 
 	self contacts add: aContact.
-	
+	self saveContactInSton
 ]
 
 { #category : 'adding' }
@@ -77,7 +77,8 @@ ICVCardManager >> addContactName: icName phoneNumber1: aString3 address: aString
 			 addEmailAddress: aString5;
 			 birthday: aString6;
 			 photo: aPicture;
-			 yourself)
+			 yourself).
+		self saveContactInSton
 ]
 
 { #category : 'accessing' }

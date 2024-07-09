@@ -22,14 +22,15 @@ CMIntegrationTest >> setUp [
 	contactManager := ICVCardManager new.
 	app := ICVCardApp new.
 	presenter := app newPresenter: ICVCardMainPresenter.
-	vcardManager := presenter contactList vcardManager. 
+	vcardManager := presenter contactList vcardManager.
 
 	nameContact1 := ICName new
 		                givenName: 'Julie';
 		                familyName: 'Mangui'.
 
 	nameContact2 := ICName new
-		                givenName: 'Fafa'.
+		                givenName: 'Fafa';
+		                familyName: 'Poitier'.
 
 	vcard1 := ICVCard new.
 	vcard1
@@ -87,13 +88,11 @@ CMIntegrationTest >> testContactDeletion [
 { #category : 'tests' }
 CMIntegrationTest >> testContactExport [
 
-	| contacts |
-	vcardManager addContact: vcard2. 
-	contacts := vcardManager readContactSton: 'contacts.ston' asFileReference.
-	self assert: (contacts includes: vcard2) equals: 'true'.
-	
-
-	
+	| contacts lastContact |
+	contacts := vcardManager readContactSton:
+		            'contacts.ston' asFileReference.
+	lastContact := contacts last.
+	self assert: lastContact equals: vcard1 
 ]
 
 { #category : 'tests' }
@@ -170,8 +169,7 @@ CMIntegrationTest >> testListContacts [
 CMIntegrationTest >> testRemoveContact [
 	"Test removing a single contact in the contact manager"
 
-	contactManager addContact: vcard1. 
-
+	contactManager addContact: vcard1.
 
 	contactManager removeContact: (contactManager contacts at: 1).
 	self assert: contactManager contacts isEmpty

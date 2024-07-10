@@ -36,11 +36,14 @@ ICContactListPresenter >> addContact [
 { #category : 'operations' }
 ICContactListPresenter >> createNewContact [
 
+	| tmp2 |
+	tmp2 := ICName new.
+	tmp2
+		givenName: contactPresenter name;
+		familyName: contactPresenter lastname.
 	self vcardManager
-		addContactName: (icGenerator createName: (ICName new
-					  givenName: contactPresenter name;
-					  familyName: contactPresenter lastname;
-					  yourself) asVCardString)
+		addContactName:
+		(icGenerator createName: tmp2 yourself asVCardString)
 		phoneNumber1:
 		(icGenerator createPhoneNumber: contactPresenter phoneNumber1)
 		address: (icGenerator createAddress:
@@ -50,7 +53,6 @@ ICContactListPresenter >> createNewContact [
 		phoneNumber2:
 		(icGenerator createPhoneNumber: contactPresenter phoneNumber2)
 		photo: (icGenerator photo: contactPresenter photo)
-
 ]
 
 { #category : 'layout' }

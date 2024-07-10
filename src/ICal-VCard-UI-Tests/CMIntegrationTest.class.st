@@ -9,7 +9,8 @@ Class {
 		'vcard1',
 		'vcard2',
 		'presenter',
-		'vcardManager'
+		'vcardManager',
+		'fileSystem'
 	],
 	#category : 'ICal-VCard-UI-Tests',
 	#package : 'ICal-VCard-UI-Tests'
@@ -20,6 +21,8 @@ CMIntegrationTest >> setUp [
 
 	super setUp.
 	contactManager := ICVCardManager new.
+	fileSystem := FileSystem memory.
+	contactManager contactFile: fileSystem workingDirectory  / 'contact.ston'.
 	app := ICVCardApp new.
 	presenter := app newPresenter: ICVCardMainPresenter.
 	vcardManager := presenter contactList vcardManager.
@@ -47,143 +50,159 @@ CMIntegrationTest >> setUp [
 		addPhoneNumber: (ICPhoneNumber new number: '0310225863')
 ]
 
+{ #category : 'running' }
+CMIntegrationTest >> tearDown [
+
+	super tearDown
+]
+
 { #category : 'tests' }
 CMIntegrationTest >> testAddContact [
 
-	| nameContact |
-	nameContact := ICName new
-		               familyName: 'claire';
-		               givenName: 'lune'.
-
-	contactManager    
-		addContactName: nameContact
+	| tmp1 tmp3 |
+	tmp3 := ICName new.
+	tmp3 familyName: 'claire'.
+	tmp1 := tmp3 givenName: 'lune'.
+	contactManager
+		addContactName: tmp1
 		phoneNumber1: '05664'
 		address: '50 rue pont, 78000 bg'
 		email: 'lune@gmail.com'
 		birthday: '08-01-2000'
 		phoneNumber2: ''
 		photo: 'inria.png'.
-
 	self assert: contactManager contacts size equals: 1
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testAddContact2 [
 
-	| nameContact |
-	nameContact := ICName new
-		               familyName: 'claire';
-		               givenName: 'lune'.
-
+	| tmp1 tmp3 |
+	tmp3 := ICName new.
+	tmp3 familyName: 'claire'.
+	tmp1 := tmp3 givenName: 'lune'.
 	contactManager addContact: vcard1.
-
 	self assert: contactManager contacts size equals: 1
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactDeletion [
 
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactExport [
 
-	| contacts lastContact |
-	vcardManager addContact: vcard1.
-	contacts := vcardManager readContactSton:
-		            'contacts.ston' asFileReference.
-	lastContact := contacts last.
-	self assert: lastContact equals: vcard1
+	| tmp1 tmp2 |
+	contactManager addContact: vcard1.
+	tmp1 := contactManager readContactSton: fileSystem / 'contact.ston'.
+	tmp2 := tmp1 asOrderedCollection last.
+	self assert: tmp2 equals: vcard1
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactGrouping [
 
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactHistory [
+
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactImport [
 
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactMerge [
+
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactNotifications [
-	"Check that notifications related to contacts are appropriately triggered and handled within the contact manager"
+
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactOwnership [
+
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactPermissions [
+
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactSearch [
 
-	| searchText1 searchText2 searchPresenter  result |
-	searchPresenter := presenter contactsToolbar.
-
-	searchText1 := 'Sarah'.
-	result := searchPresenter filteredContactFor: searchText1.
-	self assert: result size equals: 0.
-
-	searchText2 := 'jjj'.
-	result := searchPresenter filteredContactFor: searchText2.
-	self assert: result size equals: 0
+	| tmp1 tmp2 tmp3 tmp4 |
+	tmp3 := presenter contactsToolbar.
+	tmp1 := 'Sarah'.
+	tmp4 := tmp3 filteredContactFor: tmp1.
+	self assert: tmp4 size equals: 0.
+	tmp2 := 'jjj'.
+	tmp4 := tmp3 filteredContactFor: tmp2.
+	self assert: tmp4 size equals: 0
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactSharing [
 
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactSorting [
 
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testContactValidation [
+
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testDuplicateContactPrevention [
 
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testListContacts [
 
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testRemoveContact [
-	"Test removing a single contact in the contact manager"
 
-	contactManager addContact: vcard1.
-
-	contactManager removeContact: (contactManager contacts at: 1).
+	contactManager
+		addContact: vcard1;
+		removeContact: (contactManager contacts at: 1).
 	self assert: contactManager contacts isEmpty
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testRetrieveContact [
-	"Test obtaining a contact object"
 
+	
 ]
 
 { #category : 'tests' }
 CMIntegrationTest >> testUpdateContact [
 
-
+	
 ]

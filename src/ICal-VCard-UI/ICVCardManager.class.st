@@ -27,7 +27,7 @@ Class {
 	#instVars : [
 		'contacts',
 		'vcard',
-		'vcardGenerator'
+		'contactFile'
 	],
 	#classVars : [
 		'UniqueInstance'
@@ -60,31 +60,52 @@ ICVCardManager class >> uniqueInstance [
 ]
 
 { #category : 'initialization' }
-ICVCardManager >> addContact: aContact [
+ICVCardManager >> addContact: arg1 [
 
-	self contacts add: aContact.
+	self contacts add: arg1.
 	self saveContactInSton
 ]
 
 { #category : 'adding' }
-ICVCardManager >> addContactName: icName phoneNumber1: aString3 address: aString4 email: aString5 birthday: aString6 phoneNumber2: aString7 photo: aPicture [
+ICVCardManager >> addContactName: arg1 phoneNumber1: arg2 address: arg3 email: arg4 birthday: arg5 phoneNumber2: arg6 photo: arg7 [
 
-	self addContact: (ICVCard new
-			 name: icName;
-			 addPhoneNumber: aString3;
-			 addPhoneNumber: aString7;
-			 addAddress: aString4;
-			 addEmailAddress: aString5;
-			 birthday: aString6;
-			 photo: aPicture;
-			 yourself).
-		self saveContactInSton
+	| tmp1 |
+	tmp1 := ICVCard new.
+	tmp1
+		name: arg1;
+		addPhoneNumber: arg2;
+		addPhoneNumber: arg6;
+		addAddress: arg3;
+		addEmailAddress: arg4;
+		birthday: arg5;
+		photo: arg7.
+	self
+		addContact: tmp1 yourself;
+		saveContactInSton
+]
+
+{ #category : 'actions' }
+ICVCardManager >> contactFile [
+
+	^ contactFile
+]
+
+{ #category : 'actions' }
+ICVCardManager >> contactFile: arg1 [
+
+	contactFile := arg1
 ]
 
 { #category : 'accessing' }
 ICVCardManager >> contacts [
 	^ contacts 
 		ifNil: [ contacts := OrderedCollection new ]
+]
+
+{ #category : 'accessing' }
+ICVCardManager >> contacts: arg1 [
+
+	contacts := arg1
 ]
 
 { #category : 'actions' }
@@ -98,6 +119,12 @@ ICVCardManager >> importContact [
 	
 
 	contactsImported do: [ :contact | self addContact: contact ]
+]
+
+{ #category : 'initialization' }
+ICVCardManager >> initialize [
+
+	contactFile := 'contact.ston' asFileReference
 ]
 
 { #category : 'writing' }
@@ -125,10 +152,12 @@ ICVCardManager >> reset [
 { #category : 'writing' }
 ICVCardManager >> saveContactInSton [
 
-	'contacts.ston' asFileReference writeStreamDo: [ :stream |
-		STON writer
-			on: stream;
-			nextPut: (self contacts do: [ :each | each saveContactInSton ]) ] 
+	contactFile asFileReference writeStreamDo: [ :arg1 |
+		| tmp1 |
+		tmp1 := STON writer.
+		tmp1
+			on: arg1;
+			nextPut: (self contacts do: [ :arg2 | arg2 saveContactInSton ]) ]
 ]
 
 { #category : 'accessing' }

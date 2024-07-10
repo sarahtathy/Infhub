@@ -152,22 +152,18 @@ ICContactPresenter >> initialExtentForWindow [
 ]
 
 { #category : 'initialization' }
-ICContactPresenter >> initializeDialogWindow: aDialogPresenter [
+ICContactPresenter >> initializeDialogWindow: arg1 [
 
-	| cancelButton saveButton |
-	aDialogPresenter centered.
-	cancelButton := aDialogPresenter
-		                addButton: 'Cancel'
-		                do: [ :presenter | presenter close ].
-	cancelButton icon: (self iconNamed: #smallCancel). "Appliquer le style visuel du bouton Cancel"
-
-	saveButton := aDialogPresenter addButton: 'Save' do: [ :presenter |
-		              (self checkName "or: [ self checkPrincipalPhoneNumber ]")
-		              ifFalse: [
-			              presenter
-				              beOk;
-				              close ] ].
-	saveButton icon: (self iconNamed: #smallOk)
+	| tmp1 tmp2 |
+	arg1 centered.
+	tmp1 := arg1 addButton: 'Cancel' do: [ :arg2 | arg2 close ].
+	tmp1 icon: (self iconNamed: #smallCancel).
+	tmp2 := arg1 addButton: 'Save' do: [ :arg3 |
+		        self checkName ifFalse: [
+			        arg3
+				        beOk;
+				        close ] ].
+	tmp2 icon: (self iconNamed: #smallOk)
 ]
 
 { #category : 'initialization' }
@@ -270,17 +266,18 @@ ICContactPresenter >> selectImage [
 ]
 
 { #category : 'layout' }
-ICContactPresenter >> updateModel: anICvcard [
+ICContactPresenter >> updateModel: arg1 [
 
-	| firstNumber secondNumber |
-	firstNumber := anICvcard phoneNumbers at: 1.
-	secondNumber := anICvcard phoneNumbers at: 2.
-	self address: anICvcard addresses first.
-	self name: anICvcard name givenName.
-	self lastname: anICvcard name familyName.
-	self email: anICvcard emailAddresses first.
-	self birthday: anICvcard birthday.
-	self phoneNumber1: firstNumber.
-	self phoneNumber2: secondNumber.
-	self picturePresenter image: anICvcard photo 
+	| tmp1 tmp2 |
+	tmp1 := arg1 phoneNumbers at: 1.
+	tmp2 := arg1 phoneNumbers at: 2.
+	self
+		address: arg1 addresses first;
+		name: arg1 name givenName;
+		lastname: arg1 name familyName;
+		email: arg1 emailAddresses first;
+		birthday: arg1 birthday;
+		phoneNumber1: tmp1;
+		phoneNumber2: tmp2.
+	self picturePresenter image: arg1 photo
 ]

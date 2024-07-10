@@ -129,11 +129,9 @@ ICContactListPresenter >> items: aCollection [
 
 { #category : 'initialization' }
 ICContactListPresenter >> phoneNumbersFor: contact [
+	^ contact phoneNumbers inject: String empty into: [ :acc :n |
+		  acc ifEmpty: [ n number ] ifNotEmpty:[ n number ifNotEmpty:[  acc , ', ' , n number ] ifEmpty:[acc]] ]
 
-	^ contact phoneNumbers 
-		  inject: String empty
-		  into: [ :acc :n | acc ifEmpty: [n number]
-			ifNotEmpty: [ acc,  ', ' , n number ]  ]
 ]
 
 { #category : 'operations' }

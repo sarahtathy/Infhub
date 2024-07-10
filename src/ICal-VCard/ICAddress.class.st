@@ -208,7 +208,8 @@ ICAddress >> isPostal [
 
 { #category : 'accessing' }
 ICAddress >> locality [
-	^locality
+
+	^ locality ifNil: [ locality := '' ]
 ]
 
 { #category : 'accessing' }
@@ -272,7 +273,8 @@ ICAddress >> region: aString [
 
 { #category : 'accessing' }
 ICAddress >> street [
-	^street
+
+	^ street ifNil: [  street:= '' ]
 ]
 
 { #category : 'accessing' }

@@ -65,10 +65,11 @@ si c'est bien ecrit alors on peut save. sinon on lance l'alerte. "
 { #category : 'layout' }
 ICContactPresenter >> checkPrincipalPhoneNumber [
 
-	self phoneNumber1 isEmptyOrNil ifFalse: [
-		 ^ self hasGoodPhoneNumber ].
-	self alert: 'Please write phone number for the contact'.
-	^ true
+	self phoneNumber1 isEmptyOrNil
+		ifFalse: [ ^ self hasGoodPhoneNumber ]
+		ifTrue: [
+			self alert: 'Please write phone number for the contact'.
+			^ true ]
 ]
 
 { #category : 'layout' }
@@ -134,7 +135,19 @@ Please correct it.'.
 { #category : 'layout' }
 ICContactPresenter >> hasGoodPhoneNumber [
 
+	self phoneNumber1 isAllDigits
+		ifFalse: [
+			self alert: 'You have letter(s) in the first phone number. 
+Please correct it.'.
+			^ true ]
+		ifTrue: [
+			self phoneNumber2 isNotEmpty ifTrue: [
+				self phoneNumber2 isAllDigits ifFalse: [
+					self alert: 'You have letter(s) in the second phone number. 
+Please correct it.'.
+					^ true ] ] ].
 
+	^ false
 ]
 
 { #category : 'layout' }

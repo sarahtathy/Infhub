@@ -89,10 +89,11 @@ CMIntegrationTest >> testContactDeletion [
 CMIntegrationTest >> testContactExport [
 
 	| contacts lastContact |
+	vcardManager addContact: vcard1.
 	contacts := vcardManager readContactSton:
 		            'contacts.ston' asFileReference.
 	lastContact := contacts last.
-	self assert: lastContact equals: vcard1 
+	self assert: lastContact equals: vcard1
 ]
 
 { #category : 'tests' }

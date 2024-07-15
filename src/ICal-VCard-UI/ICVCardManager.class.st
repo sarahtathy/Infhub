@@ -87,7 +87,7 @@ ICVCardManager >> addContactName: arg1 phoneNumber1: arg2 address: arg3 email: a
 { #category : 'actions' }
 ICVCardManager >> contactFile [
 
-	^ contactFile
+	^ contactFile ifNil: [ contactFile :=  'contact.ston' asFileReference ]
 ]
 
 { #category : 'actions' }
@@ -124,7 +124,8 @@ ICVCardManager >> importContact [
 { #category : 'initialization' }
 ICVCardManager >> initialize [
 
-	contactFile := 'contact.ston' asFileReference
+	super initialize.
+	contactFile := 'contact.ston' asFileReference.
 ]
 
 { #category : 'writing' }
@@ -152,7 +153,7 @@ ICVCardManager >> reset [
 { #category : 'writing' }
 ICVCardManager >> saveContactInSton [
 
-	contactFile asFileReference writeStreamDo: [ :arg1 |
+	self contactFile asFileReference writeStreamDo: [ :arg1 |
 		| tmp1 |
 		tmp1 := STON writer.
 		tmp1
